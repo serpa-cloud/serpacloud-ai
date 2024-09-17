@@ -7,7 +7,7 @@ body {
 body,
 #root {
   position: relative;
-  background: transparent;
+  min-height: 100vh;
 }
 
 a {
@@ -38,10 +38,11 @@ a:hover {
 }
 
 :root {
-  --font-family-apple: system-ui, -apple-system, BlinkMacSystemFont, '.SFNSText-Regular', sans-serif;
+  --font-family-apple: SF Pro Text, system-ui, -apple-system, BlinkMacSystemFont,
+    '.SFNSText-Regular', sans-serif;
   --font-family-code: ui-monospace, Menlo, Consolas, Monaco, monospace;
-  --font-family-default: system-ui, -apple-system, BlinkMacSystemFont, '.SFNSText-Regular',
-    sans-serif;
+  --font-family-default: SF Pro Text, Helvetica, Arial, sans-serif, system-ui, -apple-system,
+    BlinkMacSystemFont, '.SFNSText-Regular', sans-serif;
   --font-family-segoe: SFProDisplay-Regular, Helvetica, Arial, sans-serif;
 
   --fds-soft: cubic-bezier(0.08, 0.52, 0.52, 1);
@@ -81,6 +82,14 @@ a:hover {
   --header-height: 56px;
   --footer-height: 186px;
   --content-top-padding: 32px;
+
+  --red: #00c798;
+  --red: #177ef7;
+  --red: #2665d9;
+  --red: #8d1ac2;
+  --red: #ff4083;
+  --red: #ff5e5e;
+  --red: #fdb200;
 
   --neutral-gradient: linear-gradient(346deg, #f1f6ff 50%, #ffffff 100%);
 
@@ -152,6 +161,8 @@ a:hover {
   --green-solid-color: #1dff85;
   --cyan-solid-color: #00c2ff;
   --squares: rgb(233 233 239);
+  --messages-background: #d9fdd3;
+  --message-primary: #111b21;
 
   --always-white: white;
   --always-dark: rgb(34, 33, 87);

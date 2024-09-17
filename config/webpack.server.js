@@ -4,8 +4,6 @@ const StylexPlugin = require('@serpa-cloud/stylex-webpack-plugin');
 
 const paths = require('./paths');
 
-const ASSET_PATH = process.env.ASSET_PATH;
-
 const imageInlineSizeLimit = parseInt(process.env.IMAGE_INLINE_SIZE_LIMIT || '10000');
 
 const hasJsxRuntime = (() => {
@@ -34,7 +32,7 @@ module.exports = {
     path: path.resolve('server-build'),
     filename: 'index.js',
     assetModuleFilename: `static/media/[name].${version}[ext]`,
-    publicPath: ASSET_PATH || '/',
+    publicPath: '/',
   },
 
   resolve: {

@@ -17,4 +17,9 @@ CHANGELOG.md
 /src/beta/*/*/__generated__/*.graphql.js
 /src/shared/__generated__/*.graphql.js
 /src/queries/__generated__/*.graphql.js
+src/*/__generated__/*.graphql.js
+src/**/__generated__/*.graphql.js
 /serpa-atomic-compiler
+/flow-typed
+/flow-typed/*
+/flow-typed/**

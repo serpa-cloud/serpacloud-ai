@@ -21,6 +21,7 @@ import Text from './Text';
 // Provider
 
 // Hooks
+import useDevice from './hooks/useDevice';
 
 // Utils
 
@@ -45,6 +46,9 @@ export {
   Padding,
   Spinner,
   Text,
+  // Hooks
+  useDevice,
   useInput,
+  // Utils
   validateData,
 };

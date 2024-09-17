@@ -15,7 +15,7 @@ import InteractiveElement from './InteractiveElement';
 
 import invariant from './utils/invariant';
 
-import useDevice from '../hooks/useDevice';
+import useDevice from './hooks/useDevice';
 
 const styles = stylex.create({
   container: {
@@ -180,7 +180,7 @@ function CascaderColumn({
 }: CascaderColumnProps): React$Node {
   const [search, setSearch] = useState<string>('');
   const { width } = useDevice();
-  console.log(width);
+
   return (
     <div className={stylex(width <= 1000 ? styles.mobileContent : styles.content)}>
       <Padding vertical={8} horizontal={8}>

@@ -12,9 +12,7 @@ ENV PORT=80
 
 ENV NODE_ENV=production
 
-ENV ASSET_PATH="https://d1icgfgxibs78l.cloudfront.net/"
-
-ENV BASE_DOMAIN="serpa.cloud"
+ENV BASE_DOMAIN="ai.serpa.cloud"
 
 COPY . .
 
