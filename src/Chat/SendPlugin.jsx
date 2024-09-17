@@ -24,7 +24,7 @@ export default function SendPlugin({ onSubmit, disable }: PluginProps): React$No
 
   useEffect(() => {
     editor.focus();
-    editor.setEditable(!!disable);
+    editor.setEditable(!disable);
   }, [editor, disable]);
 
   useEffect(() => {

@@ -5,7 +5,7 @@
   },
   ".eslintignore": {
     "uuid": "45c22170-4a6b-4d5b-92bd-6e6bb5950c0c",
-    "hash": "3af7ea80e2d44044f0d75a90611f24d9b010cc9a1acba38e44b77afc334f535d"
+    "hash": "d01e179aa8cfc65c7ddfeb614f627ec23f03c36fc5c7cec3a3554ebaa99b7e5e"
   },
   ".eslintrc.js": {
     "uuid": "ed41225d-0e81-4874-b0a5-77a7a2677146",
@@ -17,7 +17,7 @@
   },
   ".prettierignore": {
     "uuid": "083158d6-622b-49fd-86f6-59d61c0f630a",
-    "hash": "20e259beabd3fd615086e1f9a077b5c5485414ccf3087304a5c99475ca3b4afc"
+    "hash": "6d2cbe1d95d25941c1cb3e2b4d4fd68b7aaf25deaa7e03cbb759d22626f590aa"
   },
   ".prettierrc.js": {
     "uuid": "f64e9233-b715-4520-8e1d-9cccabd4a75f",
@@ -73,7 +73,7 @@
   },
   "config/webpack.config.js": {
     "uuid": "ec806a21-79be-4ea2-bb1a-af62bb6ce3a5",
-    "hash": "d51dd18fed00f7f497c713d78ae9a15471f96cbc49bcac80532633aee6f3e89f"
+    "hash": "89386146bdcf03520f29b348f30479b285106b51e1cdf3b0147140e7b6f161c6"
   },
   "config/webpack.server.js": {
     "uuid": "77a2fbb7-085a-4dbe-bac0-b29a24df4c3b",
@@ -89,11 +89,11 @@
   },
   "lib/indexProject.js": {
     "uuid": "1239da3d-5e92-47cd-a499-a6538766b226",
-    "hash": "c0d9071305d958fc95290ebffea271349454717d023894ebcd20d2dada466cf3"
+    "hash": "1d7eb0b393c707fe8ae4a50447a504077d2fded92f0cb31e95b30c4767066739"
   },
   "lib/main.js": {
     "uuid": "6669603e-a2e4-40c6-8d08-0dc9db2320fb",
-    "hash": "73335644e0be05fb3b778f5471d216ebc29e69a26b50c018bc04ad47728ffa08"
+    "hash": "373c5cdb418a326238992b3064dd58f57b81ca787f2a201b9046e36dbab76795"
   },
   "lint-staged.config.js": {
     "uuid": "238d2e51-1932-423b-a472-c73cffff680b",
@@ -101,7 +101,7 @@
   },
   "package.json": {
     "uuid": "38400cc2-084e-409c-96b9-1e2d94d7d8b3",
-    "hash": "8d2128957c0f414a7dc52d67c5d543178c49bd7c1d29d62288b62e24765a92f4"
+    "hash": "aa99a400f8fbf4df024c82bdd8a7e31a4849634289c72bf9a993b2949f6bcfed"
   },
   "public/browserconfig.xml": {
     "uuid": "8abcd322-f2b3-4eb1-ab68-4d985a8bcb67",
@@ -141,11 +141,11 @@
   },
   "src/Chat/index.jsx": {
     "uuid": "cae92c3c-176a-439d-ba00-3121d63815bf",
-    "hash": "8136279dc679e98d54c6d38c9ee90c7085ced7c7c64ad2744db6eba3110abc1d"
+    "hash": "a5a8b55d879be12e613d52191a0b5996edc527b837ac49031efbbbe635e4e8ec"
   },
   "src/index.js": {
     "uuid": "86458bd6-05a6-40b4-8c79-5f73f601e2ca",
-    "hash": "7f0a57c372292eaf103a4e7453b79e20ccfb821e1a2da76e9d0ad2ae8f23882e"
+    "hash": "f13ad91bd188ad27dc00100054d9ab74b949ca57d158b593af79f9a9d31362d9"
   },
   "src/server.js": {
     "uuid": "cbf43043-f7e0-4fca-9498-d5f5bff0bb07",
@@ -241,7 +241,7 @@
   },
   "src/shared/styles.css": {
     "uuid": "1ea70cb0-c03e-4439-8ae2-73faf58b69a0",
-    "hash": "c570939f415f6d7a331d1a860bd3d17c1e3a7d6849dd5e5dd39fed9a84ea230a"
+    "hash": "00a8a573588bbfda9a9c351b082804c3317b87c2b765a236c06f659a5b319271"
   },
   "src/shared/utils/invariant.js": {
     "uuid": "9ff50ad6-8c3c-4af3-a5d2-f18289f24144",
@@ -253,6 +253,82 @@
   },
   "src/translations/spanish.json": {
     "uuid": "fd350717-92ef-4cce-a307-cad648831784",
-    "hash": "be59c6dd6094f7a3f5c2bdf5afdc67a88df7199af737f73e1eb23fc7c9539974"
+    "hash": "80ffbc8e6f56a423f3f108b14f9fda084cbc66f06634bc146b3415b6d2c49958"
+  },
+  "schema.graphql": {
+    "uuid": "9e90e0a8-2816-40db-890d-303afc3488da",
+    "hash": "6a4f253e457e00344a7e08f2ad0a1b73dedba4b96e316fa934db4a1226950ff5"
+  },
+  "src/Chat/ChatMessage.jsx": {
+    "uuid": "9cea08c5-b9f8-4392-983d-f38591183c7d",
+    "hash": "b2a7bf3ae59eb50d56bdd464a538283003870d55bede2291659d8abaf1403bea"
+  },
+  "src/Chat/Composer.jsx": {
+    "uuid": "bc3bf164-202e-4bba-9fdb-34d7699afc8d",
+    "hash": "ce49048bd319792a58237d12439f4687bcd514064f7d780f7dbe9a28442b5751"
+  },
+  "src/Chat/Loader.jsx": {
+    "uuid": "cc55eeaf-2556-4a89-93dc-df676b96c2ad",
+    "hash": "da4a3a533a17aacf350d8af94c7516e70d06f823aeb1cba82d7efc29a892da59"
+  },
+  "src/Chat/MarkdownToJSX.jsx": {
+    "uuid": "3bf203fc-167a-4be4-8c48-e65b6d0ef50f",
+    "hash": "1d2db13bcb596e7b5df1194cafac3fe6488c303aa8fb3883ec6e7fec680954a4"
+  },
+  "src/Chat/Messages.jsx": {
+    "uuid": "80c81ab0-4748-4c6c-a11c-04d363ed6a51",
+    "hash": "6dbf3c320e7292d834322325d3b9f45ce309985abc3c5cc31ba58219a028d1de"
+  },
+  "src/Chat/SendPlugin.jsx": {
+    "uuid": "69b20bec-781e-4b21-975a-b1e87e6fd095",
+    "hash": "1f9a60d1db5f63416ba0e832e2ad6321b5427fe686912ee57a23d7773b6f26c7"
+  },
+  "src/Chat/__generated__/ChatConversationSubscription.graphql.js": {
+    "uuid": "7a9ec203-dda8-4ab8-a8c1-4b0f6ba67e6a",
+    "hash": "f287bf49e2558f829a2ce8302ffedf9d7b5a17894f2529e56e410b57c4f0e485"
+  },
+  "src/Chat/__generated__/ChatList.graphql.js": {
+    "uuid": "912639a6-b270-4ec1-bc59-7c1f160ef36e",
+    "hash": "d94d3a44e8ce4f24b0d9daf069a277092bfa0066304203ff14a9b6f069fccc88"
+  },
+  "src/Chat/__generated__/ChatListPaginationQuery.graphql.js": {
+    "uuid": "f169fc99-32da-4fd2-8f44-13c0343f65e7",
+    "hash": "e8c4fed4fb2c43a8854e5b0b055c085a5780c78b0c48fc7d67db47a9c70f165d"
+  },
+  "src/Chat/__generated__/ChatMessage.graphql.js": {
+    "uuid": "33e4194d-6a4b-4966-9634-d2d1c9df2952",
+    "hash": "980da709b347a7726d64b80c05df7df6dff32d538031d0cbc485e0aac4abfe48"
+  },
+  "src/Chat/__generated__/ChatSendMessageMutation.graphql.js": {
+    "uuid": "9ff82099-3ed9-4b1c-9661-7a507d216a6a",
+    "hash": "3dbbcb4f92d8e58877ab0c503387239f0e9dd5eac7e13f886796c71ace0fd648"
+  },
+  "src/Chat/__generated__/MessagesConversationSubscription.graphql.js": {
+    "uuid": "164ba88c-e0b5-49f8-8b76-15990ea63aef",
+    "hash": "ea485c556f4941e5be753d539849467de8165f7187173b660310c1727decfca1"
+  },
+  "src/Chat/__generated__/MessagesList.graphql.js": {
+    "uuid": "04fb6baf-4eb9-41ee-a686-e8960ebd4b8d",
+    "hash": "87c55229c71b68f25017b62fdeb0bb382644275cc96f70455a1ee56565dc2dbe"
+  },
+  "src/Chat/__generated__/MessagesListPaginationQuery.graphql.js": {
+    "uuid": "21a478e9-5398-4a7e-9e23-11539ce6fdaf",
+    "hash": "505e3fd5f2785ef8a12a513174dfbce53dc1530db6c2020fb2f0d74937510215"
+  },
+  "src/RelayEnvironment.js": {
+    "uuid": "989632c3-9fba-4028-bfd7-77534b9ce67e",
+    "hash": "72256e22b37e3f8e938ddba684cdb61a1c6d08569e513ac48d55654f46ab465e"
+  },
+  "src/shared/.DS_Store": {
+    "uuid": "51a244ff-5147-4439-88c2-f369cedb7178",
+    "hash": "2e17a7217fde6c499c60af6bddaf46ac56464804c61190cd2c3f1745efa32262"
+  },
+  "src/shared/hooks/__generated__/useSendAIMessageMutation.graphql.js": {
+    "uuid": "3e5ec66a-a345-4bb4-a91e-d35dadea332c",
+    "hash": "5d060efd3ed2a0e9f5fe42e106134b38aebd9daa7e8902796cc7f8530ec90e0d"
+  },
+  "src/shared/hooks/useSendAIMessage.js": {
+    "uuid": "6ca5e859-c6db-4857-ac4f-9c4fd5f635b7",
+    "hash": "a5321d0ede40c0d47b1493bf2cb548cbfe3918bab1f523cdae5273c0a1365cbf"
   }
 }

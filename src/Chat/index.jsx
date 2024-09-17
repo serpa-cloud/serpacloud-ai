@@ -44,7 +44,7 @@ export default function Chat(): React$Node {
                 Serpa CodeGen AI
               </Text>
             </Flexbox>
-            <Composer conversation={conversation} />
+            <Composer conversation={conversation} disable />
           </>
         }
       >
