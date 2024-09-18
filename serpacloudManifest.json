@@ -89,11 +89,11 @@
   },
   "lib/indexProject.js": {
     "uuid": "1239da3d-5e92-47cd-a499-a6538766b226",
-    "hash": "1d7eb0b393c707fe8ae4a50447a504077d2fded92f0cb31e95b30c4767066739"
+    "hash": "1961ac1ab47aa27a3b6ee5be2cc5fa125f34ebe462afc8e3a285f2a2f3a9be96"
   },
   "lib/main.js": {
     "uuid": "6669603e-a2e4-40c6-8d08-0dc9db2320fb",
-    "hash": "373c5cdb418a326238992b3064dd58f57b81ca787f2a201b9046e36dbab76795"
+    "hash": "f6d06a8ba04ecdc60a71db213d04296c592fecd8ed82fb53590f5c262e1549d7"
   },
   "lint-staged.config.js": {
     "uuid": "238d2e51-1932-423b-a472-c73cffff680b",
@@ -273,7 +273,7 @@
   },
   "src/Chat/MarkdownToJSX.jsx": {
     "uuid": "3bf203fc-167a-4be4-8c48-e65b6d0ef50f",
-    "hash": "1d2db13bcb596e7b5df1194cafac3fe6488c303aa8fb3883ec6e7fec680954a4"
+    "hash": "c68ab4f3ef9ca2bc4667f4e9705cdfa2bd4c60034a6eb69468b38d3993beaae0"
   },
   "src/Chat/Messages.jsx": {
     "uuid": "80c81ab0-4748-4c6c-a11c-04d363ed6a51",
@@ -330,5 +330,9 @@
   "src/shared/hooks/useSendAIMessage.js": {
     "uuid": "6ca5e859-c6db-4857-ac4f-9c4fd5f635b7",
     "hash": "a5321d0ede40c0d47b1493bf2cb548cbfe3918bab1f523cdae5273c0a1365cbf"
+  },
+  "lib/preload.js": {
+    "uuid": "35feef64-784b-4bcf-a6f6-44975424a10f",
+    "hash": "a2f07c221de561919e5213464b095a4aa8c2843d3b90f2ecec0c63a24427084a"
   }
 }

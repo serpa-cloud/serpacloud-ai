@@ -7,6 +7,8 @@ import { memo, useMemo, useEffect } from 'react';
 import 'highlight.js/styles/github.css'; // Puedes usar cualquier estilo disponible
 
 import noiseWhiteUrl from './noise_white.png';
+import InteractiveElement from '../shared/InteractiveElement'; // Importar el componente InteractiveElement
+import Icon from '../shared/Icon'; // Importar el componente Icon
 
 // Definir los tipos de las props usando Flow
 type Props = {
@@ -25,12 +27,55 @@ const styles = stylex.create({
   },
   codeBlock: {
     border: '1px solid var(--border-color)',
-    borderRadius: 8,
+    borderTopLeftRadius: 8,
+    borderTopRightRadius: 8,
+    borderBottomLeftRadius: 8,
+    borderBottomRightRadius: 8,
     padding: 0,
     boxShadow: 'var(--shadow-1)',
+    marginTop: 0, // Para que no haya espacio entre la barra y el bloque de código
   },
   code: {
-    borderRadius: 8,
+    borderTopLeftRadius: 0,
+    borderTopRightRadius: 0,
+    borderBottomLeftRadius: 8,
+    borderBottomRightRadius: 8,
+  },
+  pathBar: {
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    backgroundColor: 'var(--neutral-color-200)',
+    paddingTop: 4,
+    paddingBottom: 4,
+    paddingLeft: 8,
+    paddingRight: 8,
+    borderTopLeftRadius: 8,
+    borderTopRightRadius: 8,
+    borderBottomLeftRadius: 0,
+    borderBottomRightRadius: 0,
+    borderBottom: '1px solid var(--border-color)',
+  },
+  pathText: {
+    fontFamily: 'monospace',
+    fontSize: 14,
+    color: 'var(--neutral-color-100)',
+  },
+  applyButton: {
+    display: 'flex',
+    alignItems: 'center',
+    backgroundColor: 'white',
+    color: 'var(--primary-color)',
+    border: '1px solid var(--primary-color)',
+    borderRadius: 4,
+    paddingTop: 4,
+    paddingBottom: 4,
+    paddingLeft: 8,
+    paddingRight: 8,
+    cursor: 'pointer',
+  },
+  applyButtonText: {
+    marginLeft: 4,
   },
 });
 
@@ -42,9 +87,18 @@ const MarkdownToJsx: React$AbstractComponent<Props, mixed> = memo<Props>(functio
     const lines = markdownText.split('\n');
     let inCodeBlock = false;
     let codeBlockContent = [];
+    let currentPath = null;
 
     // Mapeamos cada línea para convertirla en un componente JSX
     return lines.map((line, index) => {
+      // Detectar etiquetas de ruta de archivo
+      const pathMatch = line.match(/^\[PATH: (.+)\]$/);
+      if (pathMatch) {
+        // eslint-disable-next-line prefer-destructuring
+        currentPath = pathMatch[1];
+        return null; // No renderizar la línea de la etiqueta
+      }
+
       // Detectar inicio o fin de un bloque de código
       if (/^```/.test(line)) {
         if (inCodeBlock) {
@@ -53,17 +107,33 @@ const MarkdownToJsx: React$AbstractComponent<Props, mixed> = memo<Props>(functio
           const codeBlock = codeBlockContent.join('\n'); // Unir el contenido acumulado
           codeBlockContent = []; // Limpiar el contenido del bloque
 
-          // Al usar 'pre' y 'code', le aplicaremos el resaltado sintáctico
+          const handleApplyClick = () => {
+            window.codegen.saveFile({ filePath: currentPath, content: codeBlock });
+          };
+
           return (
-            <pre
-              key={index}
-              className={stylex(styles.codeBlock)}
-              style={{
-                backgroundImage: `url("${noiseWhiteUrl}")`,
-              }}
-            >
-              <code className={`hljs ${stylex(styles.code)}`}>{codeBlock}</code>
-            </pre>
+            <div key={index}>
+              {currentPath && (
+                <div className={stylex(styles.pathBar)}>
+                  <span className={stylex(styles.pathText)}>{currentPath}</span>
+                  <InteractiveElement
+                    className={stylex(styles.applyButton)}
+                    onClick={handleApplyClick}
+                  >
+                    <Icon icon="save" size={16} />
+                    <span className={stylex(styles.applyButtonText)}>Aplicar</span>
+                  </InteractiveElement>
+                </div>
+              )}
+              <pre
+                className={stylex(styles.codeBlock)}
+                style={{
+                  backgroundImage: `url("${noiseWhiteUrl}")`,
+                }}
+              >
+                <code className={`hljs ${stylex(styles.code)}`}>{codeBlock}</code>
+              </pre>
+            </div>
           );
         }
         // Inicio del bloque de código
