@@ -85,7 +85,7 @@
   },
   "src/Chat/index.jsx": {
     "uuid": "65d4c043-e40d-4512-9554-2a2fe546d586",
-    "hash": "a5a8b55d879be12e613d52191a0b5996edc527b837ac49031efbbbe635e4e8ec"
+    "hash": "8427d9096fa862669aaf81c50bb02620eec36c688e44f18b677485f7627159f2"
   },
   "src/Chat/SendPlugin.jsx": {
     "uuid": "ff1bed5d-7613-4fb7-83d8-88c522d88fd9",
@@ -97,11 +97,11 @@
   },
   "src/Chat/Messages.jsx": {
     "uuid": "2cf63a85-fe40-4550-9556-b4e6e31c837c",
-    "hash": "6dbf3c320e7292d834322325d3b9f45ce309985abc3c5cc31ba58219a028d1de"
+    "hash": "79b13bf7bf09215cae534faa0bcb4569fbd87d4f9be4022af4683316afb09222"
   },
   "src/Chat/MarkdownToJSX.jsx": {
     "uuid": "ed01a10a-a2b8-4799-86d2-242e2419b4b1",
-    "hash": "de404e37818dc6bd59c70232d8bacf44c498fd85cd83316f4583a488e1f60a34"
+    "hash": "0306d2a70385f2d75d385d221e988630a5bbb99d430fd272fd1bca13b1f4a49a"
   },
   "src/Chat/ChatMessage.jsx": {
     "uuid": "6c78d41c-731b-42ac-aaab-1d705f41a4a6",
@@ -185,7 +185,7 @@
   },
   "src/shared/styles.css": {
     "uuid": "b94014c1-b967-4caa-ab4d-26a469f20b95",
-    "hash": "00a8a573588bbfda9a9c351b082804c3317b87c2b765a236c06f659a5b319271"
+    "hash": "1cc4df0f2bf302b9a88876a4f59796510e640ae0328c9761ff8f67940f031203"
   },
   "src/shared/.DS_Store": {
     "uuid": "508e0e7e-ec33-4f7b-a897-ef735e60a69a",
@@ -197,7 +197,7 @@
   },
   "src/translations/spanish.json": {
     "uuid": "f55a4591-b762-4f41-b8b1-fa965b648ed2",
-    "hash": "80ffbc8e6f56a423f3f108b14f9fda084cbc66f06634bc146b3415b6d2c49958"
+    "hash": "73631176a84864a737e17372eef5d8c58d022792f1fc5c70ff7535dda57cd759"
   },
   "public/fonts/DMMono-Regular.ttf": {
     "uuid": "c2595bde-3855-45fe-be14-1d740bef346b",

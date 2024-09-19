@@ -24,7 +24,7 @@ const styles = stylex.create({
   },
 });
 
-const conversation = 'ConversationAI:d66f3350-7093-11ef-8468-a9da26a47dfa';
+const conversation = 'ConversationAI:f07e0500-76ba-11ef-b633-c7d635e2fd4c';
 
 export default function Chat(): React$Node {
   return (

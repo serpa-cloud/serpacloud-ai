@@ -107,7 +107,7 @@ export default function Messages({ conversation }: Props): React$Node {
         ConnectionHandler.insertEdgeAfter(edges, record);
       },
     }),
-    [],
+    [conversation],
   );
 
   useSubscription(configSubscription);

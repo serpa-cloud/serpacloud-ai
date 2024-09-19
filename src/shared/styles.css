@@ -161,8 +161,8 @@ a:hover {
   --green-solid-color: #1dff85;
   --cyan-solid-color: #00c2ff;
   --squares: rgb(233 233 239);
-  --messages-background: #d9fdd3;
-  --message-primary: #111b21;
+  --messages-background: var(--primary-color-1); /* Cambiado a --primary-color-1 */
+  --message-primary: var(--always-white); /* Cambiado a --always-white */
 
   --always-white: white;
   --always-dark: rgb(34, 33, 87);

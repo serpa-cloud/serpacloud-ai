@@ -2,7 +2,7 @@
 // @flow
 import hljs from 'highlight.js';
 import stylex from '@serpa-cloud/stylex';
-import { memo, useMemo, useEffect } from 'react';
+import { memo, useMemo, useEffect, useState } from 'react';
 
 import 'highlight.js/styles/github.css'; // Puedes usar cualquier estilo disponible
 
@@ -77,12 +77,32 @@ const styles = stylex.create({
   applyButtonText: {
     marginLeft: 4,
   },
+  confirmationMessage: {
+    display: 'flex',
+    alignItems: 'center',
+    backgroundColor: 'var(--green-300)',
+    color: 'var(--neutral-color-100)',
+    borderRadius: 4,
+    padding: 8,
+    position: 'fixed',
+    top: 20,
+    left: '50%',
+    transform: 'translateX(-50%)',
+    zIndex: 1000,
+    boxShadow: 'var(--shadow-1)',
+    transition: 'opacity 0.5s ease-in-out',
+  },
+  confirmationMessageText: {
+    marginLeft: 8,
+  },
 });
 
 // Componente memoizado usando React.memo
 const MarkdownToJsx: React$AbstractComponent<Props, mixed> = memo<Props>(function MarkdownToJsx({
   markdownText,
 }: Props): React$Node {
+  const [showConfirmation, setShowConfirmation] = useState(false);
+
   const markdownToJsx = useMemo(() => {
     const lines = markdownText.split('\n');
     let inCodeBlock = false;
@@ -110,6 +130,8 @@ const MarkdownToJsx: React$AbstractComponent<Props, mixed> = memo<Props>(functio
 
           const handleApplyClick = () => {
             window.codegen.saveFile({ filePath: codeBlockPatch, content: codeBlock });
+            setShowConfirmation(true);
+            setTimeout(() => setShowConfirmation(false), 5000);
           };
 
           return (
@@ -213,7 +235,17 @@ const MarkdownToJsx: React$AbstractComponent<Props, mixed> = memo<Props>(functio
     });
   }, [markdownToJsx]); // Se ejecuta cada vez que el JSX generado cambia
 
-  return <div>{markdownToJsx}</div>;
+  return (
+    <div>
+      {markdownToJsx}
+      {showConfirmation && (
+        <div className={stylex(styles.confirmationMessage)}>
+          <Icon icon="done" size={16} color="--always-white" />
+          <span className={stylex(styles.confirmationMessageText)}>Cambio aplicado</span>
+        </div>
+      )}
+    </div>
+  );
 });
 
 export default MarkdownToJsx;
