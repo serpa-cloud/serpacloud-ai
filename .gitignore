@@ -24,5 +24,3 @@ yarn-debug.log*
 yarn-error.log*
 
 nodemon.json
-src/setupProxy.js
-/src/setupProxy.js

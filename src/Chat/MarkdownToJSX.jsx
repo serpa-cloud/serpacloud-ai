@@ -45,7 +45,7 @@ const styles = stylex.create({
     display: 'flex',
     justifyContent: 'space-between',
     alignItems: 'center',
-    backgroundColor: 'var(--neutral-color-200)',
+    backgroundColor: 'var(--neutral-color-800)', // Cambio realizado aquí
     paddingTop: 4,
     paddingBottom: 4,
     paddingLeft: 8,
@@ -104,11 +104,12 @@ const MarkdownToJsx: React$AbstractComponent<Props, mixed> = memo<Props>(functio
         if (inCodeBlock) {
           // Fin del bloque de código
           inCodeBlock = false;
+          const codeBlockPatch = currentPath;
           const codeBlock = codeBlockContent.join('\n'); // Unir el contenido acumulado
           codeBlockContent = []; // Limpiar el contenido del bloque
 
           const handleApplyClick = () => {
-            window.codegen.saveFile({ filePath: currentPath, content: codeBlock });
+            window.codegen.saveFile({ filePath: codeBlockPatch, content: codeBlock });
           };
 
           return (
