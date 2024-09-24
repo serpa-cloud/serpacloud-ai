@@ -1,13 +1,25 @@
 html,
+.app-header {
+  -webkit-app-region: drag;
+}
+
+html,
 body {
   font-size: 16px;
   margin: 0;
+  height: 100%;
+  background: var(--neutral-gradient);
 }
 
 body,
 #root {
   position: relative;
   min-height: 100vh;
+  height: 100%;
+}
+
+#root {
+  -webkit-app-region: no-drag;
 }
 
 a {

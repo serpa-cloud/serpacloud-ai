@@ -45,7 +45,7 @@ const styles = stylex.create({
     display: 'flex',
     justifyContent: 'space-between',
     alignItems: 'center',
-    backgroundColor: 'var(--neutral-color-800)', // Cambio realizado aquí
+    backgroundColor: 'var(--primary-color-1)',
     paddingTop: 4,
     paddingBottom: 4,
     paddingLeft: 8,

@@ -1,6 +1,7 @@
 // @flow
 
 // Components
+import Avatar from './Avatar';
 import Button from './Button';
 import Card from './Card';
 import Cascader from './Cascader';
@@ -30,6 +31,7 @@ import useDevice from './hooks/useDevice';
 export {
   // Components
   // eslint-disable-next-line import/prefer-default-export
+  Avatar,
   Button,
   Card,
   Cascader,

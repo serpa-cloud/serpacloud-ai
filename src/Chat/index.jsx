@@ -11,7 +11,7 @@ import Composer from './Composer';
 
 const styles = stylex.create({
   root: {
-    height: '100vh',
+    height: 'calc(100vh - 41px)',
     boxSizing: 'border-box',
     background: 'var(--neutral-gradient)',
   },
@@ -24,7 +24,7 @@ const styles = stylex.create({
   },
 });
 
-const conversation = 'ConversationAI:f07e0500-76ba-11ef-b633-c7d635e2fd4c';
+const conversation = 'ConversationAI:f8f95fb0-79ec-11ef-9101-c12c1b8d2af8';
 
 export default function Chat(): React$Node {
   return (

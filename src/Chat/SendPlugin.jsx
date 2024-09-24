@@ -1,6 +1,6 @@
 // @flow
 import { useCallback, useEffect } from 'react';
-import { $getRoot, KEY_ENTER_COMMAND, COMMAND_PRIORITY_CRITICAL } from 'lexical';
+import { $getRoot, KEY_ENTER_COMMAND, COMMAND_PRIORITY_HIGH } from 'lexical';
 import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext';
 
 type PluginProps = {|
@@ -28,20 +28,20 @@ export default function SendPlugin({ onSubmit, disable }: PluginProps): React$No
   }, [editor, disable]);
 
   useEffect(() => {
-    const removeListener = editor.registerCommand(
+    const removeEnterListener = editor.registerCommand(
       KEY_ENTER_COMMAND,
-      (payload) => {
-        const event: ?KeyboardEvent = payload;
+      (event) => {
+        if (event?.shiftKey || event?.ctrlKey || event?.metaKey) {
+          return false;
+        }
         event?.preventDefault();
-
         handleOnSend();
-        // Return true to stop propagation.
         return true;
       },
-      COMMAND_PRIORITY_CRITICAL,
+      COMMAND_PRIORITY_HIGH,
     );
 
-    return () => removeListener();
+    return () => removeEnterListener();
   }, [editor, handleOnSend]);
 
   return null;

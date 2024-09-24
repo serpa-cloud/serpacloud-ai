@@ -29,7 +29,7 @@ function SiriWaveLoader({ size = 100 }: Props): React$Node {
 
       // Configurar la variación de amplitud
       const amplitudeVariation = 0.3 + Math.random() * 0.2; // Variación entre 0.3 y 0.5
-      const amplitudeSpeed = 0.5 + Math.random() * 0.5; // Velocidad de variación
+      const amplitudeSpeed = 0.1 + Math.random() * 0.2; // Velocidad de variación
       const timeOffset = Math.random() * Math.PI * 2; // Desfase de tiempo para variación
 
       // Todas las ondas se mueven hacia la izquierda
