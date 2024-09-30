@@ -230,6 +230,16 @@ type Certificate {
   dnsRecords: [DNSRecord!]!
 }
 
+type Chat implements Node {
+  id: ID!
+  organization: Node
+  createdBy: User!
+  createdAt: Date!
+  createdAtFormatted: String!
+  messages(after: Cursor, before: Cursor, first: Int, last: Int): AIMessagesConnection
+  resume: String
+}
+
 type CloudAccount implements Node {
   id: ID!
   alias: String
@@ -483,6 +493,7 @@ enum ElasticIndex {
   KUBERNETES
   SITES
   POSTS
+  CHATS
 }
 
 type EntitiesConnection {
@@ -490,7 +501,7 @@ type EntitiesConnection {
   pageInfo: PageInfo
 }
 
-union Entity = App | Org | User | Post | Site | Build | Artifact | DBResource | Deployment | DockerFile | Environment | Implementation | CloudAccount | KubernetesCluster
+union Entity = App | Org | User | Post | Site | Build | Artifact | DBResource | Deployment | DockerFile | Environment | Implementation | CloudAccount | KubernetesCluster | Chat
 
 type Env {
   name: String!
@@ -763,6 +774,7 @@ type Mutation {
   validateNSRecords(domain: String!, environment: ID!, provider: DNSProvider!): Domain!
   requestCertificate(domain: String!, environment: ID!, provider: DNSProvider!, recordType: DNSRecordType!): Domain!
   promptToSerpaCloudAI(message: String!, conversation: ID!): AIMessageEdge
+  createChat: Edge!
 }
 
 interface NamespaceNode {

@@ -26,5 +26,6 @@
   "sign.usernameNotAvailable": "<strong>name</strong> no está disponible",
   "sign.usernameNotAvailable.adjusted": "<strong>name</strong> no está disponible, tu nombre de usuario ha sido ajustado para que cumpla con nuestras reglas.",
   "sign.githubSignup": "Sign up with Github",
-  "sign.githubSignin": "Sign in with Github"
+  "sign.githubSignin": "Sign in with Github",
+  "newChat": "New Chat"
 }

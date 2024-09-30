@@ -24,11 +24,9 @@ export default function useSendAIMessage(conversation: string): SendAIMessageUti
   const sendAIMessage = useCallback(
     (message: string) => {
       const connectionID = ConnectionHandler.getConnectionID(
-        'client:root',
-        'MessagesList__conversation',
-        {
-          conversation,
-        },
+        conversation,
+        'MessagesList__messages',
+        {},
       );
 
       if (!sendingMessagePending) {
@@ -39,11 +37,9 @@ export default function useSendAIMessage(conversation: string): SendAIMessageUti
             connections: [connectionID],
           },
           optimisticUpdater(store) {
-            const root = store.getRoot();
+            const root = store.get(conversation);
 
-            const edges = ConnectionHandler.getConnection(root, 'MessagesList__conversation', {
-              conversation,
-            });
+            const edges = ConnectionHandler.getConnection(root, 'MessagesList__messages', {});
 
             const record = store.create(`AIMessage:${new Date().getDate()}`, 'AIMessage');
             record.setValue('user', 'role');

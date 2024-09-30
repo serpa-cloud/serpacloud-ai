@@ -16,6 +16,7 @@ import Input, { useInput, validateData } from './Input';
 import InteractiveElement from './InteractiveElement';
 import Margin from './Margin';
 import Padding from './Padding';
+import ScrolledList from './ScrolledList';
 import Spinner from './Spinner';
 import Text from './Text';
 
@@ -46,6 +47,7 @@ export {
   InteractiveElement,
   Margin,
   Padding,
+  ScrolledList,
   Spinner,
   Text,
   // Hooks

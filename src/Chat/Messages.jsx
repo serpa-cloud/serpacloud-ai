@@ -5,7 +5,7 @@ import { useRef, useLayoutEffect, useEffect, useMemo } from 'react';
 import {
   graphql,
   useSubscription,
-  useLazyLoadQuery,
+  usePreloadedQuery,
   ConnectionHandler,
   usePaginationFragment,
 } from 'react-relay';
@@ -15,15 +15,16 @@ import ChatMessage from './ChatMessage';
 import { Text, Flexbox, Margin } from '../shared';
 import { ReactComponent as Logo } from '../shared/images/icon.svg';
 
-import type { MessagesList$key } from './__generated__/MessagesList.graphql';
 import MessagesListPaginationQuery from './__generated__/MessagesListPaginationQuery.graphql';
 
 const styles = stylex.create({
   viewportMessages: {
+    width: 'calc(100vw - 250px)',
     flex: 1,
     overflow: 'auto',
     paddingLeft: 8,
     paddingRight: 8,
+    boxSizing: 'border-box',
     paddingBottom: 8,
   },
 });
@@ -43,26 +44,20 @@ const subscription = graphql`
 
 type Props = {|
   conversation: string,
+  queryReference: any,
 |};
 
-export default function Messages({ conversation }: Props): React$Node {
+export default function Messages({ queryReference, conversation }: Props): React$Node {
   const spaceFromBottom = useRef(0);
   const viewportRef = useRef<?HTMLDivElement>(null);
 
-  const node: MessagesList$key = useLazyLoadQuery(
-    MessagesListPaginationQuery,
-    {
-      last: 20,
-      conversation,
-    },
-    { fetchPolicy: 'store-and-network' },
-  );
+  const node = usePreloadedQuery(MessagesListPaginationQuery, queryReference);
 
   const { data, loadPrevious, hasPrevious, isLoadingPrevious } = usePaginationFragment(
     graphql`
-      fragment MessagesList on Query @refetchable(queryName: "MessagesListPaginationQuery") {
-        conversation(last: $last, before: $before, conversation: $conversation)
-          @connection(key: "MessagesList__conversation") {
+      fragment MessagesList on Chat @refetchable(queryName: "MessagesListPaginationQuery") {
+        id
+        messages(last: $last, before: $before) @connection(key: "MessagesList__messages") {
           pageInfo {
             hasPreviousPage
             startCursor
@@ -78,7 +73,7 @@ export default function Messages({ conversation }: Props): React$Node {
         }
       }
     `,
-    node,
+    node?.node ?? null,
   );
 
   const configSubscription = useMemo(
@@ -91,11 +86,9 @@ export default function Messages({ conversation }: Props): React$Node {
 
         if (!record) return;
 
-        const root = store.getRoot();
+        const root = store.get(conversation);
 
-        const edges = ConnectionHandler.getConnection(root, 'MessagesList__conversation', {
-          conversation,
-        });
+        const edges = ConnectionHandler.getConnection(root, 'MessagesList__messages', {});
 
         const existingEdges = edges?.getLinkedRecords('edges');
         const recordAlreadyExists = !!existingEdges?.find(
@@ -112,7 +105,7 @@ export default function Messages({ conversation }: Props): React$Node {
 
   useSubscription(configSubscription);
 
-  const edges = data?.conversation?.edges ?? [];
+  const edges = data?.messages?.edges ?? [];
   const messagesLength = edges.length;
 
   useEffect(() => {

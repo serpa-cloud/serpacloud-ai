@@ -18,15 +18,18 @@ const styles = stylex.create({
   fallback: {
     flex: 1,
     overflow: 'auto',
-    paddingLeft: 8,
+    paddingLeft: 20,
     paddingRight: 8,
     paddingBottom: 8,
   },
 });
 
-const conversation = 'ConversationAI:f8f95fb0-79ec-11ef-9101-c12c1b8d2af8';
+type Props = {|
+  +conversation: string,
+  +queryReference: any,
+|};
 
-export default function Chat(): React$Node {
+export default function Chat({ conversation, queryReference }: Props): React$Node {
   return (
     <Flexbox flexDirection="column" className={stylex(styles.root)}>
       <Suspense
@@ -48,7 +51,7 @@ export default function Chat(): React$Node {
           </>
         }
       >
-        <Messages conversation={conversation} />
+        <Messages conversation={conversation} queryReference={queryReference} />
         <Composer conversation={conversation} />
       </Suspense>
     </Flexbox>

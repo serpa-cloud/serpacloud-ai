@@ -5,9 +5,19 @@ import { useLazyLoadQuery, graphql, loadQuery, useRelayEnvironment } from 'react
 
 import NamespaceSelector from './NamespaceSelector';
 
-import { Icon, Text, Flexbox, InteractiveElement, ContextualMenu, Avatar } from '../shared';
+import {
+  Icon,
+  Text,
+  Flexbox,
+  InteractiveElement,
+  ContextualMenu,
+  Avatar,
+  ScrolledList,
+  Margin,
+} from '../shared';
 
 import NamespaceSelectorQuery from './__generated__/NamespaceSelectorQuery.graphql';
+import ChatResume from './ChatResume';
 
 const styles = stylex.create({
   navbar: {
@@ -15,16 +25,32 @@ const styles = stylex.create({
     height: '100vh',
     borderRight: '1px solid var(--border-color)',
     paddingTop: 36,
-    paddingLeft: 16,
-    paddingRight: 16,
     boxSizing: 'border-box',
   },
   namespaceSelectorContainer: {
     position: 'relative',
+    paddingLeft: 8,
+    paddingRight: 8,
+  },
+  chatsContainer: {
+    height: 'calc(100vh - 84px)',
+    overflow: 'auto',
+    paddingLeft: 8,
+    paddingRight: 8,
   },
 });
 
-export default function Menu(): React$Node {
+type Props = {|
+  +conversation: ?string,
+  +setConversation: (string) => void,
+  +setConversationRef: (any) => void,
+|};
+
+export default function Menu({
+  conversation,
+  setConversation,
+  setConversationRef,
+}: Props): React$Node {
   const [orgMenuIsOpen, setOrgMenuIsOpen] = useState<boolean>(false);
 
   const handleOnToggleOrgMenu = useCallback(
@@ -79,6 +105,19 @@ export default function Menu(): React$Node {
     );
   }, [relayEnvironment]);
 
+  const renderElement = useCallback(
+    (node, key) => (
+      <ChatResume
+        node={node}
+        key={key}
+        conversation={conversation}
+        setConversation={setConversation}
+        setConversationRef={setConversationRef}
+      />
+    ),
+    [conversation, setConversation, setConversationRef],
+  );
+
   const namespace = data?.getCurrentNameSpace;
 
   return (
@@ -117,6 +156,20 @@ export default function Menu(): React$Node {
           <NamespaceSelector />
         </ContextualMenu>
       </div>
+      <Margin top={24}>
+        <ScrolledList
+          first={99}
+          index="CHATS"
+          renderElement={renderElement}
+          container={
+            <Flexbox flexDirection="column" rowGap={8} className={stylex(styles.chatsContainer)} />
+          }
+          sort={{
+            property: 'createdAt',
+            value: 'desc',
+          }}
+        />
+      </Margin>
     </nav>
   );
 }

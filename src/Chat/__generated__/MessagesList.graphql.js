@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<a5cfbcf202fbcf91d96fa06b8f763fe6>>
+ * @generated SignedSource<<7e53ab85d1178f61ae03627c44ea21c0>>
  * @flow
  * @lightSyntaxTransform
  * @nogrep
@@ -17,7 +17,8 @@ import type { FragmentType } from "relay-runtime";
 declare export opaque type MessagesList$fragmentType: FragmentType;
 type MessagesListPaginationQuery$variables = any;
 export type MessagesList$data = {|
-  +conversation: ?{|
+  +id: string,
+  +messages: ?{|
     +edges: ?$ReadOnlyArray<?{|
       +cursor: any,
       +id: string,
@@ -42,17 +43,20 @@ export type MessagesList$key = {
 
 var node/*: ReaderFragment*/ = (function(){
 var v0 = [
-  "conversation"
-];
+  "messages"
+],
+v1 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "id",
+  "storageKey": null
+};
 return {
   "argumentDefinitions": [
     {
       "kind": "RootArgument",
       "name": "before"
-    },
-    {
-      "kind": "RootArgument",
-      "name": "conversation"
     },
     {
       "kind": "RootArgument",
@@ -78,24 +82,25 @@ return {
         },
         "path": (v0/*: any*/)
       },
-      "fragmentPathInResult": [],
-      "operation": require('./MessagesListPaginationQuery.graphql')
+      "fragmentPathInResult": [
+        "node"
+      ],
+      "operation": require('./MessagesListPaginationQuery.graphql'),
+      "identifierInfo": {
+        "identifierField": "id",
+        "identifierQueryVariableName": "id"
+      }
     }
   },
   "name": "MessagesList",
   "selections": [
+    (v1/*: any*/),
     {
-      "alias": "conversation",
-      "args": [
-        {
-          "kind": "Variable",
-          "name": "conversation",
-          "variableName": "conversation"
-        }
-      ],
+      "alias": "messages",
+      "args": null,
       "concreteType": "AIMessagesConnection",
       "kind": "LinkedField",
-      "name": "__MessagesList__conversation_connection",
+      "name": "__MessagesList__messages_connection",
       "plural": false,
       "selections": [
         {
@@ -131,13 +136,7 @@ return {
           "name": "edges",
           "plural": true,
           "selections": [
-            {
-              "alias": null,
-              "args": null,
-              "kind": "ScalarField",
-              "name": "id",
-              "storageKey": null
-            },
+            (v1/*: any*/),
             {
               "alias": null,
               "args": null,
@@ -182,12 +181,12 @@ return {
       "storageKey": null
     }
   ],
-  "type": "Query",
+  "type": "Chat",
   "abstractKey": null
 };
 })();
 
-(node/*: any*/).hash = "1c23c5edb825b8cb152e0ddc75c56a5c";
+(node/*: any*/).hash = "e9c23e4a0c063bcbd08cb85d4425932b";
 
 module.exports = ((node/*: any*/)/*: RefetchableFragment<
   MessagesList$fragmentType,

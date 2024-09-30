@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<ae21fe71d87acdea3d296ea5c7600742>>
+ * @generated SignedSource<<d5df4a0ff4c2425f67dbd024eee2ff85>>
  * @flow
  * @lightSyntaxTransform
  * @nogrep
@@ -15,11 +15,13 @@ import type { FragmentType } from "relay-runtime";
 import type { MessagesList$fragmentType } from "./MessagesList.graphql";
 export type MessagesListPaginationQuery$variables = {|
   before?: ?any,
-  conversation: string,
+  id: string,
   last?: ?number,
 |};
 export type MessagesListPaginationQuery$data = {|
-  +$fragmentSpreads: MessagesList$fragmentType,
+  +node: ?{|
+    +$fragmentSpreads: MessagesList$fragmentType,
+  |},
 |};
 export type MessagesListPaginationQuery = {|
   response: MessagesListPaginationQuery$data,
@@ -28,24 +30,43 @@ export type MessagesListPaginationQuery = {|
 */
 
 var node/*: ConcreteRequest*/ = (function(){
-var v0 = [
+var v0 = {
+  "defaultValue": null,
+  "kind": "LocalArgument",
+  "name": "before"
+},
+v1 = {
+  "defaultValue": null,
+  "kind": "LocalArgument",
+  "name": "id"
+},
+v2 = {
+  "defaultValue": null,
+  "kind": "LocalArgument",
+  "name": "last"
+},
+v3 = [
   {
-    "defaultValue": null,
-    "kind": "LocalArgument",
-    "name": "before"
-  },
-  {
-    "defaultValue": null,
-    "kind": "LocalArgument",
-    "name": "conversation"
-  },
-  {
-    "defaultValue": null,
-    "kind": "LocalArgument",
-    "name": "last"
+    "kind": "Variable",
+    "name": "id",
+    "variableName": "id"
   }
 ],
-v1 = [
+v4 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "__typename",
+  "storageKey": null
+},
+v5 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "id",
+  "storageKey": null
+},
+v6 = [
   {
     "kind": "Variable",
     "name": "before",
@@ -53,33 +74,36 @@ v1 = [
   },
   {
     "kind": "Variable",
-    "name": "conversation",
-    "variableName": "conversation"
-  },
-  {
-    "kind": "Variable",
     "name": "last",
     "variableName": "last"
   }
-],
-v2 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "id",
-  "storageKey": null
-};
+];
 return {
   "fragment": {
-    "argumentDefinitions": (v0/*: any*/),
+    "argumentDefinitions": [
+      (v0/*: any*/),
+      (v1/*: any*/),
+      (v2/*: any*/)
+    ],
     "kind": "Fragment",
     "metadata": null,
     "name": "MessagesListPaginationQuery",
     "selections": [
       {
-        "args": null,
-        "kind": "FragmentSpread",
-        "name": "MessagesList"
+        "alias": null,
+        "args": (v3/*: any*/),
+        "concreteType": null,
+        "kind": "LinkedField",
+        "name": "node",
+        "plural": false,
+        "selections": [
+          {
+            "args": null,
+            "kind": "FragmentSpread",
+            "name": "MessagesList"
+          }
+        ],
+        "storageKey": null
       }
     ],
     "type": "Query",
@@ -87,130 +111,146 @@ return {
   },
   "kind": "Request",
   "operation": {
-    "argumentDefinitions": (v0/*: any*/),
+    "argumentDefinitions": [
+      (v0/*: any*/),
+      (v2/*: any*/),
+      (v1/*: any*/)
+    ],
     "kind": "Operation",
     "name": "MessagesListPaginationQuery",
     "selections": [
       {
         "alias": null,
-        "args": (v1/*: any*/),
-        "concreteType": "AIMessagesConnection",
+        "args": (v3/*: any*/),
+        "concreteType": null,
         "kind": "LinkedField",
-        "name": "conversation",
+        "name": "node",
         "plural": false,
         "selections": [
+          (v4/*: any*/),
+          (v5/*: any*/),
           {
-            "alias": null,
-            "args": null,
-            "concreteType": "PageInfo",
-            "kind": "LinkedField",
-            "name": "pageInfo",
-            "plural": false,
+            "kind": "InlineFragment",
             "selections": [
               {
                 "alias": null,
-                "args": null,
-                "kind": "ScalarField",
-                "name": "hasPreviousPage",
-                "storageKey": null
-              },
-              {
-                "alias": null,
-                "args": null,
-                "kind": "ScalarField",
-                "name": "startCursor",
-                "storageKey": null
-              }
-            ],
-            "storageKey": null
-          },
-          {
-            "alias": null,
-            "args": null,
-            "concreteType": "AIMessageEdge",
-            "kind": "LinkedField",
-            "name": "edges",
-            "plural": true,
-            "selections": [
-              (v2/*: any*/),
-              {
-                "alias": null,
-                "args": null,
-                "kind": "ScalarField",
-                "name": "cursor",
-                "storageKey": null
-              },
-              {
-                "alias": null,
-                "args": null,
-                "concreteType": "AIMessage",
+                "args": (v6/*: any*/),
+                "concreteType": "AIMessagesConnection",
                 "kind": "LinkedField",
-                "name": "node",
+                "name": "messages",
                 "plural": false,
                 "selections": [
-                  (v2/*: any*/),
                   {
                     "alias": null,
                     "args": null,
-                    "kind": "ScalarField",
-                    "name": "role",
+                    "concreteType": "PageInfo",
+                    "kind": "LinkedField",
+                    "name": "pageInfo",
+                    "plural": false,
+                    "selections": [
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "hasPreviousPage",
+                        "storageKey": null
+                      },
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "startCursor",
+                        "storageKey": null
+                      }
+                    ],
                     "storageKey": null
                   },
                   {
                     "alias": null,
                     "args": null,
-                    "kind": "ScalarField",
-                    "name": "content",
-                    "storageKey": null
-                  },
-                  {
-                    "alias": null,
-                    "args": null,
-                    "kind": "ScalarField",
-                    "name": "createdAt",
-                    "storageKey": null
-                  },
-                  {
-                    "alias": null,
-                    "args": null,
-                    "kind": "ScalarField",
-                    "name": "__typename",
+                    "concreteType": "AIMessageEdge",
+                    "kind": "LinkedField",
+                    "name": "edges",
+                    "plural": true,
+                    "selections": [
+                      (v5/*: any*/),
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "cursor",
+                        "storageKey": null
+                      },
+                      {
+                        "alias": null,
+                        "args": null,
+                        "concreteType": "AIMessage",
+                        "kind": "LinkedField",
+                        "name": "node",
+                        "plural": false,
+                        "selections": [
+                          (v5/*: any*/),
+                          {
+                            "alias": null,
+                            "args": null,
+                            "kind": "ScalarField",
+                            "name": "role",
+                            "storageKey": null
+                          },
+                          {
+                            "alias": null,
+                            "args": null,
+                            "kind": "ScalarField",
+                            "name": "content",
+                            "storageKey": null
+                          },
+                          {
+                            "alias": null,
+                            "args": null,
+                            "kind": "ScalarField",
+                            "name": "createdAt",
+                            "storageKey": null
+                          },
+                          (v4/*: any*/)
+                        ],
+                        "storageKey": null
+                      }
+                    ],
                     "storageKey": null
                   }
                 ],
                 "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": (v6/*: any*/),
+                "filters": null,
+                "handle": "connection",
+                "key": "MessagesList__messages",
+                "kind": "LinkedHandle",
+                "name": "messages"
               }
             ],
-            "storageKey": null
+            "type": "Chat",
+            "abstractKey": null
           }
         ],
         "storageKey": null
-      },
-      {
-        "alias": null,
-        "args": (v1/*: any*/),
-        "filters": [
-          "conversation"
-        ],
-        "handle": "connection",
-        "key": "MessagesList__conversation",
-        "kind": "LinkedHandle",
-        "name": "conversation"
       }
     ]
   },
   "params": {
-    "cacheID": "5dd7eadaf922bc51730f90fdf14ad098",
+    "cacheID": "5678f15bd93a6aae78c848936c813087",
     "id": null,
     "metadata": {},
     "name": "MessagesListPaginationQuery",
     "operationKind": "query",
-    "text": "query MessagesListPaginationQuery(\n  $before: Cursor\n  $conversation: String!\n  $last: Int\n) {\n  ...MessagesList\n}\n\nfragment ChatMessage on AIMessage {\n  id\n  role\n  content\n  createdAt\n}\n\nfragment MessagesList on Query {\n  conversation(last: $last, before: $before, conversation: $conversation) {\n    pageInfo {\n      hasPreviousPage\n      startCursor\n    }\n    edges {\n      id\n      cursor\n      node {\n        ...ChatMessage\n        role\n        id\n        __typename\n      }\n    }\n  }\n}\n"
+    "text": "query MessagesListPaginationQuery(\n  $before: Cursor\n  $last: Int\n  $id: ID!\n) {\n  node(id: $id) {\n    __typename\n    ...MessagesList\n    id\n  }\n}\n\nfragment ChatMessage on AIMessage {\n  id\n  role\n  content\n  createdAt\n}\n\nfragment MessagesList on Chat {\n  id\n  messages(last: $last, before: $before) {\n    pageInfo {\n      hasPreviousPage\n      startCursor\n    }\n    edges {\n      id\n      cursor\n      node {\n        ...ChatMessage\n        role\n        id\n        __typename\n      }\n    }\n  }\n}\n"
   }
 };
 })();
 
-(node/*: any*/).hash = "1c23c5edb825b8cb152e0ddc75c56a5c";
+(node/*: any*/).hash = "e9c23e4a0c063bcbd08cb85d4425932b";
 
 module.exports = ((node/*: any*/)/*: Query<
   MessagesListPaginationQuery$variables,
