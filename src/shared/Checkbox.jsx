@@ -12,8 +12,8 @@ const styles = stylex.create({
     userSelect: 'none',
   },
   checkContainer: {
-    width: 24,
-    height: 24,
+    width: 20,
+    height: 20,
     borderRadius: 4,
     transitionProperty: 'all',
     transitionTimingFunction: 'var(--fds-soft)',

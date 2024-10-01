@@ -19,6 +19,7 @@ import Padding from './Padding';
 import ScrolledList from './ScrolledList';
 import Spinner from './Spinner';
 import Text from './Text';
+import Modal from './Modal'; // Importamos el nuevo componente Modal
 
 // Provider
 
@@ -50,6 +51,7 @@ export {
   ScrolledList,
   Spinner,
   Text,
+  Modal, // Exportamos el nuevo componente Modal
   // Hooks
   useDevice,
   useInput,

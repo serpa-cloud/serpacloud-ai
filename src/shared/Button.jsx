@@ -183,7 +183,7 @@ function Button({
           {icon && (
             <Icon
               icon={icon}
-              fill
+              size={20}
               color={
                 buttonType === 'secondary' ? '--primary-color-1' : '--button-primary-text-color'
               }
@@ -210,6 +210,7 @@ function Button({
           {iconRight && (
             <Icon
               icon={iconRight}
+              size={20}
               color={
                 buttonType === 'secondary' ? '--primary-color-1' : '--button-primary-text-color'
               }

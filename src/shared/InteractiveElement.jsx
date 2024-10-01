@@ -6,7 +6,7 @@ const ESCAPE = 'Escape';
 
 export type InteractiveElementEvent = (
   SyntheticMouseEvent<HTMLDivElement> | SyntheticKeyboardEvent<HTMLDivElement>,
-) => void;
+) => void | Promise<void>;
 
 type Props = {
   label?: string,

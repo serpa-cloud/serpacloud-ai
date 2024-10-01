@@ -4,6 +4,7 @@ import { useState, useCallback } from 'react';
 import { useLazyLoadQuery, graphql, loadQuery, useRelayEnvironment } from 'react-relay';
 
 import NamespaceSelector from './NamespaceSelector';
+import Projects from './Projects';
 
 import {
   Icon,
@@ -32,8 +33,25 @@ const styles = stylex.create({
     paddingLeft: 8,
     paddingRight: 8,
   },
+  horizontalMenu: {
+    display: 'flex',
+    justifyContent: 'space-around',
+    padding: '8px 0',
+    borderBottom: '1px solid var(--border-color)',
+    marginTop: 24, // Added margin to separate from NamespaceSelector
+  },
+  menuItem: {
+    cursor: 'pointer',
+    paddingBottom: 12, // Added padding between labels and bottom border
+    flex: 1, // Ensure each menu item takes up half of the horizontal menu
+    textAlign: 'center', // Center the text within each menu item
+  },
+  menuItemSelected: {
+    color: 'var(--primary-color-1)',
+    borderBottom: '1px solid var(--primary-color-1)',
+  },
   chatsContainer: {
-    height: 'calc(100vh - 84px)',
+    height: 'calc(100vh - 124px)', // Adjusted height to account for the new horizontal menu
     overflow: 'auto',
     paddingLeft: 8,
     paddingRight: 8,
@@ -52,6 +70,7 @@ export default function Menu({
   setConversationRef,
 }: Props): React$Node {
   const [orgMenuIsOpen, setOrgMenuIsOpen] = useState<boolean>(false);
+  const [selectedMenu, setSelectedMenu] = useState<string>('chats'); // State for selected menu
 
   const handleOnToggleOrgMenu = useCallback(
     (e) => {
@@ -156,19 +175,58 @@ export default function Menu({
           <NamespaceSelector />
         </ContextualMenu>
       </div>
-      <Margin top={24}>
-        <ScrolledList
-          first={99}
-          index="CHATS"
-          renderElement={renderElement}
-          container={
-            <Flexbox flexDirection="column" rowGap={8} className={stylex(styles.chatsContainer)} />
-          }
-          sort={{
-            property: 'createdAt',
-            value: 'desc',
-          }}
-        />
+      <div className={stylex(styles.horizontalMenu)}>
+        <InteractiveElement
+          className={stylex(
+            styles.menuItem,
+            selectedMenu === 'projects' && styles.menuItemSelected,
+          )}
+          onClick={() => setSelectedMenu('projects')}
+        >
+          <Text
+            type="s0b"
+            id="menu.projects"
+            textAlign="center"
+            color={selectedMenu === 'projects' ? '--primary-color-1' : '--neutral-color-800'}
+          >
+            Projects
+          </Text>
+        </InteractiveElement>
+        <InteractiveElement
+          className={stylex(styles.menuItem, selectedMenu === 'chats' && styles.menuItemSelected)}
+          onClick={() => setSelectedMenu('chats')}
+        >
+          <Text
+            type="s0b"
+            id="menu.chats"
+            textAlign="center"
+            color={selectedMenu === 'chats' ? '--primary-color-1' : '--neutral-color-800'}
+          >
+            Chats
+          </Text>
+        </InteractiveElement>
+      </div>
+      <Margin top={8}>
+        {selectedMenu === 'projects' ? (
+          <Projects namespace={namespace?.key ?? ''} />
+        ) : (
+          <ScrolledList
+            first={99}
+            index="CHATS"
+            renderElement={renderElement}
+            container={
+              <Flexbox
+                flexDirection="column"
+                rowGap={8}
+                className={stylex(styles.chatsContainer)}
+              />
+            }
+            sort={{
+              property: 'createdAt',
+              value: 'desc',
+            }}
+          />
+        )}
       </Margin>
     </nav>
   );
