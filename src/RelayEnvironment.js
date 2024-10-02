@@ -12,7 +12,7 @@ import {
 import { createClient } from 'graphql-ws';
 
 const subscriptionsClient = createClient({
-  url: process.env.REACT_APP_WS_ENDPOINT || 'ws://localhost:7100/_graphql',
+  url: process.env.REACT_APP_WS_ENDPOINT || 'wss://app.serpa.cloud/_graphql',
 });
 
 /**
@@ -22,7 +22,7 @@ const subscriptionsClient = createClient({
  */
 const ttl = 60000 * 1;
 const cache = new QueryResponseCache({ size: 250, ttl });
-const endpoint = '/_graphql';
+const endpoint = 'https://app.serpa.cloud/_graphql';
 
 const isEnglish = window.location.hostname.includes('en.');
 

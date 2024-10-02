@@ -23,6 +23,13 @@ const styles = stylex.create({
   toolBar: {
     '-webkit-app-region': 'no-drag',
   },
+  spinnerContainer: {
+    width: 24,
+    height: 24,
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
 });
 
 export default function Dashboard(): React$Node {
@@ -48,7 +55,9 @@ export default function Dashboard(): React$Node {
           </Text>
           <div className={stylex(styles.toolBar)}>
             {createChatPending ? (
-              <Spinner />
+              <div className={stylex(styles.spinnerContainer)}>
+                <Spinner size={20} />
+              </div>
             ) : (
               <InteractiveElement onClick={handleIconClick}>
                 <Icon icon="edit_square" size={24} color="--primary-color-1" />

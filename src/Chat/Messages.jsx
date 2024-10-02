@@ -11,9 +11,9 @@ import {
 } from 'react-relay';
 
 import ChatMessage from './ChatMessage';
+import Loader from './Loader'; // Importamos el Loader
 
 import { Text, Flexbox, Margin } from '../shared';
-import { ReactComponent as Logo } from '../shared/images/icon.svg';
 
 import MessagesListPaginationQuery from './__generated__/MessagesListPaginationQuery.graphql';
 
@@ -161,7 +161,7 @@ export default function Messages({ queryReference, conversation }: Props): React
           })}
           {lastMessageIsFromUser && (
             <Flexbox columnGap={16} alignItems="center">
-              <Logo width={24} height={24} />
+              <Loader size={24} />
 
               <div>
                 <Text type="s0b" id="generatingResponse" color="--neutral-color-800" />

@@ -7,7 +7,6 @@ import { graphql, useFragment } from 'react-relay';
 import { Flexbox, Margin } from '../shared';
 
 import MarkdownToJsx from './MarkdownToJSX';
-
 import { ReactComponent as Logo } from '../shared/images/icon.svg';
 
 import type { ChatMessage$key } from './__generated__/ChatMessage.graphql';

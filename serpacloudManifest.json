@@ -4,8 +4,8 @@
     "hash": "82dafca19cd53f27bd2b2989de80b73e45c72b5507c2db27a207be6048d2d1fd"
   },
   "src/Chat/ChatMessage.jsx": {
-    "uuid": "671888d4f0493d20337bb6e374485d648dc3ee1983fb958854d9773141cf6f4b",
-    "hash": "b2a7bf3ae59eb50d56bdd464a538283003870d55bede2291659d8abaf1403bea"
+    "uuid": "1150da60baba4f25d24eba4bde9651f691797b6d8681daf6052c95980728f1d3",
+    "hash": "f11bb00dc677a7c857936f337501e180aae85181f013a40b561886d6efa68ba6"
   },
   "src/Chat/Composer.jsx": {
     "uuid": "967b177069287ae15a3fb7ccebd3e11887e35c65786d228d001a6671c4fee7a1",
@@ -20,12 +20,12 @@
     "hash": "74f403e9bdb90e7d24cd88f4048cb2190899018e91a4873b6de041429f74d892"
   },
   "src/Chat/Messages.jsx": {
-    "uuid": "c6af92576d1d290b27646207796225beb9f587d3e34f344baafed0d0b19b7a57",
-    "hash": "0134260de3ff918bc87dabe603e2736160096285f2c97cf41ac1970ed0906afe"
+    "uuid": "3e7c59bd45c98f7d2aa679032e3c7fc71dc71147fc1384e4413769568b28259e",
+    "hash": "d25e8a840c88fe64e1339e0ce7e8bde795b6cbf564f7d8ca91e85889d1413389"
   },
   "src/Chat/SendPlugin.jsx": {
-    "uuid": "581af2364734c57299a62fa5c8e5ec4466517c4c5db824ef3562ebeb06ff6a1f",
-    "hash": "0487ac9b24e72afaf046e5a9a63ce4ed92bfacb1c9f4e495079ac1803b64c9db"
+    "uuid": "7fae5f1f37312cd92733fd08a0c6d183ef82bfd43898ae0fa97c321faab862c2",
+    "hash": "a424faa5e6a3f9c8d464b9ae8247f3fbed1b1a7436fc9ffdc05fa232c491d66c"
   },
   "src/Chat/__generated__/ChatConversationSubscription.graphql.js": {
     "uuid": "aa3cf4dd075624179d4093d371aad037a0ad873e5c977f9be3e7b22c70b23887",
@@ -64,8 +64,8 @@
     "hash": "ce1464c5599f897add415e4342e5459ca202305be65d5198ea75db8ab8266784"
   },
   "src/Dashboard/index.jsx": {
-    "uuid": "1bf36936a21a6eecc928afb93a41a3f55763825f23afc706c776a0a92a9e3a83",
-    "hash": "7f87a6a17ebdf9407bea5f4dc1c23fac23b16be060e0223c9e73cc70554e6986"
+    "uuid": "0144826d4ceee0a709dd2f14e46867e893cdc5e5bc8d4ba166d0888ee679385a",
+    "hash": "f4e275c7a8c0c3262b0ef383a1a544bfdef33e0b6fc4d33fb98f7d1f8d199816"
   },
   "src/Menu/ChatResume.jsx": {
     "uuid": "40d120df02abdf45c040f34dc4a5211c6ffb0572f68f65a15b8cec67b7234ec2",
@@ -100,8 +100,8 @@
     "hash": "586d0af9f9ffdcae6e112070b7383c7750100afb49723ddf367b09aa0c4fbc02"
   },
   "src/RelayEnvironment.js": {
-    "uuid": "fc5f5ca99d50bfbdcb0bb6e8c6f2608cb3a7e680d80c3dc4c002b851e186a5ae",
-    "hash": "72256e22b37e3f8e938ddba684cdb61a1c6d08569e513ac48d55654f46ab465e"
+    "uuid": "dd28a6cd9bef6603218d408a72651faf702c2babbe13af4fb4b07dfeaab5e857",
+    "hash": "c0f6d8258c8381f99979f0750b70653bae63cf470f2b906b77cfaffb732af6af"
   },
   "src/Session/Login.jsx": {
     "uuid": "e968106db4257f16ac1f7648ff6f687cb63f8ffe7a1b3fe10f0aa36d7cc62b90",
@@ -296,8 +296,8 @@
     "hash": "ab9c234af9ac5e8d8dfaeb9923c7fbe2c89cf24ef54facd31395ac338d35fe29"
   },
   "lib/watchman.js": {
-    "uuid": "ce978d087b7a2076657d8da0d2dc6f92e9208169d01a45f0fc39039a95f46351",
-    "hash": "9c1fc238be9229ab64933908b22f9a6ac7d71da56a76f1adfce4ea8e3935b982"
+    "uuid": "10e9ff16ece67a106178a2e75b28b6d9a44a8b4961e6d87795f07ea22d8e4a94",
+    "hash": "80616b8d1e16d3c4d7c8851f6889374db94fe97e389d1b02a3b8897026624382"
   },
   "lib/directoryHandler.js": {
     "uuid": "70031af7c650e92aaba1ada7aef7043489b74588fd31334e6e1815ee97c16bd9",
@@ -380,20 +380,20 @@
     "hash": "30b2b16955e5b456e370b1f51acf644b5fcc6fd5aeebc37cb1be072132b20225"
   },
   "lib/main.js": {
-    "uuid": "11c3381746847b7453b9642d22639473327230b6e5afe0f7649b3651f34a4ddb",
-    "hash": "c68c1298717786c5740654a3c80d86f3be88d517944257e53e37959cff51d6e8"
+    "uuid": "f88c1d027a3f2cdbac931337680b05c2dec6f49428cc34d4e6b07b3466a5e799",
+    "hash": "1b9f82a83e9a1799942e1db8bf50714a0512438edb6178b1782e21becdde587d"
   },
   "lib/preload.js": {
-    "uuid": "d70aab058e64f6bae06638124fdf8a04a3a7fe6c82a0e7407fd1d6cd02b6c74c",
-    "hash": "83681bcc12ebab7cdfd297a089d5746b44971c46b94353175961054c1dc1b8a1"
+    "uuid": "1055b7b68c04c9023619fac0b6baec8b1baf5e7bfa7b54648e2472ced080ec37",
+    "hash": "acd6ecbf991395d208d3e101a8d176ed405dfd329290890281e0c2d5e8cbb520"
   },
   "src/Menu/DirectoryTree.jsx": {
     "uuid": "cef3f58666415610ae66ab6b5e0836ff204779c31cef956fecb35ec256701c9c",
     "hash": "49c038fdb2e362ca8a0917538042618fb5a2a0427815e9217130234bb551d246"
   },
   "src/Menu/Projects.jsx": {
-    "uuid": "73ee771eed07d04b1d96eef54f11b9a29e4f1c51915ef424f0671a8d47054c6c",
-    "hash": "e4f7f4ff0ba68aaa4d1b5a52e4c9dc039a75d687d41ba1535627a16982380d46"
+    "uuid": "0974f3eed7688b15c4d9030fdd66c46352847e94c723819786c42e2a481523cc",
+    "hash": "59648ea6ce7e844dc483b644eca02f75283e207f0401af835e0c7545836b4ae8"
   },
   "src/shared/Modal.jsx": {
     "uuid": "941f8dad73690276b4de2d94d8553b95752d0399cf5a7e109226adc3f843c3b4",
@@ -402,5 +402,13 @@
   "lib/saveSelectedItemsHandler.js": {
     "uuid": "e1657159c1c4e0d519f250f7f420b284c775edd028d53cc59a91732a75de59f2",
     "hash": "74a6c805591ada09ac2f80ca403d427b84e388de8fe99d768f26f97741ae3737"
+  },
+  "src/Menu/ProjectItem.jsx": {
+    "uuid": "0397f2b2b3a54ac4fa6a9a2486bfb9f275ec35c54d21744544b797cc23dcdedf",
+    "hash": "66bbdd46553188a15fbf43b8df8bc4d34faf42cc14b569565f48d445191a78fb"
+  },
+  "lib/contextMenuHandler.js": {
+    "uuid": "6f0a9cf140669dc57e19640df21f9623ade74f2a4b659b8c6f8df7ae111d10c2",
+    "hash": "b276f43234c30a07e1b792750afab673a55f2d9eedb7f559e9c90721153560bc"
   }
 }

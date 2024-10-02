@@ -5,7 +5,7 @@ import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext
 
 type PluginProps = {|
   +disable?: ?boolean,
-  +onSubmit: (string) => void,
+  +onSubmit: (string) => Promise<void> | void,
 |};
 
 export default function SendPlugin({ onSubmit, disable }: PluginProps): React$Node {

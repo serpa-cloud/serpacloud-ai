@@ -2,9 +2,10 @@
 // @flow
 import { useState, useEffect } from 'react';
 import stylex from '@serpa-cloud/stylex';
-import { Text, Button, Flexbox, Icon, Modal, Padding } from '../shared'; // Importamos InteractiveElement
+import { Text, Button, Flexbox, Modal, Padding } from '../shared'; // Importamos InteractiveElement
 import DirectoryTree from './DirectoryTree'; // Importamos el nuevo componente DirectoryTree
 import Loader from '../Chat/Loader'; // Importamos el componente Loader
+import ProjectItem from './ProjectItem'; // Importamos el nuevo componente ProjectItem
 
 const styles = stylex.create({
   container: {
@@ -63,6 +64,20 @@ export default function Projects({ namespace }: Props): React$Node {
     };
 
     fetchSelectedDirectories();
+
+    // Escuchar la señal de eliminación de directorio
+    const handleDirectoryDeleted = (directoryPath) => {
+      setSelectedDirectories((prevDirectories) =>
+        prevDirectories.filter((dir) => dir.path !== directoryPath),
+      );
+    };
+
+    window.codegen.onDirectoryDeleted(handleDirectoryDeleted);
+
+    // Limpiar el listener al desmontar el componente
+    return () => {
+      window.codegen.onDirectoryDeleted(() => {});
+    };
   }, []);
 
   const handleSelectDirectory = async () => {
@@ -104,22 +119,8 @@ export default function Projects({ namespace }: Props): React$Node {
         Seleccionar Directorio
       </Button>
       <Flexbox flexDirection="column" rowGap={24} className={stylex(styles.directoryList)}>
-        {selectedDirectories.map((directory, index) => (
-          <Flexbox
-            alignItems="center"
-            key={index}
-            columnGap={12}
-            className={stylex(styles.directoryRow)}
-          >
-            <Icon icon="folder" size={20} />
-
-            <div className={stylex(styles.directoryItem)}>
-              <Text type="s0b" color="--neutral-color-800">
-                {directory.name}
-              </Text>
-              <span className={stylex(styles.directoryPath)}>{directory.path}</span>
-            </div>
-          </Flexbox>
+        {selectedDirectories.map((directory) => (
+          <ProjectItem key={directory.name} directory={directory} />
         ))}
       </Flexbox>
       {showModal && (

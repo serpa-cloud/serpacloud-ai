@@ -1,23 +1,32 @@
-FROM node:lts
+# Etapa 1: Compilar la aplicación React
+FROM node:18-alpine AS build
 
-WORKDIR /
+# Crear directorio de trabajo
+WORKDIR /app
 
+# Copiar package.json y package-lock.json
 COPY package*.json ./
 
-COPY yarn.lock ./
-
+# Instalar dependencias
 RUN yarn
 
-ENV PORT=80
-
-ENV NODE_ENV=production
-
-ENV BASE_DOMAIN="ai.serpa.cloud"
-
+# Copiar el resto del código de la aplicación
 COPY . .
 
-RUN yarn build && yarn build:webpack
+# Compilar la aplicación
+RUN yarn build
 
+# Etapa 2: Configurar Nginx para servir la aplicación
+FROM nginx:stable-alpine
+
+# Elimina la configuración por defecto de Nginx
+RUN rm -rf /usr/share/nginx/html/*
+
+# Copia los archivos generados en el paso anterior a la carpeta de Nginx
+COPY --from=build /app/build /usr/share/nginx/html
+
+# Exponer el puerto 80 para el contenedor
 EXPOSE 80
 
-CMD [ "npm", "start" ]
+# Comando por defecto para iniciar Nginx
+CMD ["nginx", "-g", "daemon off;"]
