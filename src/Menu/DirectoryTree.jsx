@@ -75,6 +75,7 @@ export default function DirectoryTree({ tree, onSave, onCancel }: DirectoryTreeP
   const handleToggleCollapse = (path) => {
     setCollapsedNodes((prev) => ({
       ...prev,
+      // $FlowExpectedError
       [path]: !prev[path],
     }));
   };

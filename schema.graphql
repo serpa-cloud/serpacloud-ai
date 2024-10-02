@@ -773,7 +773,7 @@ type Mutation {
   updateDeploymentSource(id: ID!, source: ID!): Deployment!
   validateNSRecords(domain: String!, environment: ID!, provider: DNSProvider!): Domain!
   requestCertificate(domain: String!, environment: ID!, provider: DNSProvider!, recordType: DNSRecordType!): Domain!
-  promptToSerpaCloudAI(message: String!, conversation: ID!): AIMessageEdge
+  promptToSerpaCloudAI(message: String!, conversation: ID!, services: [String]!): AIMessageEdge
   createChat: Edge!
 }
 

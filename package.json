@@ -48,6 +48,7 @@
     "deck.gl": "^9.0.7",
     "dotenv": "^16.4.1",
     "dotenv-expand": "^5.1.0",
+    "electron-fetch": "^1.9.1",
     "es6-crawler-detect": "^3.3.0",
     "eslint": "^7.11.0",
     "eslint-config-react-app": "^6.0.0",

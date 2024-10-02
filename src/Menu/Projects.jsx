@@ -1,9 +1,10 @@
 /* eslint-disable react/no-array-index-key */
 // @flow
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import stylex from '@serpa-cloud/stylex';
-import { Text, Button, Flexbox, Icon, Modal } from '../shared'; // Importamos InteractiveElement
+import { Text, Button, Flexbox, Icon, Modal, Padding } from '../shared'; // Importamos InteractiveElement
 import DirectoryTree from './DirectoryTree'; // Importamos el nuevo componente DirectoryTree
+import Loader from '../Chat/Loader'; // Importamos el componente Loader
 
 const styles = stylex.create({
   container: {
@@ -30,6 +31,12 @@ const styles = stylex.create({
     overflow: 'hidden',
     textOverflow: 'ellipsis',
   },
+  indexingMessage: {
+    marginTop: 16,
+    color: 'var(--neutral-color-800)',
+    fontSize: 16,
+    textAlign: 'center',
+  },
 });
 
 // Función auxiliar para obtener el nombre del directorio a partir de la ruta completa
@@ -47,6 +54,16 @@ export default function Projects({ namespace }: Props): React$Node {
   const [showModal, setShowModal] = useState(false);
   const [directoryTree, setDirectoryTree] = useState({});
   const [tempDirectory, setTempDirectory] = useState(null);
+  const [isSaving, setIsSaving] = useState(false);
+
+  useEffect(() => {
+    const fetchSelectedDirectories = async () => {
+      const directories = await window.codegen.getSelectedDirectories();
+      setSelectedDirectories(directories.map((d) => ({ ...d, name: getDirectoryName(d.path) })));
+    };
+
+    fetchSelectedDirectories();
+  }, []);
 
   const handleSelectDirectory = async () => {
     // Llamamos al método selectDirectory expuesto en preload.js
@@ -65,16 +82,20 @@ export default function Projects({ namespace }: Props): React$Node {
 
   const handleSave = async (selectedItems) => {
     if (tempDirectory) {
+      setIsSaving(true);
       setSelectedDirectories([...selectedDirectories, tempDirectory]);
       setTempDirectory(null);
       await window.codegen.saveSelectedItems(tempDirectory.path, selectedItems);
+      setIsSaving(false);
+      setShowModal(false);
     }
-    setShowModal(false);
   };
 
   const handleCancel = () => {
-    setTempDirectory(null);
-    setShowModal(false);
+    if (!isSaving) {
+      setTempDirectory(null);
+      setShowModal(false);
+    }
   };
 
   return (
@@ -102,8 +123,28 @@ export default function Projects({ namespace }: Props): React$Node {
         ))}
       </Flexbox>
       {showModal && (
-        <Modal title="Selecciona los archivos y carpetas a incluir como Contexto">
-          <DirectoryTree tree={directoryTree} onSave={handleSave} onCancel={handleCancel} />
+        <Modal
+          title={
+            isSaving ? undefined : 'Selecciona los archivos y carpetas a incluir como Contexto'
+          }
+        >
+          {isSaving ? (
+            <Padding vertical={80} horizontal={24}>
+              <Flexbox flexDirection="column" rowGap={32} alignItems="center">
+                <Loader />
+                <Flexbox flexDirection="column" rowGap={12}>
+                  <Text type="s2b" color="--primary-color-1" textAlign="center">
+                    Indexando Proyecto
+                  </Text>
+                  <Text type="s1m" color="--neutral-color-600" textAlign="center">
+                    Por favor no cierres la aplicación
+                  </Text>
+                </Flexbox>
+              </Flexbox>
+            </Padding>
+          ) : (
+            <DirectoryTree tree={directoryTree} onSave={handleSave} onCancel={handleCancel} />
+          )}
         </Modal>
       )}
     </div>

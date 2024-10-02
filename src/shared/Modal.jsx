@@ -40,18 +40,20 @@ const styles = stylex.create({
 
 type Props = {|
   +children: React$Node,
-  +title: string,
+  +title?: string,
 |};
 
 export default function Modal({ children, title }: Props): React$Node {
   return createPortal(
     <div className={stylex(styles.modalOverlay)}>
       <div className={stylex(styles.modalContent)}>
-        <div className={stylex(styles.modalHeader)}>
-          <Text type="s1b" color="--primary-color-1">
-            {title}
-          </Text>
-        </div>
+        {title && (
+          <div className={stylex(styles.modalHeader)}>
+            <Text type="s1b" color="--primary-color-1">
+              {title}
+            </Text>
+          </div>
+        )}
         <div className={stylex(styles.modalBody)}>{children}</div>
       </div>
     </div>,

@@ -2,5 +2,9 @@
   "name": "serpacloud-ai",
   "service": "serpacloud-ai",
   "projectId": "yellow-code",
-  "include": ["./src", "./lib"]
+  "include": [
+    "lib",
+    "public",
+    "src"
+  ]
 }

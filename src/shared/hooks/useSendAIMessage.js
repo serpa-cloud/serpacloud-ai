@@ -4,12 +4,22 @@ import { graphql, useMutation, ConnectionHandler } from 'react-relay';
 
 import type { useSendAIMessageMutation } from './__generated__/useSendAIMessageMutation.graphql';
 
-type SendAIMessageUtils = [(message: string) => void, boolean];
+type SendAIMessageUtils = [(message: string) => void | Promise<void>, boolean];
+
+const getDirectoryName = (fullPath) => {
+  const parts = fullPath.split('/');
+  return parts[parts.length - 1];
+};
 
 export default function useSendAIMessage(conversation: string): SendAIMessageUtils {
   const [sendMessage, sendingMessagePending] = useMutation<useSendAIMessageMutation>(graphql`
-    mutation useSendAIMessageMutation($message: String!, $conversation: ID!, $connections: [ID!]!) {
-      promptToSerpaCloudAI(message: $message, conversation: $conversation)
+    mutation useSendAIMessageMutation(
+      $message: String!
+      $conversation: ID!
+      $connections: [ID!]!
+      $services: [String!]!
+    ) {
+      promptToSerpaCloudAI(message: $message, conversation: $conversation, services: $services)
         @appendEdge(connections: $connections) {
         id
         cursor
@@ -21,8 +31,15 @@ export default function useSendAIMessage(conversation: string): SendAIMessageUti
     }
   `);
 
+  const getSelectedServices = async () => {
+    // Llamamos al método getSelectedDirectories expuesto en preload.js
+    const services = await window.codegen.getSelectedDirectories();
+    return services.map((s) => getDirectoryName(s.path));
+  };
+
   const sendAIMessage = useCallback(
-    (message: string) => {
+    // eslint-disable-next-line consistent-return
+    async (message: string) => {
       const connectionID = ConnectionHandler.getConnectionID(
         conversation,
         'MessagesList__messages',
@@ -30,11 +47,14 @@ export default function useSendAIMessage(conversation: string): SendAIMessageUti
       );
 
       if (!sendingMessagePending) {
+        const services = await getSelectedServices();
+
         sendMessage({
           variables: {
             message,
             conversation,
             connections: [connectionID],
+            services,
           },
           optimisticUpdater(store) {
             const root = store.get(conversation);

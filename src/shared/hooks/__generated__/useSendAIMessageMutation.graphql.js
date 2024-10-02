@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<5224c3f4bf8bd0b5720aba9a9fa4c861>>
+ * @generated SignedSource<<4be7ec5a8e2317b2857bca35f16c39e4>>
  * @flow
  * @lightSyntaxTransform
  * @nogrep
@@ -17,6 +17,7 @@ export type useSendAIMessageMutation$variables = {|
   connections: $ReadOnlyArray<string>,
   conversation: string,
   message: string,
+  services: $ReadOnlyArray<string>,
 |};
 export type useSendAIMessageMutation$data = {|
   +promptToSerpaCloudAI: ?{|
@@ -50,7 +51,12 @@ v2 = {
   "kind": "LocalArgument",
   "name": "message"
 },
-v3 = [
+v3 = {
+  "defaultValue": null,
+  "kind": "LocalArgument",
+  "name": "services"
+},
+v4 = [
   {
     "kind": "Variable",
     "name": "conversation",
@@ -60,23 +66,28 @@ v3 = [
     "kind": "Variable",
     "name": "message",
     "variableName": "message"
+  },
+  {
+    "kind": "Variable",
+    "name": "services",
+    "variableName": "services"
   }
 ],
-v4 = {
+v5 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "id",
   "storageKey": null
 },
-v5 = {
+v6 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "cursor",
   "storageKey": null
 },
-v6 = {
+v7 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
@@ -88,7 +99,8 @@ return {
     "argumentDefinitions": [
       (v0/*: any*/),
       (v1/*: any*/),
-      (v2/*: any*/)
+      (v2/*: any*/),
+      (v3/*: any*/)
     ],
     "kind": "Fragment",
     "metadata": null,
@@ -96,14 +108,14 @@ return {
     "selections": [
       {
         "alias": null,
-        "args": (v3/*: any*/),
+        "args": (v4/*: any*/),
         "concreteType": "AIMessageEdge",
         "kind": "LinkedField",
         "name": "promptToSerpaCloudAI",
         "plural": false,
         "selections": [
-          (v4/*: any*/),
           (v5/*: any*/),
+          (v6/*: any*/),
           {
             "alias": null,
             "args": null,
@@ -117,7 +129,7 @@ return {
                 "kind": "FragmentSpread",
                 "name": "ChatMessage"
               },
-              (v6/*: any*/)
+              (v7/*: any*/)
             ],
             "storageKey": null
           }
@@ -133,21 +145,22 @@ return {
     "argumentDefinitions": [
       (v2/*: any*/),
       (v1/*: any*/),
-      (v0/*: any*/)
+      (v0/*: any*/),
+      (v3/*: any*/)
     ],
     "kind": "Operation",
     "name": "useSendAIMessageMutation",
     "selections": [
       {
         "alias": null,
-        "args": (v3/*: any*/),
+        "args": (v4/*: any*/),
         "concreteType": "AIMessageEdge",
         "kind": "LinkedField",
         "name": "promptToSerpaCloudAI",
         "plural": false,
         "selections": [
-          (v4/*: any*/),
           (v5/*: any*/),
+          (v6/*: any*/),
           {
             "alias": null,
             "args": null,
@@ -156,8 +169,8 @@ return {
             "name": "node",
             "plural": false,
             "selections": [
-              (v4/*: any*/),
-              (v6/*: any*/),
+              (v5/*: any*/),
+              (v7/*: any*/),
               {
                 "alias": null,
                 "args": null,
@@ -180,7 +193,7 @@ return {
       },
       {
         "alias": null,
-        "args": (v3/*: any*/),
+        "args": (v4/*: any*/),
         "filters": null,
         "handle": "appendEdge",
         "key": "",
@@ -197,17 +210,17 @@ return {
     ]
   },
   "params": {
-    "cacheID": "0033f60ce6d3b089141f4593c8187a78",
+    "cacheID": "95ba28d305e233853d0152bf0b242630",
     "id": null,
     "metadata": {},
     "name": "useSendAIMessageMutation",
     "operationKind": "mutation",
-    "text": "mutation useSendAIMessageMutation(\n  $message: String!\n  $conversation: ID!\n) {\n  promptToSerpaCloudAI(message: $message, conversation: $conversation) {\n    id\n    cursor\n    node {\n      ...ChatMessage\n      role\n      id\n    }\n  }\n}\n\nfragment ChatMessage on AIMessage {\n  id\n  role\n  content\n  createdAt\n}\n"
+    "text": "mutation useSendAIMessageMutation(\n  $message: String!\n  $conversation: ID!\n  $services: [String!]!\n) {\n  promptToSerpaCloudAI(message: $message, conversation: $conversation, services: $services) {\n    id\n    cursor\n    node {\n      ...ChatMessage\n      role\n      id\n    }\n  }\n}\n\nfragment ChatMessage on AIMessage {\n  id\n  role\n  content\n  createdAt\n}\n"
   }
 };
 })();
 
-(node/*: any*/).hash = "268e163d518a65ad255eb5a211c0de83";
+(node/*: any*/).hash = "615113a1279baedf16b230aacfeb28cd";
 
 module.exports = ((node/*: any*/)/*: Mutation<
   useSendAIMessageMutation$variables,

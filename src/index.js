@@ -1,5 +1,5 @@
 /* eslint-disable react/jsx-filename-extension */
-import React from 'react';
+
 import { createRoot } from 'react-dom/client';
 import { BrowserRouter } from 'react-router-dom';
 import { RelayEnvironmentProvider } from 'react-relay';
@@ -15,13 +15,11 @@ import './shared/styles.css';
 const isEnglish = window.location.hostname.includes('en.');
 
 createRoot(document.getElementById('root')).render(
-  <React.StrictMode>
-    <RelayEnvironmentProvider environment={RelayEnvironment}>
-      <BrowserRouter>
-        <ResizerProvider>
-          <App locale={isEnglish ? 'en' : 'es'} />
-        </ResizerProvider>
-      </BrowserRouter>
-    </RelayEnvironmentProvider>
-  </React.StrictMode>,
+  <RelayEnvironmentProvider environment={RelayEnvironment}>
+    <BrowserRouter>
+      <ResizerProvider>
+        <App locale={isEnglish ? 'en' : 'es'} />
+      </ResizerProvider>
+    </BrowserRouter>
+  </RelayEnvironmentProvider>,
 );
