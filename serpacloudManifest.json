@@ -64,8 +64,8 @@
     "hash": "ce1464c5599f897add415e4342e5459ca202305be65d5198ea75db8ab8266784"
   },
   "src/Dashboard/index.jsx": {
-    "uuid": "0144826d4ceee0a709dd2f14e46867e893cdc5e5bc8d4ba166d0888ee679385a",
-    "hash": "f4e275c7a8c0c3262b0ef383a1a544bfdef33e0b6fc4d33fb98f7d1f8d199816"
+    "uuid": "52a78ed8649b19caa9e33da70ca3ec776037ea2835f80754a3f59eee171201eb",
+    "hash": "471e26065a8963da804ee7dc43608d72b47667ba0c71321d4b733fad1829e28b"
   },
   "src/Menu/ChatResume.jsx": {
     "uuid": "40d120df02abdf45c040f34dc4a5211c6ffb0572f68f65a15b8cec67b7234ec2",
@@ -101,7 +101,7 @@
   },
   "src/RelayEnvironment.js": {
     "uuid": "dd28a6cd9bef6603218d408a72651faf702c2babbe13af4fb4b07dfeaab5e857",
-    "hash": "c0f6d8258c8381f99979f0750b70653bae63cf470f2b906b77cfaffb732af6af"
+    "hash": "83deff75f657c0a112fea019c7cd8e9e7cdda1104e15aa1af0e9cd97a361448e"
   },
   "src/Session/Login.jsx": {
     "uuid": "e968106db4257f16ac1f7648ff6f687cb63f8ffe7a1b3fe10f0aa36d7cc62b90",
@@ -376,12 +376,12 @@
     "hash": "6933d67ce6eb21128eed412fe4d1997d34ed80ca23b72d1dac3ce6727bb8734b"
   },
   "lib/indexProject.js": {
-    "uuid": "b005102d696f299e4056ca622b1be755e31cf7a056e8e98f5f77588f7e669fbd",
-    "hash": "30b2b16955e5b456e370b1f51acf644b5fcc6fd5aeebc37cb1be072132b20225"
+    "uuid": "8aa1549f07eacf91fb45ef8e87de13098730b4cc4ac5858fd5706145e871a00b",
+    "hash": "36718e147cbc770dab33655bcaaa46b94de0d6fe744c52f1acdc40f134274149"
   },
   "lib/main.js": {
     "uuid": "f88c1d027a3f2cdbac931337680b05c2dec6f49428cc34d4e6b07b3466a5e799",
-    "hash": "1b9f82a83e9a1799942e1db8bf50714a0512438edb6178b1782e21becdde587d"
+    "hash": "149b4be6d1cc66bcfb21fb12de0aa765bf07808615748a0dd21cb8c95f6669a2"
   },
   "lib/preload.js": {
     "uuid": "1055b7b68c04c9023619fac0b6baec8b1baf5e7bfa7b54648e2472ced080ec37",

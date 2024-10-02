@@ -25,6 +25,9 @@ RUN rm -rf /usr/share/nginx/html/*
 # Copia los archivos generados en el paso anterior a la carpeta de Nginx
 COPY --from=build /app/build /usr/share/nginx/html
 
+# Copiar archivo de configuración personalizado de Nginx si lo tienes
+COPY nginx.conf /etc/nginx/conf.d/default.conf
+
 # Exponer el puerto 80 para el contenedor
 EXPOSE 80
 
