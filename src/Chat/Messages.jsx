@@ -81,6 +81,7 @@ export default function Messages({ queryReference, conversation }: Props): React
       subscription,
       variables: { conversation },
       updater(store, payload) {
+        console.log(payload);
         const messageEdgeId = payload?.aiConversation?.id;
         const record = store.get(payload?.aiConversation?.id);
 

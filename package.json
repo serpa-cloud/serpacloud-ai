@@ -10,7 +10,7 @@
   "author": "Emilia Gonzalez",
   "license": "MIT",
   "port": 9000,
-  "proxy": "https://serpa.cloud/_graphql",
+  "proxy": "http://localhost:7100/_graphql",
   "dependencies": {
     "@amplitude/analytics-browser": "^2.5.2",
     "@babel/core": "^7.16.0",
@@ -78,6 +78,7 @@
     "mini-css-extract-plugin": "^2.4.5",
     "node-fetch": "2.6.1",
     "node-match-path": "^0.6.3",
+    "openai": "^4.67.3",
     "postcss": "^8.4.4",
     "postcss-flexbugs-fixes": "^5.0.2",
     "postcss-loader": "^6.2.1",

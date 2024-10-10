@@ -16,8 +16,6 @@ import type {
 } from './__generated__/ScrolledListPaginationQuery.graphql';
 
 import Flexbox from './Flexbox';
-import Button from './Button';
-import Margin from './Margin';
 
 type Props = {|
   +next?: ?number,
@@ -134,6 +132,7 @@ function ScrolledListNetworkInterface({
     return edges?.map((edge) => renderElement(edge?.node, edge?.node?.id ?? edge?.id));
   }, [edges, renderElement]);
 
+  // eslint-disable-next-line no-unused-vars
   const handleOnLoad = useCallback(() => {
     if (hasNext && !isLoadingNext) {
       loadNext(next ?? 9);
@@ -152,17 +151,6 @@ function ScrolledListNetworkInterface({
         {elements?.length ? (
           <>
             <div>{cloneElement(container, { children: <>{elements}</> })}</div>
-            {hasNext && (
-              <Margin top={24}>
-                <Flexbox>
-                  <Button
-                    onClick={handleOnLoad}
-                    icon={isLoadingNext ? 'hourglass_top' : 'rotate_right'}
-                    intlId="loadMore"
-                  />
-                </Flexbox>
-              </Margin>
-            )}
           </>
         ) : (
           <Flexbox flexDirection="column" alignItems="center" rowGap={8}>
@@ -178,17 +166,6 @@ function ScrolledListNetworkInterface({
       {elements?.length ? (
         <>
           <div>{cloneElement(container, { children: <>{elements}</> })}</div>
-          {hasNext && (
-            <Margin top={24}>
-              <Flexbox>
-                <Button
-                  onClick={handleOnLoad}
-                  icon={isLoadingNext ? 'hourglass_top' : 'rotate_right'}
-                  intlId="loadMore"
-                />
-              </Flexbox>
-            </Margin>
-          )}
         </>
       ) : (
         <Flexbox flexDirection="column" alignItems="center" rowGap={8}>

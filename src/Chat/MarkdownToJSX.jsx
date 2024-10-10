@@ -1,3 +1,5 @@
+/* eslint-disable no-plusplus */
+/* eslint-disable react/jsx-one-expression-per-line */
 /* eslint-disable react/no-array-index-key */
 // @flow
 import hljs from 'highlight.js';
@@ -9,6 +11,8 @@ import 'highlight.js/styles/github.css'; // Puedes usar cualquier estilo disponi
 import noiseWhiteUrl from './noise_white.png';
 import InteractiveElement from '../shared/InteractiveElement'; // Importar el componente InteractiveElement
 import Icon from '../shared/Icon'; // Importar el componente Icon
+import Flexbox from '../shared/Flexbox';
+import Spinner from '../shared/Spinner';
 
 // Definir los tipos de las props usando Flow
 type Props = {
@@ -25,15 +29,22 @@ const styles = stylex.create({
     borderRadius: 3,
     color: 'var(--red-400)',
   },
-  codeBlock: {
+  codeBlockContainer: {
     border: '1px solid var(--border-color)',
     borderTopLeftRadius: 8,
     borderTopRightRadius: 8,
     borderBottomLeftRadius: 8,
     borderBottomRightRadius: 8,
-    padding: 0,
     boxShadow: 'var(--shadow-1)',
+  },
+  codeBlock: {
+    borderTopLeftRadius: 8,
+    borderTopRightRadius: 8,
+    borderBottomLeftRadius: 8,
+    borderBottomRightRadius: 8,
+    padding: 0,
     marginTop: 0, // Para que no haya espacio entre la barra y el bloque de código
+    marginBottom: 0, // Para que no haya espacio entre el bloque de código y el siguiente párrafo
   },
   code: {
     borderTopLeftRadius: 0,
@@ -45,28 +56,51 @@ const styles = stylex.create({
     display: 'flex',
     justifyContent: 'space-between',
     alignItems: 'center',
-    backgroundColor: 'var(--primary-color-1)',
+    backgroundColor: 'var(--neutral-color-800)',
     paddingTop: 4,
     paddingBottom: 4,
     paddingLeft: 8,
     paddingRight: 8,
     borderTopLeftRadius: 8,
     borderTopRightRadius: 8,
-    borderBottomLeftRadius: 0,
-    borderBottomRightRadius: 0,
     borderBottom: '1px solid var(--border-color)',
+  },
+  publishBar: {
+    marginTop: 12,
+    borderBottomLeftRadius: 8,
+    borderBottomRightRadius: 8,
+    columnGap: 24,
+    paddingRight: 8,
+    display: 'block',
+  },
+  publishHeader: {
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+  pathbarClosed: {
+    borderBottomLeftRadius: 8,
+    borderBottomRightRadius: 8,
   },
   pathText: {
     fontFamily: 'monospace',
     fontSize: 14,
     color: 'var(--neutral-color-100)',
+    marginLeft: 8, // Separación de 8px entre la flecha y el texto
+  },
+  commitText: {
+    fontFamily: 'monospace',
+    fontSize: 14,
+    color: 'var(--neutral-color-100)',
+    marginLeft: 8,
+    paddingTop: 8,
+    paddingBottom: 8,
+    paddingRight: 80,
   },
   applyButton: {
     display: 'flex',
     alignItems: 'center',
-    backgroundColor: 'white',
     color: 'var(--primary-color)',
-    border: '1px solid var(--primary-color)',
     borderRadius: 4,
     paddingTop: 4,
     paddingBottom: 4,
@@ -101,7 +135,16 @@ const styles = stylex.create({
 const MarkdownToJsx: React$AbstractComponent<Props, mixed> = memo<Props>(function MarkdownToJsx({
   markdownText,
 }: Props): React$Node {
+  console.log(markdownText);
   const [showConfirmation, setShowConfirmation] = useState(false);
+  const [visibleCodeBlocks, setVisibleCodeBlocks] = useState({});
+
+  const toggleCodeBlockVisibility = (index) => {
+    setVisibleCodeBlocks((prev) => ({
+      ...prev,
+      [index]: !prev[index],
+    }));
+  };
 
   const markdownToJsx = useMemo(() => {
     const lines = markdownText.split('\n');
@@ -111,6 +154,56 @@ const MarkdownToJsx: React$AbstractComponent<Props, mixed> = memo<Props>(functio
 
     // Mapeamos cada línea para convertirla en un componente JSX
     return lines.map((line, index) => {
+      // Omitir líneas que solo contienen [SUMMARY] o [CODE]
+      if (line.trim() === '[SUMMARY]' || line.trim() === '[CODE]') {
+        return null;
+      }
+
+      let commitMessage = null;
+      const publishMatch = line.match(/^\[PUBLISH: (.+)\]$/);
+      if (publishMatch) {
+        // eslint-disable-next-line prefer-destructuring
+        commitMessage = publishMatch[1];
+      }
+      // Detectar etiqueta [PUBLISH]
+      if (publishMatch) {
+        let arrayContent = '';
+        let i = index + 2;
+        while (i < lines.length && !lines[i].trim().startsWith('```')) {
+          if (!lines[i].trim()) i++;
+          else {
+            arrayContent += lines[i].trim();
+            i++;
+          }
+        }
+        try {
+          const array = JSON.parse(arrayContent);
+          if (Array.isArray(array)) {
+            const handlePublishClick = () => {
+              window.codegen.publishServices({ services: array, commitMessage });
+            };
+
+            return (
+              <div key={index} className={stylex(styles.pathBar, styles.publishBar)}>
+                <div className={stylex(styles.publishHeader)}>
+                  <span className={stylex(styles.pathText)}>Publicar {array.join(', ')}</span>
+                  <InteractiveElement
+                    className={stylex(styles.applyButton)}
+                    onClick={handlePublishClick}
+                  >
+                    <Icon icon="motion_play" size={24} color="--neutral-color-100" />
+                  </InteractiveElement>
+                </div>
+                <div className={stylex(styles.commitText)}>{commitMessage}</div>
+              </div>
+            );
+          }
+        } catch (e) {
+          // No hacer nada si no es un JSON válido
+        }
+        return null;
+      }
+
       // Detectar etiquetas de ruta de archivo
       const pathMatch = line.match(/^\[PATH: (.+)\]$/);
       if (pathMatch) {
@@ -119,8 +212,9 @@ const MarkdownToJsx: React$AbstractComponent<Props, mixed> = memo<Props>(functio
         return null; // No renderizar la línea de la etiqueta
       }
 
+      const isPartialCode = inCodeBlock && index === lines.length - 1;
       // Detectar inicio o fin de un bloque de código
-      if (/^```/.test(line)) {
+      if (/^```/.test(line) || isPartialCode) {
         if (inCodeBlock) {
           // Fin del bloque de código
           inCodeBlock = false;
@@ -135,27 +229,52 @@ const MarkdownToJsx: React$AbstractComponent<Props, mixed> = memo<Props>(functio
           };
 
           return (
-            <div key={index}>
+            <div key={index} className={stylex(styles.codeBlockContainer)}>
               {currentPath && (
-                <div className={stylex(styles.pathBar)}>
-                  <span className={stylex(styles.pathText)}>{currentPath}</span>
-                  <InteractiveElement
-                    className={stylex(styles.applyButton)}
-                    onClick={handleApplyClick}
-                  >
-                    <Icon icon="save" size={16} />
-                    <span className={stylex(styles.applyButtonText)}>Aplicar</span>
-                  </InteractiveElement>
+                <div
+                  className={stylex(
+                    styles.pathBar,
+                    !visibleCodeBlocks[index] ? styles.pathbarClosed : null,
+                  )}
+                >
+                  {/^```/.test(line) ? (
+                    <InteractiveElement onClick={() => toggleCodeBlockVisibility(index)}>
+                      <Flexbox alignItems="center" columnGap={4}>
+                        <Icon
+                          icon={visibleCodeBlocks[index] ? 'expand_more' : 'chevron_right'}
+                          size={16}
+                          color="--neutral-color-100"
+                        />
+                        <span className={stylex(styles.pathText)}>{currentPath}</span>
+                      </Flexbox>
+                    </InteractiveElement>
+                  ) : (
+                    <span className={stylex(styles.pathText)}>{currentPath}</span>
+                  )}
+                  {/^```/.test(line) ? (
+                    <InteractiveElement
+                      className={stylex(styles.applyButton)}
+                      onClick={handleApplyClick}
+                    >
+                      <Icon icon="motion_play" size={24} color="--neutral-color-100" />
+                    </InteractiveElement>
+                  ) : (
+                    <div className={stylex(styles.applyButton)}>
+                      <Spinner size={20} color="var(--neutral-color-100)" />
+                    </div>
+                  )}
                 </div>
               )}
-              <pre
-                className={stylex(styles.codeBlock)}
-                style={{
-                  backgroundImage: `url("${noiseWhiteUrl}")`,
-                }}
-              >
-                <code className={`hljs ${stylex(styles.code)}`}>{codeBlock}</code>
-              </pre>
+              {visibleCodeBlocks[index] && (
+                <pre
+                  className={stylex(styles.codeBlock)}
+                  style={{
+                    backgroundImage: `url("${noiseWhiteUrl}")`,
+                  }}
+                >
+                  <code className={`hljs ${stylex(styles.code)}`}>{codeBlock}</code>
+                </pre>
+              )}
             </div>
           );
         }
@@ -226,7 +345,7 @@ const MarkdownToJsx: React$AbstractComponent<Props, mixed> = memo<Props>(functio
 
       return <p key={index}>{parts}</p>;
     });
-  }, [markdownText]); // Memoizar la conversión en función de `markdownText`
+  }, [markdownText, visibleCodeBlocks]); // Memoizar la conversión en función de `markdownText` y `visibleCodeBlocks`
 
   // Usamos useEffect para aplicar el resaltado de código cuando el contenido se renderiza
   useEffect(() => {

@@ -24,7 +24,7 @@ const styles = stylex.create({
     paddingTop: 7,
     paddingBottom: 8,
     boxSizing: 'border-box',
-    backgroundColor: 'var(--messages-background)',
+    background: 'var(--primary-color-1)',
     boxShadow: '0 1px .5px rgba(11, 20, 26, .13)',
   },
   assistantContainer: {
@@ -47,7 +47,7 @@ const styles = stylex.create({
     whiteSpaceCollapse: 'preserve',
   },
   textUser: {
-    color: 'var(--message-primary)',
+    color: 'var(--neutral-color-100)',
   },
   textAssitant: {
     color: 'var(--neutral-color-800)',
