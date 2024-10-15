@@ -4,8 +4,6 @@
   "projectId": "yellow-code",
   "include": [
     "lib",
-    "scripts",
-    "public",
     "src"
   ]
 }
