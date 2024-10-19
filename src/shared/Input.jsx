@@ -493,7 +493,7 @@ export default function Input({
   },
 }: InputType): React$Node {
   const inputReference = React.useRef(null);
-  const [focus, setFocus] = React.useState(!!value);
+  const [focus, setFocus] = React.useState(false);
   const [[x, y], setXY] = React.useState([0, 0]);
   const [modalOpen, setModalOpen] = React.useState(false);
 
@@ -570,7 +570,7 @@ export default function Input({
         style={overrideStyles}
         className={stylex(
           styles.label,
-          error ? styles.labelError : isOpen ? styles.labelFocus : styles.labelBlur,
+          error ? styles.labelError : focus ? styles.labelFocus : styles.labelBlur,
           type === 'textarea' && styles.labelTextArea,
         )}
       >

@@ -51,6 +51,25 @@ type AIMessagesConnection {
   pageInfo: PageInfo
 }
 
+type AIProject implements Node {
+  id: ID!
+  createdBy: User!
+  createdAt: Date!
+  createdAtFormatted: String!
+  name: String!
+  key: String!
+  mode: AIProjectType!
+  currentConversation: Chat
+  firstConversation: Chat
+  description: String!
+  stackPreferences: String
+}
+
+enum AIProjectType {
+  CREATE
+  IMPROVE
+}
+
 enum AIRole {
   user
   assistant
@@ -360,27 +379,6 @@ input DeploymentEnvInput {
   valueFrom: ValueFromInput
 }
 
-input DeploymentInputFlow {
-  name: String!
-  app: ID!
-  build: ID
-  environment: ID!
-  env: [DeploymentEnvInput!]!
-  postStartExecCommand: [String!]
-  replicas: Int = 1
-  volumeMounts: [VolumeMountInput!] = []
-  volumes: [VolumeInput!] = []
-  privacy: DeploymentPrivacy!
-  enableCors: Boolean! = false
-  allowOrigin: [String!] = ["*"]
-  allowHeaders: [String!] = ["content-type"]
-  allowMethods: [String!] = ["OPTIONS", "GET"]
-  continousDeployment: String
-  patternTag: String
-  dockerImageUrl: String
-  port: Int! = 80
-}
-
 enum DeploymentPrivacy {
   PUBLIC
   PRIVATE
@@ -494,6 +492,7 @@ enum ElasticIndex {
   SITES
   POSTS
   CHATS
+  PROJECTS
 }
 
 type EntitiesConnection {
@@ -501,7 +500,7 @@ type EntitiesConnection {
   pageInfo: PageInfo
 }
 
-union Entity = App | Org | User | Post | Site | Build | Artifact | DBResource | Deployment | DockerFile | Environment | Implementation | CloudAccount | KubernetesCluster | Chat
+union Entity = App | Org | User | Post | Site | Build | Artifact | DBResource | Deployment | DockerFile | Environment | Implementation | CloudAccount | KubernetesCluster | Chat | AIProject
 
 type Env {
   name: String!
@@ -538,12 +537,6 @@ type Environment implements Node {
   secrets: [Secret!]!
   secretsCount: Int
   defaultEnvironment: Boolean
-}
-
-input EnvironmentInput {
-  name: String!
-  env: [EnvInput!]
-  kubernetesResource: ID!
 }
 
 enum EventTypeTrigger {
@@ -733,40 +726,17 @@ type Mutation {
   signup(input: SignupInput!): ID
   login(input: LoginInput!): ID
   logout: ID
-  subscribe(input: SubscriptionInput!): String!
-  createComputeResource(provider: CloudProvider!, accountId: String!, location: String!, sublocation: String, clusterId: String!, instanceType: String!, minSize: Int = 1, maxSize: Int = 3, desiredSize: Int = 2): KubernetesCluster
-  deleteComputeResource(id: ID!): KubernetesCluster!
   saveGithubToken(code: String!): Boolean!
-  saveGitlabToken(code: String!): Boolean!
   createApp(input: AppInput!, triggerCompilation: Boolean): App!
   updateApp(input: PatchAppInput!): App!
-  createEnvironment(input: EnvironmentInput!): Environment!
-  updateEnvironment(input: PatchEnvironmentInput!): Environment!
-  createSecret(input: SecretInput!): Secret!
-  updateSecret(input: SecretInput!): Secret!
   updateDeployment(input: PatchDeploymentInput!): Deployment!
   pauseDeployment(id: ID!): Deployment!
   restartDeployment(id: ID!): Deployment!
   createBuild(input: BuildInput!): Build!
   updateNetworking(input: DestinationInput!): NetworkingOwner!
-  inviteCollaborator(email: String!, orgId: String!): Boolean!
-  joinWithInvite(state: String!, validationEmail: String!): Boolean!
   deleteDeployment(id: ID!): Boolean!
-  deleteEnvironment(id: ID!): Boolean!
-  createCloudAccount(provider: CloudProvider!, serviceAccount: String!, projectId: String!, alias: String): CloudAccount!
   addAlternateDomain(environment: ID!, domain: String!): Environment!
-  updateUserMedia(image: ID!): User!
-  updateUserCover(image: ID!): User!
-  updateUserProfile(name: String!, lastname: String!, gender: Gender, pronoun: Pronoun, description: String): User!
-  post(input: PostInput!): Post!
-  likePost(post: ID!): Boolean!
-  commentPost(post: ID!, text: String!, parentComment: ID): Comment!
-  postBlogEntry(title: String!, text: String!, fullText: String!, schema: String!, paragraphs: [String]!): Post!
-  createDeploymentFlow(input: DeploymentInputFlow!): Deployment!
   deleteApp(id: ID!): Boolean!
-  authWithGoogle(accessToken: String!, sendPreRegister: Boolean): String!
-  setNamespace(namespaceId: ID!): Boolean!
-  setUITheme(uiTheme: UITheme!): User!
   githubOauth(code: String!): ID
   recoverPassword(email: String!): Boolean
   resetPassword(email: String!, password: String!, confirmPassword: String!, otp: String!, state: String!): Boolean
@@ -774,7 +744,8 @@ type Mutation {
   validateNSRecords(domain: String!, environment: ID!, provider: DNSProvider!): Domain!
   requestCertificate(domain: String!, environment: ID!, provider: DNSProvider!, recordType: DNSRecordType!): Domain!
   promptToSerpaCloudAI(message: String!, conversation: ID!, services: [String]!): AIMessageEdge
-  createChat: Edge!
+  createChat(projectId: ID!): Chat!
+  createAIProject(description: String!, stackPreferences: String, mode: AIProjectType!): AIProject!
 }
 
 interface NamespaceNode {
@@ -853,13 +824,6 @@ input PatchDeploymentInput {
   port: Int! = 80
 }
 
-input PatchEnvironmentInput {
-  id: ID!
-  shortDescription: String!
-  media: ID
-  env: [EnvInput!]!
-}
-
 type PaymentProfile implements Node {
   id: ID!
   createdBy: User!
@@ -919,12 +883,6 @@ type PostImage {
   text: String
   media(width: Int = 48, height: Int = 48, blur: Int = 0, fit: String = "cover", focus: Boolean = false): Image
   js(module: String!): JSDependency!
-}
-
-input PostInput {
-  text: String
-  media: ID
-  video: ID
 }
 
 type PostText {
@@ -1025,17 +983,6 @@ type SecretData {
   value: String!
 }
 
-input SecretDataInput {
-  key: String!
-  value: String!
-}
-
-input SecretInput {
-  environment: ID!
-  name: String!
-  data: [SecretDataInput!]!
-}
-
 type SecretVolumeSource {
   secretName: String!
   defaultMode: Int!
@@ -1096,20 +1043,6 @@ enum StaticRuntime {
 type Subscription {
   gitValidation: GitValidation!
   aiConversation(conversation: ID!): AIMessageEdge
-}
-
-input SubscriptionInput {
-  name: String!
-  goal: String!
-  market: String!
-  orgSize: String!
-  plan: SubscriptionPlan!
-}
-
-enum SubscriptionPlan {
-  HOBBY
-  BASIC
-  PRO
 }
 
 enum UITheme {

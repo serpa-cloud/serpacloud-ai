@@ -1,9 +1,5 @@
 {
   "name": "serpacloud-ai",
   "service": "serpacloud-ai",
-  "projectId": "yellow-code",
-  "include": [
-    "lib",
-    "src"
-  ]
+  "projectId": "tau-1362"
 }

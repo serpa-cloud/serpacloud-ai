@@ -4,10 +4,9 @@
 import stylex from '@serpa-cloud/stylex';
 import { graphql, useFragment } from 'react-relay';
 
-import { Flexbox, Margin } from '../shared';
+import { Flexbox } from '../shared';
 
 import MarkdownToJsx from './MarkdownToJSX';
-import { ReactComponent as Logo } from '../shared/images/icon.svg';
 
 import type { ChatMessage$key } from './__generated__/ChatMessage.graphql';
 
@@ -28,7 +27,7 @@ const styles = stylex.create({
     boxShadow: '0 1px .5px rgba(11, 20, 26, .13)',
   },
   assistantContainer: {
-    maxWidth: '80%',
+    maxWidth: 'calc(100% - 40px)',
   },
   text: {
     margin: 0,
@@ -79,12 +78,6 @@ export default function ChatMessage({ node }: Props): React$Node {
         )}
       >
         <Flexbox columnGap={16}>
-          {isAssistant && (
-            <Margin top={20}>
-              <Logo width={24} height={24} />
-            </Margin>
-          )}
-
           <div className={stylex(styles.text, isUser ? styles.textUser : styles.textAssitant)}>
             {isAssistant && <MarkdownToJsx markdownText={data.content} />}
             {isUser && <div>{data.content}</div>}

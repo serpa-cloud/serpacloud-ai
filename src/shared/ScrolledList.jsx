@@ -36,15 +36,14 @@ type Props = {|
 |};
 
 type FallbackProps = {
-  +first: number,
   +container: React$Element<any>,
   +fallbackElement: (any, any) => React$Node,
 };
 
-function ScrolledListFallback({ first, container, fallbackElement }: FallbackProps): React$Node {
+function ScrolledListFallback({ container, fallbackElement }: FallbackProps): React$Node {
   const elements = useMemo(() => {
-    return Array.from({ length: first }, (v, i) => i).map((_, key) => fallbackElement(key));
-  }, [fallbackElement, first]);
+    return Array.from({ length: 4 }, (v, i) => i).map((_, key) => fallbackElement(key));
+  }, [fallbackElement]);
 
   return <div>{cloneElement(container, { children: <>{elements}</> })}</div>;
 }
@@ -117,6 +116,10 @@ function ScrolledListNetworkInterface({
               ... on Chat {
                 id
                 ...ChatResume
+              }
+              ... on AIProject {
+                id
+                ...ProjectPreview
               }
             }
           }

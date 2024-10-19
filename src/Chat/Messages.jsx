@@ -5,7 +5,7 @@ import { useRef, useLayoutEffect, useEffect, useMemo } from 'react';
 import {
   graphql,
   useSubscription,
-  usePreloadedQuery,
+  useLazyLoadQuery,
   ConnectionHandler,
   usePaginationFragment,
 } from 'react-relay';
@@ -19,7 +19,7 @@ import MessagesListPaginationQuery from './__generated__/MessagesListPaginationQ
 
 const styles = stylex.create({
   viewportMessages: {
-    width: 'calc(100vw - 250px)',
+    width: '100%',
     flex: 1,
     overflow: 'auto',
     paddingLeft: 8,
@@ -44,14 +44,17 @@ const subscription = graphql`
 
 type Props = {|
   conversation: string,
-  queryReference: any,
 |};
 
-export default function Messages({ queryReference, conversation }: Props): React$Node {
+export default function Messages({ conversation }: Props): React$Node {
   const spaceFromBottom = useRef(0);
   const viewportRef = useRef<?HTMLDivElement>(null);
 
-  const node = usePreloadedQuery(MessagesListPaginationQuery, queryReference);
+  const node = useLazyLoadQuery(
+    MessagesListPaginationQuery,
+    { last: 20, id: conversation },
+    { fetchPolicy: 'store-and-network' },
+  );
 
   const { data, loadPrevious, hasPrevious, isLoadingPrevious } = usePaginationFragment(
     graphql`
@@ -81,7 +84,6 @@ export default function Messages({ queryReference, conversation }: Props): React
       subscription,
       variables: { conversation },
       updater(store, payload) {
-        console.log(payload);
         const messageEdgeId = payload?.aiConversation?.id;
         const record = store.get(payload?.aiConversation?.id);
 

@@ -3,14 +3,17 @@ import stylex from '@serpa-cloud/stylex';
 import { LexicalComposer } from '@lexical/react/LexicalComposer';
 import LexicalErrorBoundary from '@lexical/react/LexicalErrorBoundary';
 import { PlainTextPlugin } from '@lexical/react/LexicalPlainTextPlugin';
-import { ContentEditable } from '@lexical/react/LexicalContentEditable';
 
-import SendPlugin from './SendPlugin';
+import Content from './Content';
 
 import { Text, Padding } from '../shared';
 import useSendAIMessage from '../shared/hooks/useSendAIMessage';
+import useCreateAIProject from '../shared/hooks/useCreateAIProject';
 
 const styles = stylex.create({
+  root: {
+    boxSizing: 'border-box',
+  },
   inputContainer: {
     flex: 1,
     columnGap: 16,
@@ -23,34 +26,19 @@ const styles = stylex.create({
     paddingTop: 8,
     paddingBottom: 8,
     borderRadius: 24,
-    backgroundColor: 'var(--always-white)',
+    boxSizing: 'border-box',
+    backgroundColor: 'var(--neutral-color-100)',
   },
   editorParagraph: {
     margin: 0,
   },
   pseudoInput: {
-    backgroundColor: 'white',
     flex: 1,
     flexGrow: 1,
     flexShrink: 0,
   },
   pseudoInputInnerContainer: {
     position: 'relative',
-  },
-  editable: {
-    userSelect: 'text',
-    whiteSpace: 'pre-wrap',
-    wordBreak: 'break-word',
-    maxHeight: '100px',
-    overflowX: 'hidden',
-    overflowY: 'auto',
-    overflowWrap: 'break-word',
-    outline: 'none',
-    paddingTop: 2,
-    paddingBottom: 2,
-    fontFamily: 'var(--font-family-default)',
-    color: 'var(--neutral-color-800)',
-    fontSize: 14,
   },
   placeholder: {
     position: 'absolute',
@@ -67,14 +55,25 @@ const styles = stylex.create({
 
 type Props = {|
   +disable?: ?boolean,
-  +conversation: string,
+  +project?: ?string,
+  +standalone?: ?boolean,
+  +conversation?: ?string,
 |};
 
-export default function Composer({ conversation, disable }: Props): React$Node {
-  const [handleOnSubmit] = useSendAIMessage(conversation);
+export default function Composer({
+  conversation,
+  disable,
+  standalone,
+  project,
+}: Props): React$Node {
+  const [handleOnSubmitAIMessage, sendingMessagePending] = useSendAIMessage(
+    conversation ?? '',
+    project ?? '',
+  );
+  const [handleOnSubmitAIProject, creatingProjectPending] = useCreateAIProject();
 
   return (
-    <Padding horizontal={8} vertical={8}>
+    <Padding horizontal={8} vertical={8} className={stylex(styles.root)}>
       <div className={stylex(styles.inputContainer)}>
         <LexicalComposer
           initialConfig={{
@@ -90,13 +89,22 @@ export default function Composer({ conversation, disable }: Props): React$Node {
         >
           <div className={stylex(styles.pseudoInput)}>
             <div className={stylex(styles.pseudoInputInnerContainer)}>
-              <SendPlugin onSubmit={handleOnSubmit} disable={disable} />
               <PlainTextPlugin
                 ErrorBoundary={LexicalErrorBoundary}
-                contentEditable={<ContentEditable className={stylex(styles.editable)} />}
+                contentEditable={
+                  <Content
+                    standalone={!!standalone}
+                    onSubmitMessage={handleOnSubmitAIMessage}
+                    onSubmitProject={handleOnSubmitAIProject}
+                    disable={disable || sendingMessagePending || creatingProjectPending}
+                    creatingProjectPending={creatingProjectPending}
+                  />
+                }
                 placeholder={
                   <div className={stylex(styles.placeholder)}>
-                    <Text type="s0m" color="--neutral-color-500" id="serpaAIPlaceholder" />
+                    <Text type={standalone ? 's1m' : 's0m'} color="--neutral-color-500">
+                      {standalone ? 'Describe your app..' : 'Ask to Serpa AI'}
+                    </Text>
                   </div>
                 }
               />
@@ -110,4 +118,7 @@ export default function Composer({ conversation, disable }: Props): React$Node {
 
 Composer.defaultProps = {
   disable: false,
+  standalone: false,
+  conversation: null,
+  project: null,
 };

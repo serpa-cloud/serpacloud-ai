@@ -1,87 +1,47 @@
 // @flow
 import { useCallback } from 'react';
-import {
-  graphql,
-  useMutation,
-  useRelayEnvironment,
-  ConnectionHandler,
-  loadQuery,
-} from 'react-relay';
+import { graphql, useMutation } from 'react-relay';
 
 import type { useCreateChatMutation } from './__generated__/useCreateChatMutation.graphql';
 
-import MessagesListPaginationQuery from '../../Chat/__generated__/MessagesListPaginationQuery.graphql';
+type CreateChatResults = [(projectId: string) => void, boolean];
 
-type CreateChatResults = [() => void, boolean];
-
-type Props = {
-  +setConversation: (string) => void,
-  +setConversationRef: (any) => void,
-};
-
-export default function useCreateChat({
-  setConversation,
-  setConversationRef,
-}: Props): CreateChatResults {
-  const relayEnvironment = useRelayEnvironment();
-
+export default function useCreateChat(): CreateChatResults {
   const [createChat, createChatPending] = useMutation<useCreateChatMutation>(graphql`
-    mutation useCreateChatMutation($connections: [ID!]!, $last: Int, $before: Cursor) {
-      createChat @prependEdge(connections: $connections) {
+    mutation useCreateChatMutation($projectId: ID!, $last: Int, $before: Cursor) {
+      createChat(projectId: $projectId) {
         id
-        cursor
-        node {
-          ... on Chat {
-            id
-            ...ChatResume
-            ...MessagesList
-          }
-        }
+        ...ChatResume
+        ...MessagesList
       }
     }
   `);
 
-  const createChatCallback = useCallback(() => {
-    const connectionID = ConnectionHandler.getConnectionID(
-      'client:root',
-      'ScrolledList_root_entities',
-      {
-        filterMatrix: null,
-        index: 'CHATS',
-        query: null,
-        sort: {
-          property: 'createdAt',
-          value: 'desc',
-        },
-      },
-    );
+  const createChatCallback = useCallback(
+    (projectId: string) => {
+      if (!createChatPending) {
+        createChat({
+          variables: {
+            last: 20,
+            projectId,
+          },
+          updater(store) {
+            const projectProxy = store.get(projectId);
+            const payload = store.getRootField('createChat');
 
-    if (!createChatPending) {
-      createChat({
-        variables: {
-          last: 20,
-          connections: [connectionID],
-        },
-        onCompleted(data) {
-          // eslint-disable-next-line no-underscore-dangle
-          const chatId = data?.createChat?.node?.__id;
+            if (payload && projectProxy) {
+              const chatProxy = store.get(payload.getValue('id'));
 
-          if (chatId) {
-            const queryReference = loadQuery(
-              relayEnvironment,
-              MessagesListPaginationQuery,
-              { last: 20, id: chatId },
-              { fetchPolicy: 'store-and-network' },
-            );
-
-            setConversationRef(queryReference);
-
-            setConversation(chatId);
-          }
-        },
-      });
-    }
-  }, [createChat, createChatPending, relayEnvironment, setConversation, setConversationRef]);
+              if (chatProxy) {
+                projectProxy.setLinkedRecord(chatProxy, 'currentConversation');
+              }
+            }
+          },
+        });
+      }
+    },
+    [createChat, createChatPending],
+  );
 
   return [createChatCallback, createChatPending];
 }

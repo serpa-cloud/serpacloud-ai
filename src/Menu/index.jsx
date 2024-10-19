@@ -1,9 +1,8 @@
 // @flow
 import stylex from '@serpa-cloud/stylex';
 import { useState, useCallback } from 'react';
-import { useLazyLoadQuery, graphql, loadQuery, useRelayEnvironment } from 'react-relay';
+import { useLazyLoadQuery, graphql } from 'react-relay';
 
-import NamespaceSelector from './NamespaceSelector';
 import Projects from './Projects';
 
 import {
@@ -17,7 +16,6 @@ import {
   Margin,
 } from '../shared';
 
-import NamespaceSelectorQuery from './__generated__/NamespaceSelectorQuery.graphql';
 import ChatResume from './ChatResume';
 
 const styles = stylex.create({
@@ -111,19 +109,6 @@ export default function Menu({
     },
   );
 
-  const relayEnvironment = useRelayEnvironment();
-
-  const preloadOrganizations = useCallback(() => {
-    loadQuery(
-      relayEnvironment,
-      NamespaceSelectorQuery,
-      {},
-      {
-        fetchPolicy: 'store-or-network',
-      },
-    );
-  }, [relayEnvironment]);
-
   const renderElement = useCallback(
     (node, key) => (
       <ChatResume
@@ -142,7 +127,7 @@ export default function Menu({
   return (
     <nav className={stylex(styles.navbar)}>
       <div className={stylex(styles.namespaceSelectorContainer)}>
-        <InteractiveElement onClick={handleOnToggleOrgMenu} onMouseEnter={preloadOrganizations}>
+        <InteractiveElement onClick={handleOnToggleOrgMenu}>
           <div className={stylex(styles.namespaceSelector)}>
             <Flexbox alignItems="center" columnGap={8}>
               <Flexbox alignItems="center" columnGap={8}>
@@ -172,7 +157,7 @@ export default function Menu({
           }}
           className={stylex(styles.contextualMenu)}
         >
-          <NamespaceSelector />
+          Hola mundo
         </ContextualMenu>
       </div>
       <div className={stylex(styles.horizontalMenu)}>

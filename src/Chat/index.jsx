@@ -11,9 +11,8 @@ import Composer from './Composer';
 
 const styles = stylex.create({
   root: {
-    height: 'calc(100vh - 41px)',
+    height: 'calc(100dvh - 41px)',
     boxSizing: 'border-box',
-    background: 'var(--neutral-gradient)',
   },
   fallback: {
     flex: 1,
@@ -26,10 +25,10 @@ const styles = stylex.create({
 
 type Props = {|
   +conversation: string,
-  +queryReference: any,
+  +project: string,
 |};
 
-export default function Chat({ conversation, queryReference }: Props): React$Node {
+export default function Chat({ conversation, project }: Props): React$Node {
   return (
     <Flexbox flexDirection="column" className={stylex(styles.root)}>
       <Suspense
@@ -51,8 +50,8 @@ export default function Chat({ conversation, queryReference }: Props): React$Nod
           </>
         }
       >
-        <Messages conversation={conversation} queryReference={queryReference} />
-        <Composer conversation={conversation} />
+        <Messages conversation={conversation} />
+        <Composer conversation={conversation} project={project} />
       </Suspense>
     </Flexbox>
   );

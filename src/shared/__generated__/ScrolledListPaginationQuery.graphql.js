@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<569bcd571c8d884f659d1b65076d998b>>
+ * @generated SignedSource<<9b02a19247407822a232deeb999fd9fb>>
  * @flow
  * @lightSyntaxTransform
  * @nogrep
@@ -13,7 +13,7 @@
 import type { ConcreteRequest, Query } from 'relay-runtime';
 import type { FragmentType } from "relay-runtime";
 import type { ScrolledListElement$fragmentType } from "./ScrolledListElement.graphql";
-export type ElasticIndex = "ACCOUNTS" | "ALL" | "APPS" | "ARTIFACTS" | "BUILDS" | "CHANNELS" | "CHATS" | "DEPLOYMENTS" | "DOCKERFILES" | "ENVIRONMENTS" | "IMPLEMENTATIONS" | "KUBERNETES" | "ORGS" | "POSTS" | "RELEASES" | "SITES" | "%future added value";
+export type ElasticIndex = "ACCOUNTS" | "ALL" | "APPS" | "ARTIFACTS" | "BUILDS" | "CHANNELS" | "CHATS" | "DEPLOYMENTS" | "DOCKERFILES" | "ENVIRONMENTS" | "IMPLEMENTATIONS" | "KUBERNETES" | "ORGS" | "POSTS" | "PROJECTS" | "RELEASES" | "SITES" | "%future added value";
 export type FilterInput = {|
   gt?: ?number,
   lte?: ?number,
@@ -231,6 +231,28 @@ return {
                   {
                     "kind": "InlineFragment",
                     "selections": [
+                      (v2/*: any*/),
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "name",
+                        "storageKey": null
+                      },
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "description",
+                        "storageKey": null
+                      }
+                    ],
+                    "type": "AIProject",
+                    "abstractKey": null
+                  },
+                  {
+                    "kind": "InlineFragment",
+                    "selections": [
                       (v2/*: any*/)
                     ],
                     "type": "Node",
@@ -262,17 +284,17 @@ return {
     ]
   },
   "params": {
-    "cacheID": "cadea33d838539ee82b1ffbccb16ec9d",
+    "cacheID": "3dde8b7c2f0ccb9f93c640a57fd4c716",
     "id": null,
     "metadata": {},
     "name": "ScrolledListPaginationQuery",
     "operationKind": "query",
-    "text": "query ScrolledListPaginationQuery(\n  $after: Cursor\n  $filterMatrix: [[FilterInput]]\n  $first: Int\n  $index: ElasticIndex\n  $query: QueryInput\n  $sort: SortInput\n) {\n  ...ScrolledListElement\n}\n\nfragment ChatResume on Chat {\n  id\n  resume\n}\n\nfragment ScrolledListElement on Query {\n  entities(sort: $sort, first: $first, after: $after, index: $index, query: $query, filterMatrix: $filterMatrix) {\n    pageInfo {\n      hasNextPage\n      endCursor\n      finalCursor\n    }\n    edges {\n      id\n      cursor\n      node {\n        __typename\n        ... on Chat {\n          id\n          ...ChatResume\n        }\n        ... on Node {\n          __isNode: __typename\n          id\n        }\n      }\n    }\n  }\n}\n"
+    "text": "query ScrolledListPaginationQuery(\n  $after: Cursor\n  $filterMatrix: [[FilterInput]]\n  $first: Int\n  $index: ElasticIndex\n  $query: QueryInput\n  $sort: SortInput\n) {\n  ...ScrolledListElement\n}\n\nfragment ChatResume on Chat {\n  id\n  resume\n}\n\nfragment ProjectPreview on AIProject {\n  id\n  name\n  description\n}\n\nfragment ScrolledListElement on Query {\n  entities(sort: $sort, first: $first, after: $after, index: $index, query: $query, filterMatrix: $filterMatrix) {\n    pageInfo {\n      hasNextPage\n      endCursor\n      finalCursor\n    }\n    edges {\n      id\n      cursor\n      node {\n        __typename\n        ... on Chat {\n          id\n          ...ChatResume\n        }\n        ... on AIProject {\n          id\n          ...ProjectPreview\n        }\n        ... on Node {\n          __isNode: __typename\n          id\n        }\n      }\n    }\n  }\n}\n"
   }
 };
 })();
 
-(node/*: any*/).hash = "739913bacf5b8f59ac8a95d149cddbd3";
+(node/*: any*/).hash = "647882b12e0d67329c1dfa2f0d981165";
 
 module.exports = ((node/*: any*/)/*: Query<
   ScrolledListPaginationQuery$variables,

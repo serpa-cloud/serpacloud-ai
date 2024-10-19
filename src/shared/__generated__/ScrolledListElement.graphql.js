@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<fe4776750a986dddfb467ce5f1ac5f60>>
+ * @generated SignedSource<<443867f54215db4c84a3cad9e25032ee>>
  * @flow
  * @lightSyntaxTransform
  * @nogrep
@@ -12,6 +12,7 @@
 /*::
 import type { ReaderFragment, RefetchableFragment } from 'relay-runtime';
 import type { ChatResume$fragmentType } from "./../../Menu/__generated__/ChatResume.graphql";
+import type { ProjectPreview$fragmentType } from "./../../Projects/__generated__/ProjectPreview.graphql";
 import type { FragmentType } from "relay-runtime";
 declare export opaque type ScrolledListElement$fragmentType: FragmentType;
 type ScrolledListPaginationQuery$variables = any;
@@ -21,6 +22,10 @@ export type ScrolledListElement$data = {|
       +cursor: any,
       +id: string,
       +node: {|
+        +__typename: "AIProject",
+        +id: string,
+        +$fragmentSpreads: ProjectPreview$fragmentType,
+      |} | {|
         +__typename: "Chat",
         +id: string,
         +$fragmentSpreads: ChatResume$fragmentType,
@@ -212,6 +217,19 @@ return {
                   ],
                   "type": "Chat",
                   "abstractKey": null
+                },
+                {
+                  "kind": "InlineFragment",
+                  "selections": [
+                    (v1/*: any*/),
+                    {
+                      "args": null,
+                      "kind": "FragmentSpread",
+                      "name": "ProjectPreview"
+                    }
+                  ],
+                  "type": "AIProject",
+                  "abstractKey": null
                 }
               ],
               "storageKey": null
@@ -228,7 +246,7 @@ return {
 };
 })();
 
-(node/*: any*/).hash = "739913bacf5b8f59ac8a95d149cddbd3";
+(node/*: any*/).hash = "647882b12e0d67329c1dfa2f0d981165";
 
 module.exports = ((node/*: any*/)/*: RefetchableFragment<
   ScrolledListElement$fragmentType,

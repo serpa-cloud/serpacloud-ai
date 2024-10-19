@@ -135,7 +135,6 @@ const styles = stylex.create({
 const MarkdownToJsx: React$AbstractComponent<Props, mixed> = memo<Props>(function MarkdownToJsx({
   markdownText,
 }: Props): React$Node {
-  console.log(markdownText);
   const [showConfirmation, setShowConfirmation] = useState(false);
   const [visibleCodeBlocks, setVisibleCodeBlocks] = useState({});
 
@@ -291,13 +290,25 @@ const MarkdownToJsx: React$AbstractComponent<Props, mixed> = memo<Props>(functio
 
       // Convertir encabezados
       if (/^### (.*$)/.test(line)) {
-        return <h3 key={index}>{line.replace(/^### (.*$)/, '$1')}</h3>;
+        return (
+          <h3 style={{ fontSize: 16, lineHeight: 1.4 }} key={index}>
+            {line.replace(/^### (.*$)/, '$1')}
+          </h3>
+        );
       }
       if (/^## (.*$)/.test(line)) {
-        return <h2 key={index}>{line.replace(/^## (.*$)/, '$1')}</h2>;
+        return (
+          <h2 key={index} style={{ fontSize: 16, lineHeight: 1.4 }}>
+            {line.replace(/^## (.*$)/, '$1')}
+          </h2>
+        );
       }
       if (/^# (.*$)/.test(line)) {
-        return <h1 key={index}>{line.replace(/^# (.*$)/, '$1')}</h1>;
+        return (
+          <h1 key={index} style={{ fontSize: 20, lineHeight: 1.4 }}>
+            {line.replace(/^# (.*$)/, '$1')}
+          </h1>
+        );
       }
 
       // Procesar línea para negritas, cursivas y código en línea

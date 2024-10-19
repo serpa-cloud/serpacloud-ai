@@ -68,7 +68,12 @@ export default function InteractiveElement({
       onMouseDown={handleMouseDown}
       onMouseEnter={onMouseEnter}
       onClick={handleClick}
-      style={{ cursor: 'pointer', touchAction: 'manipulation' }}
+      style={{
+        cursor: 'pointer',
+        touchAction: 'manipulation',
+        opacity: disabled ? 0.5 : 1,
+        pointerEvents: disabled ? 'none' : '',
+      }}
     >
       {children}
     </div>

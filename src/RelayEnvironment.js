@@ -22,7 +22,7 @@ const subscriptionsClient = createClient({
  */
 const ttl = 60000 * 1;
 const cache = new QueryResponseCache({ size: 250, ttl });
-const endpoint = 'https://app.serpa.cloud/_graphql';
+const endpoint = process.env.REACT_APP_GRPHQL_ENDPOINT || 'https://app.serpa.cloud/_graphql';
 
 const isEnglish = window.location.hostname.includes('en.');
 

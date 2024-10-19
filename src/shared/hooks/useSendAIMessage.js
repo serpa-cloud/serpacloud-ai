@@ -11,7 +11,10 @@ const getDirectoryName = (fullPath) => {
   return parts[parts.length - 1];
 };
 
-export default function useSendAIMessage(conversation: string): SendAIMessageUtils {
+export default function useSendAIMessage(
+  conversation: string,
+  project: string,
+): SendAIMessageUtils {
   const [sendMessage, sendingMessagePending] = useMutation<useSendAIMessageMutation>(graphql`
     mutation useSendAIMessageMutation(
       $message: String!
@@ -31,11 +34,12 @@ export default function useSendAIMessage(conversation: string): SendAIMessageUti
     }
   `);
 
-  const getSelectedServices = async () => {
+  const getSelectedServices = useCallback(async () => {
+    console.log(project);
     // Llamamos al método getSelectedDirectories expuesto en preload.js
-    const services = await window.codegen.getSelectedDirectories();
+    const services = await window.codegen.getSelectedDirectories(project);
     return services.map((s) => getDirectoryName(s.path));
-  };
+  }, [project]);
 
   const sendAIMessage = useCallback(
     // eslint-disable-next-line consistent-return
@@ -71,10 +75,16 @@ export default function useSendAIMessage(conversation: string): SendAIMessageUti
 
             ConnectionHandler.insertEdgeAfter(edges, newEdge);
           },
+          updater(store) {
+            const root = store.get(conversation);
+            if (root) {
+              root.setValue(message, 'resume');
+            }
+          },
         });
       }
     },
-    [conversation, sendMessage, sendingMessagePending],
+    [conversation, sendMessage, sendingMessagePending, getSelectedServices],
   );
 
   return [sendAIMessage, sendingMessagePending];

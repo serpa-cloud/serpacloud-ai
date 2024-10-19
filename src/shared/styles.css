@@ -49,6 +49,15 @@ a:hover {
   z-index: 99999999;
 }
 
+::backdrop {
+  background: rgba(241, 246, 255, 0.5);
+  backdrop-filter: saturate(180%);
+}
+
+* {
+  outline: none !important;
+}
+
 :root {
   --font-family-apple: SF Pro Text, system-ui, -apple-system, BlinkMacSystemFont,
     '.SFNSText-Regular', sans-serif;
@@ -94,14 +103,6 @@ a:hover {
   --header-height: 56px;
   --footer-height: 186px;
   --content-top-padding: 32px;
-
-  --red: #00c798;
-  --red: #177ef7;
-  --red: #2665d9;
-  --red: #8d1ac2;
-  --red: #ff4083;
-  --red: #ff5e5e;
-  --red: #fdb200;
 
   --neutral-gradient: linear-gradient(346deg, #f1f6ff 50%, #ffffff 100%);
 
