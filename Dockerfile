@@ -8,7 +8,7 @@ WORKDIR /app
 COPY package*.json ./
 
 # Instalar dependencias
-RUN yarn
+RUN yarn -only=prod
 
 # Copiar el resto del código de la aplicación
 COPY . .
