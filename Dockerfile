@@ -1,5 +1,5 @@
 # Etapa 1: Compilar la aplicación React
-FROM node:18-alpine AS build
+FROM node:20-alpine AS build
 
 # Crear directorio de trabajo
 WORKDIR /app
