@@ -25,11 +25,11 @@
   },
   "lib/indexProject.js": {
     "uuid": "7afcfc087e0c73efb943da6da0efcea6edaeca919822466f22b2eae4b0cf639a",
-    "hash": "ba99f4740dc96deae7c9b98cc6d6dfb94557fd307988dbf7481e4e059e007609"
+    "hash": "b86ec8e3219af0ee3912073dcdce0477ebd0b8e2d25e45289fbbcc85be29e3c6"
   },
   "lib/main.js": {
     "uuid": "66857e368d9fabee72a33fbeb54eddca58dd51fe8feb529ad179746a1525c31f",
-    "hash": "4fc027aa2a027098dd5d53640c501056f30f218c0f91ec5091cd5ae0e21d2a73"
+    "hash": "c5a1d052098e7f1301279d07b852b82ca6c4fe58c20f56c5e17fe9d8da241975"
   },
   "lib/preload.js": {
     "uuid": "28ebe57a62ecb360032dea9f8794361dc236ff9efc9746c7c3cf48e1c066fa19",
@@ -57,7 +57,7 @@
   },
   "src/Chat/MarkdownToJSX.jsx": {
     "uuid": "7ecda78fdcd8947a30dbdff14d494b8a9864fbaf9a2d4de7256dd42db396b31c",
-    "hash": "63ccf28e6ff06824d7571d62a55a9af77bcef635802727fe41ebd0d55fd3bc53"
+    "hash": "113d2b48e2be035e29c1bbbb904c29dd7407b5f64f1e13e2b4a8dadecfccecf6"
   },
   "src/Chat/Messages.jsx": {
     "uuid": "830ef71fe2a9d4a2f04b41558c45c54fbc94aa73a797409fda130fbc20852623",
@@ -145,7 +145,7 @@
   },
   "src/RelayEnvironment.js": {
     "uuid": "52001ed0e6e30cd0bf613f47dfda79273686c80ef8ac56768ccabedd8f2fcb02",
-    "hash": "72256e22b37e3f8e938ddba684cdb61a1c6d08569e513ac48d55654f46ab465e"
+    "hash": "86d1052e3f0bb30db70458e13ed1d84db4347d984375064acd4a32f7fd251e60"
   },
   "src/Session/Login.jsx": {
     "uuid": "6d2ef1844a613530119c5d6c758605df6908944151f7e4d23dcf83f69f0b5a80",
@@ -353,7 +353,7 @@
   },
   "Dockerfile": {
     "uuid": "82eb503b48f5fe324ab8ee30f9909b825c3bd09232f6982092d92c3f3481bc7c",
-    "hash": "34b7d234d57a2cf3730cbb68aa618bd7ad188ec2eff969781f33c4b2a6f61424"
+    "hash": "752e05a247de072197a700ab72a5472b13b443e4a5090283d3ae18a87195650b"
   },
   "README.md": {
     "uuid": "e714998065c9ab04f762103a936b2d8afae43897b06fa4a1ec7f6e2939b23bad",

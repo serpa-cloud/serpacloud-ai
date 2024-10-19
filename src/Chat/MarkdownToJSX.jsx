@@ -264,7 +264,7 @@ const MarkdownToJsx: React$AbstractComponent<Props, mixed> = memo<Props>(functio
                   )}
                 </div>
               )}
-              {visibleCodeBlocks[index] && (
+              {(visibleCodeBlocks[index] || !codeBlockPatch) && (
                 <pre
                   className={stylex(styles.codeBlock)}
                   style={{
