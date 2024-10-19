@@ -206,19 +206,21 @@ export default function Login(): React$Node {
                   </Flexbox>
                 </form>
 
-                <Margin top={16}>
-                  <InteractiveElement onClick={handleGithubLogin}>
-                    <Flexbox
-                      justifyContent="center"
-                      alignItems="center"
-                      className={stylex(styles.signButton, styles.githubButton)}
-                      columnGap={8}
-                    >
-                      <GithubLogo width={24} />
-                      <Text color="--neutral-color-100" type="s0b" id="sign.githubSignin" />
-                    </Flexbox>
-                  </InteractiveElement>
-                </Margin>
+                {false && (
+                  <Margin top={16}>
+                    <InteractiveElement onClick={handleGithubLogin}>
+                      <Flexbox
+                        justifyContent="center"
+                        alignItems="center"
+                        className={stylex(styles.signButton, styles.githubButton)}
+                        columnGap={8}
+                      >
+                        <GithubLogo width={24} />
+                        <Text color="--neutral-color-100" type="s0b" id="sign.githubSignin" />
+                      </Flexbox>
+                    </InteractiveElement>
+                  </Margin>
+                )}
               </Padding>
             </>
           )}

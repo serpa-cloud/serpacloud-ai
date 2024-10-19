@@ -1,20 +1,22 @@
 {
   "name": "serpacloud-ai",
-  "version": "0.0.0",
-  "private": true,
+  "version": "0.0.0-beta-2",
   "main": "lib/main.js",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/yellow-code-io/serpacloud.git"
   },
-  "author": "Emilia Gonzalez",
+  "author": "Emilia Gonzalez <emilia@serpa.cloud>",
+  "email": "emilia@serpa.cloud",
   "license": "MIT",
   "port": 9000,
   "proxy": "http://localhost:7100/_graphql",
+  "description": "Build 20x faster with Serpa AI",
   "dependencies": {
     "@amplitude/analytics-browser": "^2.5.2",
     "@babel/core": "^7.16.0",
     "@datadog/browser-rum": "^5.10.0",
+    "@electron/asar": "^3.2.13",
     "@lexical/code": "0.8.0",
     "@lexical/link": "0.8.0",
     "@lexical/list": "0.8.0",
@@ -42,6 +44,7 @@
     "browserslist": "^4.18.1",
     "camelcase": "^6.2.1",
     "case-sensitive-paths-webpack-plugin": "^2.4.0",
+    "chokidar": "^4.0.1",
     "cookie-parser": "^1.4.6",
     "css-loader": "^6.5.1",
     "css-minimizer-webpack-plugin": "^3.2.0",
@@ -49,6 +52,7 @@
     "dotenv": "^16.4.1",
     "dotenv-expand": "^5.1.0",
     "electron-fetch": "^1.9.1",
+    "electron-updater": "^6.3.9",
     "es6-crawler-detect": "^3.3.0",
     "eslint": "^7.11.0",
     "eslint-config-react-app": "^6.0.0",
@@ -61,8 +65,8 @@
     "eslint-plugin-testing-library": "^3.9.2",
     "eslint-webpack-plugin": "^2.5.2",
     "express": "^4.18.1",
+    "fb-watchman": "^2.0.2",
     "file-loader": "^6.2.0",
-    "flow": "^0.2.3",
     "fs-extra": "^10.0.0",
     "graphql-ws": "^5.16.0",
     "highlight.js": "^11.10.0",
@@ -110,9 +114,7 @@
     "webpack-dev-server": "^4.6.0",
     "webpack-manifest-plugin": "^4.0.2",
     "webpack-node-externals": "^3.0.0",
-    "workbox-webpack-plugin": "^6.4.1",
-    "ws": "^8.18.0",
-    "y-websocket": "^1.4.5"
+    "workbox-webpack-plugin": "^6.4.1"
   },
   "devDependencies": {
     "@commitlint/cli": "^8.3.4",
@@ -143,7 +145,9 @@
     "standard-release": "standard-version",
     "create-release": "standard-version && git push --follow-tags origin release",
     "release": "npm run create-release",
-    "commitlint": "commitlint --from=main"
+    "commitlint": "commitlint --from=main",
+    "dist": "electron-builder --mac --win --linux",
+    "publish-electron": "electron-builder --mac --win --linux -p always"
   },
   "relay": {
     "src": "./src",
@@ -230,5 +234,60 @@
     "plugins": [
       "relay"
     ]
+  },
+  "build": {
+    "appId": "ai.serpa.cloud",
+    "productName": "Serpa AI",
+    "copyright": "Copyright © 2024 Serpa Cloud, Inc.",
+    "directories": {
+      "output": "release"
+    },
+    "publish": [
+      {
+        "provider": "github",
+        "owner": "serpa-cloud",
+        "repo": "serpacloud-ai"
+      }
+    ],
+    "files": [
+      "lib/**/*",
+      "!**/tests",
+      "!**/package-lock.json"
+    ],
+    "mac": {
+      "icon": "public/icon.icns"
+    },
+    "win": {
+      "target": [
+        "nsis"
+      ],
+      "icon": "public/icon.png"
+    },
+    "linux": {
+      "target": [
+        "deb",
+        "rpm"
+      ],
+      "icon": "public/icon.png"
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true
+    },
+    "dmg": {
+      "contents": [
+        {
+          "x": 410,
+          "y": 150,
+          "type": "link",
+          "path": "/Applications"
+        },
+        {
+          "x": 130,
+          "y": 150,
+          "type": "file"
+        }
+      ]
+    }
   }
 }

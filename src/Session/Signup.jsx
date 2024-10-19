@@ -199,7 +199,7 @@ export default function Signup(): React$Node {
               window.dataLayer.push({
                 event: 'signupEvent',
                 eventCallback: () => {
-                  window.location.href = '/app/apps/create/catalog';
+                  window.location.href = '/app';
                 },
               });
             } else {
@@ -284,19 +284,21 @@ export default function Signup(): React$Node {
                   </Flexbox>
                 </form>
 
-                <Margin top={16}>
-                  <InteractiveElement onClick={handleGithubLogin}>
-                    <Flexbox
-                      justifyContent="center"
-                      alignItems="center"
-                      className={stylex(styles.signButton, styles.githubButton)}
-                      columnGap={8}
-                    >
-                      <GithubLogo width={24} />
-                      <Text color="--neutral-color-100" type="s0b" id="sign.githubSignup" />
-                    </Flexbox>
-                  </InteractiveElement>
-                </Margin>
+                {false && (
+                  <Margin top={16}>
+                    <InteractiveElement onClick={handleGithubLogin}>
+                      <Flexbox
+                        justifyContent="center"
+                        alignItems="center"
+                        className={stylex(styles.signButton, styles.githubButton)}
+                        columnGap={8}
+                      >
+                        <GithubLogo width={24} />
+                        <Text color="--neutral-color-100" type="s0b" id="sign.githubSignup" />
+                      </Flexbox>
+                    </InteractiveElement>
+                  </Margin>
+                )}
               </Padding>
             </>
           )}

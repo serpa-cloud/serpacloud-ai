@@ -29,7 +29,7 @@
   },
   "lib/main.js": {
     "uuid": "66857e368d9fabee72a33fbeb54eddca58dd51fe8feb529ad179746a1525c31f",
-    "hash": "c5a1d052098e7f1301279d07b852b82ca6c4fe58c20f56c5e17fe9d8da241975"
+    "hash": "28963a97d90c4da62542249b292cee339c790ea7c154a8336df9332fbcf5b477"
   },
   "lib/preload.js": {
     "uuid": "28ebe57a62ecb360032dea9f8794361dc236ff9efc9746c7c3cf48e1c066fa19",
@@ -37,7 +37,7 @@
   },
   "lib/watchman.js": {
     "uuid": "7d64fd2c2977db67a78b9eaa4469bff0aeeaf9470d13e06677850087fc2081c4",
-    "hash": "80616b8d1e16d3c4d7c8851f6889374db94fe97e389d1b02a3b8897026624382"
+    "hash": "084f23c6b4441e9998235e884861077ff5891347f35ae1b9d036249bb875a545"
   },
   "src/App.jsx": {
     "uuid": "40a7cf0a67d23e56c1e6377ec00c1ec33ae82e63eba9554269546dc8ef6a0a56",
@@ -333,7 +333,7 @@
   },
   ".eslintignore": {
     "uuid": "b2dd0bbc160612a61bbc8e1bdf636e22660283e8fae596d56b97a2d556423b3d",
-    "hash": "59545d2eae28811609cac72c1401017c9fd8f9297881a13d909895b7872d7efc"
+    "hash": "27029e8256148e34b8d816b4603a180a7faeec7e577d474fb75fcf00509fb3f0"
   },
   ".eslintrc.js": {
     "uuid": "0774a035f3b29dc73be8053bba126ff42223ad01c10cd4448fb1542defd3fe6b",
@@ -341,7 +341,7 @@
   },
   ".flowconfig": {
     "uuid": "7c44802ecb4196ecc4d8c7d40ab02adb152d28487ed19b283e7326fdea907bae",
-    "hash": "99af187c0f3bfe415b1e19cd818b55132c6f54bd5724a1cc411f0b3c23cfc080"
+    "hash": "aaefbdf7f79b4b2ab06048cc0efd59f8b638b5cea97f7241ce7036ab55cb1397"
   },
   ".prettierignore": {
     "uuid": "cd62734a1952c8168692fb6c25cb98045a52e6651d8781c21856e850264a6d69",
@@ -421,7 +421,7 @@
   },
   "package.json": {
     "uuid": "0bdb1c21b2da3baddbda23b3cdc5f65f3ad22533f65672327555ddf48f89c8e6",
-    "hash": "ae9873f7de193e50672bdbb428e658ce969a87d82c69ba6575fbf2d28dc14e24"
+    "hash": "be976cadc550dab0bb6b710b8388c5c681e1c435d8a9702be53c80815a2e49b8"
   },
   "public/browserconfig.xml": {
     "uuid": "5d2c415f9feed51c29cc5e7a3c6bca0a0e4a7b6f1b3b470ec3bff624e6c0b430",
@@ -495,10 +495,6 @@
     "uuid": "7000199a70570a7064027f0ce87c159b2ea45b4dc1b538562343e1aee8d19604",
     "hash": "286d48ad4d15c0c01f70cafd4deddf12c2af83176e1e9fe38bbcd72995ae31a8"
   },
-  "test.txt": {
-    "uuid": "1d3908bec5e47bb60e446fb03dcd2c09d68fa3263382eaa4930c48d45a3012b7",
-    "hash": "1a476344b973658f928136fc8a2a2eee0c94e75752b1ca61f143e5d788781b1e"
-  },
   "src/Projects/ProjectPreview.jsx": {
     "uuid": "ef227d8b3db8e7de682cd8ad2d8e5205e67dd4be2d3c9fa3a642cd493eb81192",
     "hash": "2b009bf256a545ea5e8d9c6a90b306ffb7dad940d4555f3ca6ba7c258a9e6bf8"
@@ -506,5 +502,9 @@
   "src/Projects/__generated__/ProjectPreview.graphql.js": {
     "uuid": "1748d83f4344eea779ca4f29dd8b437c8149d7945b1fa65fe6a9150446f2b9ca",
     "hash": "6f62fe9d81fbfa76e096d0c318a554f620fd3b7dd52b6b890cc0ba236bb764f3"
+  },
+  "public/icon.icns": {
+    "uuid": "75366b2a4c4bd838182a53b750de2ba71875f96bcd40bb9bb1599824bf2161ca",
+    "hash": "f36ff4b4b5d69de7eae32948a0b4530e416a4676551d350160cc4534878b95dd"
   }
 }

@@ -26,3 +26,5 @@ yarn-error.log*
 
 nodemon.json
 scripts/indexProject.js
+release
+/release

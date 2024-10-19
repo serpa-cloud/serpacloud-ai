@@ -32,3 +32,4 @@ src/**/__generated__/*.graphql.js
 /atomic/*
 /atomic/**
 /lib
+/release
