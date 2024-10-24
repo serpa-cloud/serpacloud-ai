@@ -2,3 +2,17 @@ node_modules
 flow-typed
 serpacloudManifest.json
 .scignore
+build
+dist
+config
+release
+scripts
+.eslintignore
+.eslintrc.js
+.flowconfig
+.prettierignore
+.prettierrc.js
+commitlint.config
+husky.config.json
+lint-staged.config.js
+yarn.lock

@@ -159,7 +159,7 @@ export default function Content({
   }, [editor]);
 
   const handleOnSend = useCallback(() => {
-    editor.getEditorState().read(() => {
+    editor.getEditorState().read(async () => {
       const text = $getRoot().getTextContent();
 
       if (!standalone) {
@@ -177,12 +177,16 @@ export default function Content({
 4. Backend: ${backend.input.value}.
 5. Database: ${db.input.value}.`;
 
-        onSubmitProject({
-          description: text.trim(),
-          stackPreferences: localDirectory.directory ? '' : stackPreferences,
-          mode: localDirectory.directory ? 'IMPROVE' : 'CREATE',
-          directoryPath: localDirectory.directory,
-        });
+        const currentDirectory = await window.codegen.selectDirectory();
+
+        if (currentDirectory) {
+          onSubmitProject({
+            description: text.trim(),
+            stackPreferences: localDirectory.directory ? '' : stackPreferences,
+            mode: currentDirectory.directory ? 'IMPROVE' : 'CREATE',
+            directoryPath: currentDirectory?.directory,
+          });
+        }
       }
     });
   }, [
@@ -233,7 +237,7 @@ export default function Content({
   return (
     <div>
       <ContentEditable className={stylex(styles.editable, showSettings ? styles.expanded : null)} />
-      {showSettings && (
+      {showSettings && false && (
         <>
           <Flexbox alignItems="center" justifyContent="space-between">
             <InteractiveElement

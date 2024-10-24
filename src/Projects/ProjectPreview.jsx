@@ -24,7 +24,8 @@ const getRandomGradient = () => {
 const isDarkColor = (gradient) => {
   const colors = gradient.match(/var\(([^)]+)\)/g);
   const averageBrightness =
-    colors.reduce((acc, colorVar) => {
+    (colors?.reduce((acc, colorVar) => {
+      // $FlowFixMe
       const color = getComputedStyle(document.documentElement)
         .getPropertyValue(colorVar.slice(4, -1))
         .trim();
@@ -33,7 +34,7 @@ const isDarkColor = (gradient) => {
       const b = parseInt(color.slice(5, 7), 16);
       const brightness = (r * 299 + g * 587 + b * 114) / 1000;
       return acc + brightness;
-    }, 0) / colors.length;
+    }, 0) ?? 1) / (colors?.length ?? 1);
   return averageBrightness < 180;
 };
 

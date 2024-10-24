@@ -8,11 +8,9 @@ import { memo, useMemo, useEffect, useState } from 'react';
 
 import 'highlight.js/styles/github.css'; // Puedes usar cualquier estilo disponible
 
-import noiseWhiteUrl from './noise_white.png';
-import InteractiveElement from '../shared/InteractiveElement'; // Importar el componente InteractiveElement
 import Icon from '../shared/Icon'; // Importar el componente Icon
-import Flexbox from '../shared/Flexbox';
-import Spinner from '../shared/Spinner';
+import CodeBlock from './CodeBlock';
+import InteractiveElement from '../shared/InteractiveElement'; // Importar el componente InteractiveElement
 
 // Definir los tipos de las props usando Flow
 type Props = {
@@ -29,42 +27,7 @@ const styles = stylex.create({
     borderRadius: 3,
     color: 'var(--red-400)',
   },
-  codeBlockContainer: {
-    border: '1px solid var(--border-color)',
-    borderTopLeftRadius: 8,
-    borderTopRightRadius: 8,
-    borderBottomLeftRadius: 8,
-    borderBottomRightRadius: 8,
-    boxShadow: 'var(--shadow-1)',
-  },
-  codeBlock: {
-    borderTopLeftRadius: 8,
-    borderTopRightRadius: 8,
-    borderBottomLeftRadius: 8,
-    borderBottomRightRadius: 8,
-    padding: 0,
-    marginTop: 0, // Para que no haya espacio entre la barra y el bloque de código
-    marginBottom: 0, // Para que no haya espacio entre el bloque de código y el siguiente párrafo
-  },
-  code: {
-    borderTopLeftRadius: 0,
-    borderTopRightRadius: 0,
-    borderBottomLeftRadius: 8,
-    borderBottomRightRadius: 8,
-  },
-  pathBar: {
-    display: 'flex',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    backgroundColor: 'var(--neutral-color-800)',
-    paddingTop: 4,
-    paddingBottom: 4,
-    paddingLeft: 8,
-    paddingRight: 8,
-    borderTopLeftRadius: 8,
-    borderTopRightRadius: 8,
-    borderBottom: '1px solid var(--border-color)',
-  },
+
   publishBar: {
     marginTop: 12,
     borderBottomLeftRadius: 8,
@@ -78,16 +41,7 @@ const styles = stylex.create({
     justifyContent: 'space-between',
     alignItems: 'center',
   },
-  pathbarClosed: {
-    borderBottomLeftRadius: 8,
-    borderBottomRightRadius: 8,
-  },
-  pathText: {
-    fontFamily: 'monospace',
-    fontSize: 14,
-    color: 'var(--neutral-color-100)',
-    marginLeft: 8, // Separación de 8px entre la flecha y el texto
-  },
+
   commitText: {
     fontFamily: 'monospace',
     fontSize: 14,
@@ -97,17 +51,7 @@ const styles = stylex.create({
     paddingBottom: 8,
     paddingRight: 80,
   },
-  applyButton: {
-    display: 'flex',
-    alignItems: 'center',
-    color: 'var(--primary-color)',
-    borderRadius: 4,
-    paddingTop: 4,
-    paddingBottom: 4,
-    paddingLeft: 8,
-    paddingRight: 8,
-    cursor: 'pointer',
-  },
+
   applyButtonText: {
     marginLeft: 4,
   },
@@ -131,25 +75,20 @@ const styles = stylex.create({
   },
 });
 
+let timer;
+
 // Componente memoizado usando React.memo
 const MarkdownToJsx: React$AbstractComponent<Props, mixed> = memo<Props>(function MarkdownToJsx({
   markdownText,
 }: Props): React$Node {
   const [showConfirmation, setShowConfirmation] = useState(false);
-  const [visibleCodeBlocks, setVisibleCodeBlocks] = useState({});
-
-  const toggleCodeBlockVisibility = (index) => {
-    setVisibleCodeBlocks((prev) => ({
-      ...prev,
-      [index]: !prev[index],
-    }));
-  };
 
   const markdownToJsx = useMemo(() => {
     const lines = markdownText.split('\n');
     let inCodeBlock = false;
     let codeBlockContent = [];
     let currentPath = null;
+    let codeAction = null;
 
     // Mapeamos cada línea para convertirla en un componente JSX
     return lines.map((line, index) => {
@@ -204,10 +143,12 @@ const MarkdownToJsx: React$AbstractComponent<Props, mixed> = memo<Props>(functio
       }
 
       // Detectar etiquetas de ruta de archivo
-      const pathMatch = line.match(/^\[PATH: (.+)\]$/);
+      const pathMatch = line.match(/^\[(PATH|BASH): (.+)\]$/);
       if (pathMatch) {
         // eslint-disable-next-line prefer-destructuring
-        currentPath = pathMatch[1];
+        currentPath = pathMatch[2];
+        // eslint-disable-next-line prefer-destructuring
+        codeAction = pathMatch[1];
         return null; // No renderizar la línea de la etiqueta
       }
 
@@ -217,64 +158,24 @@ const MarkdownToJsx: React$AbstractComponent<Props, mixed> = memo<Props>(functio
         if (inCodeBlock) {
           // Fin del bloque de código
           inCodeBlock = false;
-          const codeBlockPatch = currentPath;
+          const codeBlockPath = currentPath;
+          const codeBlockCommand = codeAction;
           const codeBlock = codeBlockContent.join('\n'); // Unir el contenido acumulado
           codeBlockContent = []; // Limpiar el contenido del bloque
 
-          const handleApplyClick = () => {
-            window.codegen.saveFile({ filePath: codeBlockPatch, content: codeBlock });
-            setShowConfirmation(true);
-            setTimeout(() => setShowConfirmation(false), 5000);
-          };
-
           return (
-            <div key={index} className={stylex(styles.codeBlockContainer)}>
-              {currentPath && (
-                <div
-                  className={stylex(
-                    styles.pathBar,
-                    !visibleCodeBlocks[index] ? styles.pathbarClosed : null,
-                  )}
-                >
-                  {/^```/.test(line) ? (
-                    <InteractiveElement onClick={() => toggleCodeBlockVisibility(index)}>
-                      <Flexbox alignItems="center" columnGap={4}>
-                        <Icon
-                          icon={visibleCodeBlocks[index] ? 'expand_more' : 'chevron_right'}
-                          size={16}
-                          color="--neutral-color-100"
-                        />
-                        <span className={stylex(styles.pathText)}>{currentPath}</span>
-                      </Flexbox>
-                    </InteractiveElement>
-                  ) : (
-                    <span className={stylex(styles.pathText)}>{currentPath}</span>
-                  )}
-                  {/^```/.test(line) ? (
-                    <InteractiveElement
-                      className={stylex(styles.applyButton)}
-                      onClick={handleApplyClick}
-                    >
-                      <Icon icon="motion_play" size={24} color="--neutral-color-100" />
-                    </InteractiveElement>
-                  ) : (
-                    <div className={stylex(styles.applyButton)}>
-                      <Spinner size={20} color="var(--neutral-color-100)" />
-                    </div>
-                  )}
-                </div>
-              )}
-              {(visibleCodeBlocks[index] || !codeBlockPatch) && (
-                <pre
-                  className={stylex(styles.codeBlock)}
-                  style={{
-                    backgroundImage: `url("${noiseWhiteUrl}")`,
-                  }}
-                >
-                  <code className={`hljs ${stylex(styles.code)}`}>{codeBlock}</code>
-                </pre>
-              )}
-            </div>
+            <CodeBlock
+              key={index}
+              line={line}
+              codeBlock={codeBlock}
+              currentPath={codeBlockPath}
+              codeBlockCommand={codeBlockCommand}
+              onSuccess={() => {
+                clearTimeout(timer);
+                setShowConfirmation(true);
+                timer = setTimeout(() => setShowConfirmation(false), 5000);
+              }}
+            />
           );
         }
         // Inicio del bloque de código
@@ -356,7 +257,7 @@ const MarkdownToJsx: React$AbstractComponent<Props, mixed> = memo<Props>(functio
 
       return <p key={index}>{parts}</p>;
     });
-  }, [markdownText, visibleCodeBlocks]); // Memoizar la conversión en función de `markdownText` y `visibleCodeBlocks`
+  }, [markdownText]); // Memoizar la conversión en función de `markdownText` y `visibleCodeBlocks`
 
   // Usamos useEffect para aplicar el resaltado de código cuando el contenido se renderiza
   useEffect(() => {

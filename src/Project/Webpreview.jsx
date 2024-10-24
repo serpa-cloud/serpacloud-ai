@@ -11,7 +11,6 @@ const styles = stylex.create({
     borderTopRightRadius: 8,
     paddingLeft: 8,
     paddingRight: 8,
-    borderBottom: '1px solid var(--border-color)',
   },
   browser: {
     width: '100%',
@@ -31,7 +30,19 @@ const styles = stylex.create({
   },
   desktop: {
     width: '100%',
-    padding: 24,
+  },
+  navbar: {
+    border: 'none',
+    outline: 'none',
+    height: 28,
+    borderRadius: 4,
+    backgroundColor: 'var(--neutral-color-800)',
+    minWidth: '400px',
+    color: 'var(--neutral-color-100)',
+    fontFamily: 'monospace',
+    fontSize: 13,
+    paddingLeft: 12,
+    paddingRight: 12,
   },
 });
 
@@ -42,6 +53,9 @@ type Props = {|
 export default function Webpreview({ url }: Props): React$Node {
   const ref = useRef(null);
   const [currentUrl, setCurrentUrl] = useState(url);
+  const [urlBar, setUrlBar] = useState(currentUrl);
+
+  console.log({ currentUrl, urlBar });
 
   const [viewMode, setViewMode] = useState('desktop');
 
@@ -57,12 +71,20 @@ export default function Webpreview({ url }: Props): React$Node {
     const webElement = ref?.current;
 
     function listener(e) {
+      console.log(e.url);
       setCurrentUrl(e.url);
+      setUrlBar(e.url);
     }
 
-    webElement?.addEventListener('will-navigate', listener);
+    webElement?.addEventListener('did-navigate', listener);
 
-    return () => webElement?.removeEventListener('will-navigate', listener);
+    // Detectar navegación dentro de la misma página (por ejemplo, cambios usando la History API)
+    webElement?.addEventListener('did-navigate-in-page', listener);
+
+    return () => {
+      webElement?.removeEventListener('did-navigate', listener);
+      webElement?.removeEventListener('did-navigate-in-page', listener);
+    };
   }, []);
 
   return (
@@ -72,7 +94,7 @@ export default function Webpreview({ url }: Props): React$Node {
         alignItems="center"
         justifyContent="space-between"
       >
-        <Flexbox alignItems="center" columnGap={16}>
+        <Flexbox alignItems="center" columnGap={12}>
           <InteractiveElement label="Reload" onClick={handleReload}>
             <Icon
               size={20}
@@ -81,6 +103,20 @@ export default function Webpreview({ url }: Props): React$Node {
               hoverColor="--primary-color-1"
             />
           </InteractiveElement>
+
+          <form
+            onSubmit={(e) => {
+              e.preventDefault();
+              setCurrentUrl(urlBar);
+            }}
+          >
+            <input type="submit" style={{ display: 'none' }} />
+            <input
+              className={stylex(styles.navbar)}
+              value={urlBar}
+              onChange={(e) => setUrlBar(e.target.value)}
+            />
+          </form>
         </Flexbox>
 
         <Flexbox alignItems="center" columnGap={16}>
