@@ -28,3 +28,4 @@ nodemon.json
 scripts/indexProject.js
 release
 /release
+.env
