@@ -119,7 +119,7 @@ export default function CodeBlock({
     document.getElementById('webview')?.reloadIgnoringCache?.();
   };
 
-  const isCodeMarkerLine = /^```/.test(line);
+  const isCodeMarkerLine = /^( *|\t*)```/.test(line);
 
   return (
     <div className={stylex(styles.codeBlockContainer)}>
