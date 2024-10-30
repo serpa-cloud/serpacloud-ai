@@ -89,6 +89,7 @@ const MarkdownToJsx: React$AbstractComponent<Props, mixed> = memo<Props>(functio
     let codeBlockContent = [];
     let currentPath = null;
     let codeAction = null;
+    let indentSpace = null;
 
     // Mapeamos cada línea para convertirla en un componente JSX
     return lines.map((line, index) => {
@@ -143,24 +144,27 @@ const MarkdownToJsx: React$AbstractComponent<Props, mixed> = memo<Props>(functio
       }
 
       // Detectar etiquetas de ruta de archivo
-      const pathMatch = line.match(/^\[(PATH|BASH): (.+)\]$/);
+      const pathMatch = line.match(/^( *|\t*)\[(PATH|BASH): (.+)\]$/);
       if (pathMatch) {
         // eslint-disable-next-line prefer-destructuring
-        currentPath = pathMatch[2];
+        indentSpace = pathMatch[1] || '';
         // eslint-disable-next-line prefer-destructuring
-        codeAction = pathMatch[1];
+        currentPath = pathMatch[3];
+        // eslint-disable-next-line prefer-destructuring
+        codeAction = pathMatch[2];
         return null; // No renderizar la línea de la etiqueta
       }
 
       const isPartialCode = inCodeBlock && index === lines.length - 1;
       // Detectar inicio o fin de un bloque de código
-      if (/^```/.test(line) || isPartialCode) {
+      if (/^( *|\t*)```/.test(line) || isPartialCode) {
         if (inCodeBlock) {
           // Fin del bloque de código
           inCodeBlock = false;
+          const codeIndent = indentSpace || '';
           const codeBlockPath = currentPath;
           const codeBlockCommand = codeAction;
-          const codeBlock = codeBlockContent.join('\n'); // Unir el contenido acumulado
+          const codeBlock = codeBlockContent.map((l) => l.replace(codeIndent, '')).join('\n'); // Unir el contenido acumulado
           codeBlockContent = []; // Limpiar el contenido del bloque
 
           return (

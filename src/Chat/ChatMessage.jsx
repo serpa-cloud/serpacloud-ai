@@ -27,6 +27,7 @@ const styles = stylex.create({
     boxShadow: '0 1px .5px rgba(11, 20, 26, .13)',
   },
   assistantContainer: {
+    width: 'max(65%, 480px)',
     maxWidth: 'calc(100% - 40px)',
   },
   text: {
@@ -34,7 +35,7 @@ const styles = stylex.create({
     minWidth: 0,
     fontSize: '14.2px',
     display: 'block',
-    maxWidth: '100%',
+    width: '100%',
     lineHeight: '19px',
     fontWeight: '400',
     textAlign: 'left',
