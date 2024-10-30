@@ -43,7 +43,7 @@ export default function Projects(): React$Node {
             </Text>
 
             <Text type="bd" textAlign="center" color="--neutral-color-800">
-              Chat with your Serpa to improve any existing app.
+              Chat with your Serpa to Create or Improve any existing app
             </Text>
           </Flexbox>
           <Margin top={24}>
