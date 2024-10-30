@@ -256,7 +256,7 @@
       "icon": "public/icon.icns",
       "target": [
         {
-          "target": "dmg",
+          "target": "zip",
           "arch": [
             "universal"
           ]
