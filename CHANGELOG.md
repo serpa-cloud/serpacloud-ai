@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.1](https://github.com/yellow-code-io/serpacloud/compare/v0.0.0...v0.0.1) (2024-10-30)
+
+
+### Bug Fixes
+
+* **chat:** fix indentation command and code resolution ([50640dc](https://github.com/yellow-code-io/serpacloud/commit/50640dc21fe7730dd8f4f550343f420849120edd))
+* fix ignore modules ([3d02395](https://github.com/yellow-code-io/serpacloud/commit/3d02395e4c12bedf4644dcae9025eb33724e6ea4))
+* fix PATH resolution ([43335f2](https://github.com/yellow-code-io/serpacloud/commit/43335f24fdcb904c13f926c2928a6b876b8501e6))
+
 ## 0.0.0 (2024-10-25)
 
 
