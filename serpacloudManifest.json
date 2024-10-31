@@ -451,14 +451,6 @@
     "uuid": "fbaf60fdea75d80a2e87c88c8096279427b3b58d2d597a8af4759f731f0f8341",
     "hash": "689b5a4dee0e17a5e4ccea2283f528221b274cb34b60bfe89775cc6a8012e205"
   },
-  "src/Project/index.jsx": {
-    "uuid": "4f7b3a825de7f8acc1df3639e5b977b7f55b3dc6a0d58a3820cb3f49561a6fc8",
-    "hash": "15623bff4f7dde4776f848d11e1745e937ae184bd8224609ac9bd176d2aab563"
-  },
-  "src/Projects/index.jsx": {
-    "uuid": "73ba6325476ee7eab4e8d238919640b4c66c18695d8dde42db6686129085db39",
-    "hash": "d6c054a9912da7753ac9e3ff6e6b8799ca676c8551750a9f9e15ab4337d560b9"
-  },
   "src/shared/hooks/ConversationContext.jsx": {
     "uuid": "77d4498de538f588451bf1d531a69816a96a8574e593ff5a6937efa2269eb03d",
     "hash": "cd6bdf1d467894658b66d51e8a5734cc58471b60b032807f90c23ff6da698b23"
@@ -518,5 +510,9 @@
   "lib/gitIgnorePatterns.js": {
     "uuid": "b0ac21a04ddf8b40bc8d4d83026ec0bfbb5d9587aade5d0d62125bae51bcbec0",
     "hash": "38af250f835c9e6fef8b4265da9022c5b678a42a1b8c0ddc7592a1b8018e7b4d"
+  },
+  "CHANGELOG.md": {
+    "uuid": "b8553f55046094991a2e216da5abefa4305fafbe3cca7d3fc59ad8f9d1b14a28",
+    "hash": "85cf738f47448439b37c927e844f361e7f26fadad46a65b8456ce6e9c4df024d"
   }
 }
