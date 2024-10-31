@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.4](https://github.com/yellow-code-io/serpacloud/compare/v0.0.3...v0.0.4) (2024-10-31)
+
+
+### Bug Fixes
+
+* autoupdater ([f6048c2](https://github.com/yellow-code-io/serpacloud/commit/f6048c26aa05ee85f3aea6c2bbdd570bc408ca6d))
+
 ### [0.0.3](https://github.com/yellow-code-io/serpacloud/compare/v0.0.2...v0.0.3) (2024-10-30)
 
 
