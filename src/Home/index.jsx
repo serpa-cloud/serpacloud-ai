@@ -4,7 +4,7 @@ import { TypeAnimation } from 'react-type-animation';
 import { useTransition, animated } from 'react-spring';
 import { useLazyLoadQuery, graphql } from 'react-relay';
 
-import { Text, Flexbox, Margin, Button, useCreateAIProject, Grid } from '../shared';
+import { Text, Flexbox, Margin, Button, useCreateAIProject, Grid, Search } from '../shared';
 
 import ProjectCard from '../ProjectCard';
 
@@ -139,7 +139,8 @@ function HomeContent(): React$Node {
         item ? (
           <animated.div style={style}>
             <Margin top={40}>
-              <Margin bottom={24}>
+              <Search />
+              <Margin bottom={24} top={32}>
                 <Text type="s2r">Recent Projects</Text>
               </Margin>
               <Grid columns="1fr 1fr 1fr" columnGap={24}>

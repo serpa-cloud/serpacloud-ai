@@ -19,6 +19,7 @@ import InteractiveElement from './InteractiveElement';
 import Margin from './Margin';
 import Padding from './Padding';
 import ScrolledList from './ScrolledList';
+import Search from './Search';
 import Spinner from './Spinner';
 import TapIcon from './TapIcon';
 import Text from './Text';
@@ -56,6 +57,7 @@ export {
   Margin,
   Padding,
   ScrolledList,
+  Search,
   Spinner,
   TapIcon,
   Text,
