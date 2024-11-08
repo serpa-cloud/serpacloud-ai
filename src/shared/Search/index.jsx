@@ -1,4 +1,5 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState, useCallback } from 'react';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 
 import styles from './index.module.sass';
 
@@ -8,9 +9,24 @@ import InteractiveElement from '../InteractiveElement';
 import useDevice from '../hooks/useDevice';
 
 export default function Search(): React$Node {
+  const [searchParams, setSearchParams] = useSearchParams();
+  const [searchValue, setSearchValue] = useState(searchParams.get('q') || '');
+
   const { os } = useDevice();
   const isMacOS = os.includes('Mac OS ');
   const searchInput = useRef(null);
+
+  const navigate = useNavigate();
+
+  const handleChange = (event) => {
+    setSearchValue(event.target.value);
+    setSearchParams({ q: event.target.value });
+  };
+
+  const handleNavigate = useCallback(() => {
+    navigate(`/app/search?q=${searchValue}`);
+  }, [navigate, searchValue]);
+
   useEffect(() => {
     const handleKeydown = (event) => {
       if ((event.metaKey || event.ctrlKey) && event.key === 'f') {
@@ -25,7 +41,7 @@ export default function Search(): React$Node {
 
       if (event.key === 'Enter' && document.activeElement === searchInput.current) {
         event.preventDefault();
-        console.log('searching');
+        handleNavigate();
       }
     };
 
@@ -34,11 +50,15 @@ export default function Search(): React$Node {
     return () => {
       window.removeEventListener('keydown', handleKeydown);
     };
-  }, []);
+  }, [handleNavigate]);
+
+  useEffect(() => {
+    if (searchParams.get('q')) searchInput.current.focus();
+  }, [searchParams]);
 
   return (
     <div className={styles.searchContainer}>
-      <InteractiveElement onClick={() => {}}>
+      <InteractiveElement onClick={handleNavigate}>
         <div>
           <Icon
             icon="search"
@@ -47,10 +67,12 @@ export default function Search(): React$Node {
         </div>
       </InteractiveElement>
       <input
+        value={searchValue}
         type="text"
         placeholder={`${isMacOS ? '⌘' : 'CTRL'} + F / Search your project`}
         className={styles.searchInput}
         ref={searchInput}
+        onChange={handleChange}
       />
     </div>
   );
