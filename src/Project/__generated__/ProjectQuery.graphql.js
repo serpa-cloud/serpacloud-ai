@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<38052c16f8757cc82c38c351e049a14a>>
+ * @generated SignedSource<<4d15d4ef52ac750c3bc518223c454aa8>>
  * @flow
  * @lightSyntaxTransform
  * @nogrep
@@ -11,25 +11,15 @@
 
 /*::
 import type { ConcreteRequest, Query } from 'relay-runtime';
-export type AIProjectType = "CREATE" | "IMPROVE" | "%future added value";
 export type ProjectQuery$variables = {|
   id: string,
 |};
 export type ProjectQuery$data = {|
   +node: ?{|
-    +currentConversation?: ?{|
-      +id: string,
-      +resume: ?string,
-    |},
-    +description?: string,
-    +firstConversation?: ?{|
-      +id: string,
-      +resume: ?string,
-    |},
     +id: string,
-    +mode?: AIProjectType,
+    +key?: string,
     +name?: string,
-    +stackPreferences?: ?string,
+    +summary?: string,
   |},
 |};
 export type ProjectQuery = {|
@@ -60,19 +50,16 @@ v2 = {
   "name": "id",
   "storageKey": null
 },
-v3 = [
-  (v2/*: any*/),
-  {
-    "alias": null,
-    "args": null,
-    "kind": "ScalarField",
-    "name": "resume",
-    "storageKey": null
-  }
-],
-v4 = {
+v3 = {
   "kind": "InlineFragment",
   "selections": [
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "key",
+      "storageKey": null
+    },
     {
       "alias": null,
       "args": null,
@@ -84,41 +71,7 @@ v4 = {
       "alias": null,
       "args": null,
       "kind": "ScalarField",
-      "name": "mode",
-      "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "description",
-      "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "stackPreferences",
-      "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
-      "concreteType": "Chat",
-      "kind": "LinkedField",
-      "name": "firstConversation",
-      "plural": false,
-      "selections": (v3/*: any*/),
-      "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
-      "concreteType": "Chat",
-      "kind": "LinkedField",
-      "name": "currentConversation",
-      "plural": false,
-      "selections": (v3/*: any*/),
+      "name": "summary",
       "storageKey": null
     }
   ],
@@ -141,7 +94,7 @@ return {
         "plural": false,
         "selections": [
           (v2/*: any*/),
-          (v4/*: any*/)
+          (v3/*: any*/)
         ],
         "storageKey": null
       }
@@ -171,24 +124,24 @@ return {
             "storageKey": null
           },
           (v2/*: any*/),
-          (v4/*: any*/)
+          (v3/*: any*/)
         ],
         "storageKey": null
       }
     ]
   },
   "params": {
-    "cacheID": "37945afe587639a85807986824e02494",
+    "cacheID": "b65076babfd875defdb9bfc44a04d771",
     "id": null,
     "metadata": {},
     "name": "ProjectQuery",
     "operationKind": "query",
-    "text": "query ProjectQuery(\n  $id: ID!\n) {\n  node(id: $id) {\n    __typename\n    id\n    ... on AIProject {\n      id\n      name\n      mode\n      description\n      stackPreferences\n      firstConversation {\n        id\n        resume\n      }\n      currentConversation {\n        id\n        resume\n      }\n    }\n  }\n}\n"
+    "text": "query ProjectQuery(\n  $id: ID!\n) {\n  node(id: $id) {\n    __typename\n    id\n    ... on AIProject {\n      id\n      key\n      name\n      summary\n    }\n  }\n}\n"
   }
 };
 })();
 
-(node/*: any*/).hash = "35d9fb3604939203f4e030ca9142c9f5";
+(node/*: any*/).hash = "7c834dbda4b24de4a5ef5b45baafb45e";
 
 module.exports = ((node/*: any*/)/*: Query<
   ProjectQuery$variables,

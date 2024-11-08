@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import deviceTemplate from '../useDevice/deviceTemplate';
-import resizer from '../useDevice/resizerFunction';
+import deviceTemplate from './deviceTemplate';
+import resizer from './resizerFunction';
 
 const template = deviceTemplate(null);
 

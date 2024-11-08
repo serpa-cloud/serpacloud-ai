@@ -8,7 +8,6 @@ import Content from './Content';
 
 import { Text, Padding } from '../shared';
 import useSendAIMessage from '../shared/hooks/useSendAIMessage';
-import useCreateAIProject from '../shared/hooks/useCreateAIProject';
 
 const styles = stylex.create({
   root: {
@@ -17,16 +16,15 @@ const styles = stylex.create({
   inputContainer: {
     flex: 1,
     columnGap: 16,
-    display: 'flex',
     paddingLeft: 16,
     paddingRight: 16,
     color: '#3b4a54',
-    alignItems: 'center',
     border: '1px solid var(--border-color)',
-    paddingTop: 8,
+    paddingTop: 12,
     paddingBottom: 8,
     borderRadius: 24,
     boxSizing: 'border-box',
+    boxShadow: 'var(--shadow-2-color)',
     backgroundColor: 'var(--neutral-color-100)',
   },
   editorParagraph: {
@@ -44,11 +42,11 @@ const styles = stylex.create({
     position: 'absolute',
     left: 0,
     userSelect: 'none',
-    top: 0,
+    top: 2,
     pointerEvents: 'none',
     '-webkit-font-smoothing': 'antialiased',
-    bottom: 0,
     display: 'flex',
+    height: 17,
     alignItems: 'center',
   },
 });
@@ -57,24 +55,26 @@ type Props = {|
   +disable?: ?boolean,
   +project?: ?string,
   +standalone?: ?boolean,
+  +children?: ?React$Node,
   +conversation?: ?string,
 |};
 
 export default function Composer({
-  conversation,
   disable,
-  standalone,
   project,
+  children,
+  standalone,
+  conversation,
 }: Props): React$Node {
   const [handleOnSubmitAIMessage, sendingMessagePending] = useSendAIMessage(
     conversation ?? '',
     project ?? '',
   );
-  const [handleOnSubmitAIProject, creatingProjectPending] = useCreateAIProject();
 
   return (
-    <Padding horizontal={8} vertical={8} className={stylex(styles.root)}>
+    <Padding vertical={8} className={stylex(styles.root)}>
       <div className={stylex(styles.inputContainer)}>
+        {children}
         <LexicalComposer
           initialConfig={{
             namespace: 'serpa-ai',
@@ -90,14 +90,13 @@ export default function Composer({
           <div className={stylex(styles.pseudoInput)}>
             <div className={stylex(styles.pseudoInputInnerContainer)}>
               <PlainTextPlugin
+                // $FlowFixMe
                 ErrorBoundary={LexicalErrorBoundary}
                 contentEditable={
                   <Content
                     standalone={!!standalone}
                     onSubmitMessage={handleOnSubmitAIMessage}
-                    onSubmitProject={handleOnSubmitAIProject}
-                    disable={disable || sendingMessagePending || creatingProjectPending}
-                    creatingProjectPending={creatingProjectPending}
+                    disable={disable || sendingMessagePending}
                   />
                 }
                 placeholder={
@@ -117,8 +116,9 @@ export default function Composer({
 }
 
 Composer.defaultProps = {
+  project: null,
+  children: null,
   disable: false,
   standalone: false,
   conversation: null,
-  project: null,
 };

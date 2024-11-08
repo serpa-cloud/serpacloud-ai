@@ -8,18 +8,17 @@ body {
   font-size: 16px;
   margin: 0;
   height: 100%;
-  background: var(--neutral-gradient);
 }
 
 body,
 #root {
   position: relative;
   min-height: 100vh;
-  height: 100%;
 }
 
 #root {
   -webkit-app-region: no-drag;
+  background: var(--neutral-color-200);
 }
 
 a {
@@ -99,14 +98,13 @@ a:hover {
 }
 
 :root {
-  --surface-background: url(./images/noise_white.png);
   --header-height: 56px;
   --footer-height: 186px;
   --content-top-padding: 32px;
 
   --neutral-gradient: linear-gradient(346deg, #f1f6ff 50%, #ffffff 100%);
 
-  --hover-overlay: rgba(0, 0, 0, 0.05);
+  --hover-overlay: rgba(72, 72, 72, 0.85);
   --image-overlay: rgba(52, 51, 85, 0.6);
 
   --primary-color-1: rgb(86, 56, 255);

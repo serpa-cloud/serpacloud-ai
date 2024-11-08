@@ -115,11 +115,6 @@ function ScrolledListNetworkInterface({
               __typename
               ... on Chat {
                 id
-                ...ChatResume
-              }
-              ... on AIProject {
-                id
-                ...ProjectPreview
               }
             }
           }

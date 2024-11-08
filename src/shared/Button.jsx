@@ -14,14 +14,19 @@ import type { InteractiveElementEvent } from './InteractiveElement';
 
 const styles = stylex.create({
   container: {
-    height: 36,
+    height: 40,
     position: 'relative',
     '-webkit-tap-highlight-color': 'transparent',
     '-webkit-user-select': 'none',
     transitionTimingFunction: 'var(--fds-animation-fade-out)',
     transitionDuration: 'var(--fds-duration-extra-extra-short-out)',
-    transitionProperty: 'opacity',
-    overflow: 'hidden',
+    transitionProperty: 'opacity, transform',
+    borderRadius: 20,
+    boxShadow: 'var(--shadow-1-color)',
+    ':hover': {
+      boxShadow: 'var(--shadow-2-color)',
+      transform: 'scale(1.02)',
+    },
   },
   heroContainer: {
     height: 56,
@@ -79,14 +84,14 @@ const styles = stylex.create({
     top: 0,
     left: 0,
     zIndex: 1,
-    borderRadius: 0,
+    borderRadius: 20,
     width: '100%',
     height: '100%',
-    transitionDuration: 'var(--fds-duration-extra-extra-short-in)',
+    transitionDuration: 'var(--fds-duration-extra-short-in)',
     transitionTimingFunction: 'var(--fds-animation-fade-in)',
     transitionProperty: 'opacity',
     ':hover': {
-      transitionDuration: 'var(--fds-duration-extra-extra-short-out)',
+      transitionDuration: 'var(--fds-duration-extra-short-out)',
       transitionTimingFunction: 'var(--fds-animation-fade-out)',
     },
   },
@@ -94,7 +99,8 @@ const styles = stylex.create({
     backgroundColor: 'var(--button-secondary-color-hoverlay)',
   },
   mainOverlay: {
-    background: 'var(--hover-overlay)',
+    background:
+      'linear-gradient(265.7deg, var(--orange-solid-color) -2.24%, var(--pink-solid-color) 102.98%)',
   },
   dangerOverlay: {
     backgroundColor: 'var(--red-400)',
@@ -235,7 +241,7 @@ Button.defaultProps = {
   icon: null,
   iconRight: null,
   disabled: false,
-  buttonType: 'primary',
+  buttonType: 'main',
   intlId: null,
   children: null,
   size: 'default',

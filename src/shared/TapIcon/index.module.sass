@@ -1,0 +1,35 @@
+.container
+  position: relative
+
+.tap
+  width: 40px
+  height: 40px
+  padding: 8px
+  border-radius: 20px
+  box-sizing: border-box
+  box-shadow: var(--shadow-1-color)
+  background: var(--neutral-color-100)
+  &:hover
+    box-shadow: var(--shadow-2-color)
+    transform: scale(1.04)
+
+.labelContainer
+  display: flex
+  height: 30px
+  position: absolute
+  background: var(--hover-overlay)
+  white-space: nowrap
+  box-sizing: border-box
+  padding: 6px 5px
+  border-radius: 4px
+  align-items: center
+
+.anchorBottom
+  left: 50%
+  bottom: -40px
+  transform: translateX(-50%)
+
+.anchorRight
+  top: 50%
+  left: 50px
+  transform: translateY(-50%)

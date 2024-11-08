@@ -1,0 +1,53 @@
+.Input__wrapper {
+  display: flex;
+  flex-direction: column;
+  row-gap: 12px;
+}
+
+.Input__input {
+  display: flex;
+  flex: 2;
+  border: 1px solid #999;
+  padding-top: 7px;
+  padding-bottom: 7px;
+  padding-left: 10px;
+  padding-right: 10px;
+  font-size: 16px;
+  border-radius: 5px;
+  min-width: 0;
+}
+.Input__fake_image_container {
+  width: 100%;
+  aspect-ratio: 1;
+  border: 1px solid var(--border-color);
+  position: relative;
+  cursor: pointer;
+}
+
+.Input__fake_image_content {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  row-gap: 8px;
+}
+
+.Input__fake_image {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.Input__fake_image_container .Input__input {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  opacity: 0;
+}

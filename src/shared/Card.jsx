@@ -11,10 +11,10 @@ export type CardProps = {
 
 const styles = stylex.create({
   container: {
-    boxShadow: 'var(--shadow-1)',
-    position: 'relative',
     zIndex: 0,
-    border: '1px solid var(--border-color)',
+    borderRadius: 8,
+    position: 'relative',
+    boxShadow: 'var(--shadow-1-color)',
     backgroundColor: 'var(--card-background)',
   },
 });
@@ -31,7 +31,7 @@ export default function Card({
       className={`${stylex(styles.container)} ${className}`}
       style={{
         borderWidth: hideBorder ? 0 : 1,
-        boxShadow: hideShadow ? 'none' : 'var(--shadow-1)',
+        boxShadow: hideShadow ? 'none' : 'var(--shadow-1-color)',
         backgroundColor: backgroundColor ? `var(${backgroundColor})` : 'var(--card-background)',
       }}
     >

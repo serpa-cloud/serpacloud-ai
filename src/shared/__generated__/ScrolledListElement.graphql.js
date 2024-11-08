@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<443867f54215db4c84a3cad9e25032ee>>
+ * @generated SignedSource<<b7f695ccf2295bf887d2e61ced719fde>>
  * @flow
  * @lightSyntaxTransform
  * @nogrep
@@ -11,8 +11,6 @@
 
 /*::
 import type { ReaderFragment, RefetchableFragment } from 'relay-runtime';
-import type { ChatResume$fragmentType } from "./../../Menu/__generated__/ChatResume.graphql";
-import type { ProjectPreview$fragmentType } from "./../../Projects/__generated__/ProjectPreview.graphql";
 import type { FragmentType } from "relay-runtime";
 declare export opaque type ScrolledListElement$fragmentType: FragmentType;
 type ScrolledListPaginationQuery$variables = any;
@@ -22,13 +20,8 @@ export type ScrolledListElement$data = {|
       +cursor: any,
       +id: string,
       +node: {|
-        +__typename: "AIProject",
-        +id: string,
-        +$fragmentSpreads: ProjectPreview$fragmentType,
-      |} | {|
         +__typename: "Chat",
         +id: string,
-        +$fragmentSpreads: ChatResume$fragmentType,
       |} | {|
         // This will never be '%other', but we need some
         // value in case none of the concrete values match.
@@ -208,27 +201,9 @@ return {
                 {
                   "kind": "InlineFragment",
                   "selections": [
-                    (v1/*: any*/),
-                    {
-                      "args": null,
-                      "kind": "FragmentSpread",
-                      "name": "ChatResume"
-                    }
+                    (v1/*: any*/)
                   ],
                   "type": "Chat",
-                  "abstractKey": null
-                },
-                {
-                  "kind": "InlineFragment",
-                  "selections": [
-                    (v1/*: any*/),
-                    {
-                      "args": null,
-                      "kind": "FragmentSpread",
-                      "name": "ProjectPreview"
-                    }
-                  ],
-                  "type": "AIProject",
                   "abstractKey": null
                 }
               ],
@@ -246,7 +221,7 @@ return {
 };
 })();
 
-(node/*: any*/).hash = "647882b12e0d67329c1dfa2f0d981165";
+(node/*: any*/).hash = "1cbb0be6a7d6281b331a07ad99ae1ba0";
 
 module.exports = ((node/*: any*/)/*: RefetchableFragment<
   ScrolledListElement$fragmentType,

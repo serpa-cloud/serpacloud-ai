@@ -8,7 +8,7 @@ import App from './App';
 
 import RelayEnvironment from './RelayEnvironment';
 
-import ResizerProvider from './shared/hooks/context/ResizerProvider';
+import ResizerProvider from './shared/hooks/useDevice/ResizerProvider';
 
 import './shared/styles.css';
 

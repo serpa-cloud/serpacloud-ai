@@ -58,16 +58,12 @@ type AIProject implements Node {
   createdAtFormatted: String!
   name: String!
   key: String!
-  mode: AIProjectType!
   currentConversation: Chat
   firstConversation: Chat
   description: String!
   stackPreferences: String
-}
-
-enum AIProjectType {
-  CREATE
-  IMPROVE
+  summary: String!
+  clarifyingAsks: String
 }
 
 enum AIRole {
@@ -745,7 +741,8 @@ type Mutation {
   requestCertificate(domain: String!, environment: ID!, provider: DNSProvider!, recordType: DNSRecordType!): Domain!
   promptToSerpaCloudAI(message: String!, conversation: ID!, services: [String]!): AIMessageEdge
   createChat(projectId: ID!): Chat!
-  createAIProject(description: String!, stackPreferences: String, mode: AIProjectType!): AIProject!
+  createAIProject: AIProject!
+  updateProjectSummary(id: ID!, summary: String!): AIProject!
 }
 
 interface NamespaceNode {

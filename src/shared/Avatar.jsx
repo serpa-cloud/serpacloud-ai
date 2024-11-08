@@ -26,11 +26,11 @@ const styles = stylex.create({
     borderRadius: 0,
   },
   shadow: {
-    boxShadow: 'var(--shadow-1-composite)',
+    boxShadow: 'var(--shadow-1-color)',
     transitionDuration: 'var(--fds-duration-medium-in)',
     transitionTimingFunction: 'var(--fds-animation-fade-in)',
     ':hover': {
-      boxShadow: 'var(--shadow-2-composite)',
+      boxShadow: 'var(--shadow-2-color)',
       transitionDuration: 'var(--fds-duration-medium-out)',
       transitionTimingFunction: 'var(--fds-animation-fade-out)',
     },

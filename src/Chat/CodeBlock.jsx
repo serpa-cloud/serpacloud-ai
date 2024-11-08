@@ -7,8 +7,6 @@ import Flexbox from '../shared/Flexbox';
 import Spinner from '../shared/Spinner';
 import InteractiveElement from '../shared/InteractiveElement';
 
-import noiseWhiteUrl from './noise_white.png';
-
 const styles = stylex.create({
   codeBlockContainer: {
     border: '1px solid var(--border-color)',
@@ -151,12 +149,7 @@ export default function CodeBlock({
         </div>
       )}
       {(isVisible || !filePath) && (
-        <pre
-          className={stylex(styles.codeBlock)}
-          style={{
-            backgroundImage: `url("${noiseWhiteUrl}")`,
-          }}
-        >
+        <pre className={stylex(styles.codeBlock)}>
           <code className={`hljs ${stylex(styles.code)}`}>{codeBlock}</code>
         </pre>
       )}

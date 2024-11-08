@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<9b02a19247407822a232deeb999fd9fb>>
+ * @generated SignedSource<<33e42fcc52d4b4787e655c390b271ced>>
  * @flow
  * @lightSyntaxTransform
  * @nogrep
@@ -119,7 +119,10 @@ v2 = {
   "kind": "ScalarField",
   "name": "id",
   "storageKey": null
-};
+},
+v3 = [
+  (v2/*: any*/)
+];
 return {
   "fragment": {
     "argumentDefinitions": (v0/*: any*/),
@@ -215,46 +218,13 @@ return {
                   },
                   {
                     "kind": "InlineFragment",
-                    "selections": [
-                      (v2/*: any*/),
-                      {
-                        "alias": null,
-                        "args": null,
-                        "kind": "ScalarField",
-                        "name": "resume",
-                        "storageKey": null
-                      }
-                    ],
+                    "selections": (v3/*: any*/),
                     "type": "Chat",
                     "abstractKey": null
                   },
                   {
                     "kind": "InlineFragment",
-                    "selections": [
-                      (v2/*: any*/),
-                      {
-                        "alias": null,
-                        "args": null,
-                        "kind": "ScalarField",
-                        "name": "name",
-                        "storageKey": null
-                      },
-                      {
-                        "alias": null,
-                        "args": null,
-                        "kind": "ScalarField",
-                        "name": "description",
-                        "storageKey": null
-                      }
-                    ],
-                    "type": "AIProject",
-                    "abstractKey": null
-                  },
-                  {
-                    "kind": "InlineFragment",
-                    "selections": [
-                      (v2/*: any*/)
-                    ],
+                    "selections": (v3/*: any*/),
                     "type": "Node",
                     "abstractKey": "__isNode"
                   }
@@ -284,17 +254,17 @@ return {
     ]
   },
   "params": {
-    "cacheID": "3dde8b7c2f0ccb9f93c640a57fd4c716",
+    "cacheID": "00a9fb6c32c092b17334aafc95c3a93a",
     "id": null,
     "metadata": {},
     "name": "ScrolledListPaginationQuery",
     "operationKind": "query",
-    "text": "query ScrolledListPaginationQuery(\n  $after: Cursor\n  $filterMatrix: [[FilterInput]]\n  $first: Int\n  $index: ElasticIndex\n  $query: QueryInput\n  $sort: SortInput\n) {\n  ...ScrolledListElement\n}\n\nfragment ChatResume on Chat {\n  id\n  resume\n}\n\nfragment ProjectPreview on AIProject {\n  id\n  name\n  description\n}\n\nfragment ScrolledListElement on Query {\n  entities(sort: $sort, first: $first, after: $after, index: $index, query: $query, filterMatrix: $filterMatrix) {\n    pageInfo {\n      hasNextPage\n      endCursor\n      finalCursor\n    }\n    edges {\n      id\n      cursor\n      node {\n        __typename\n        ... on Chat {\n          id\n          ...ChatResume\n        }\n        ... on AIProject {\n          id\n          ...ProjectPreview\n        }\n        ... on Node {\n          __isNode: __typename\n          id\n        }\n      }\n    }\n  }\n}\n"
+    "text": "query ScrolledListPaginationQuery(\n  $after: Cursor\n  $filterMatrix: [[FilterInput]]\n  $first: Int\n  $index: ElasticIndex\n  $query: QueryInput\n  $sort: SortInput\n) {\n  ...ScrolledListElement\n}\n\nfragment ScrolledListElement on Query {\n  entities(sort: $sort, first: $first, after: $after, index: $index, query: $query, filterMatrix: $filterMatrix) {\n    pageInfo {\n      hasNextPage\n      endCursor\n      finalCursor\n    }\n    edges {\n      id\n      cursor\n      node {\n        __typename\n        ... on Chat {\n          id\n        }\n        ... on Node {\n          __isNode: __typename\n          id\n        }\n      }\n    }\n  }\n}\n"
   }
 };
 })();
 
-(node/*: any*/).hash = "647882b12e0d67329c1dfa2f0d981165";
+(node/*: any*/).hash = "1cbb0be6a7d6281b331a07ad99ae1ba0";
 
 module.exports = ((node/*: any*/)/*: Query<
   ScrolledListPaginationQuery$variables,

@@ -11,7 +11,6 @@ export default function useCreateChat(): CreateChatResults {
     mutation useCreateChatMutation($projectId: ID!, $last: Int, $before: Cursor) {
       createChat(projectId: $projectId) {
         id
-        ...ChatResume
         ...MessagesList
       }
     }

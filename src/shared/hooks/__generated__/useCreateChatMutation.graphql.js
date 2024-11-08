@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<afbd479732c3ca4226c00294dd5efa7e>>
+ * @generated SignedSource<<e5f330dfacef50eecaaa927c99a79e41>>
  * @flow
  * @lightSyntaxTransform
  * @nogrep
@@ -11,7 +11,6 @@
 
 /*::
 import type { ConcreteRequest, Mutation } from 'relay-runtime';
-import type { ChatResume$fragmentType } from "./../../../Menu/__generated__/ChatResume.graphql";
 import type { MessagesList$fragmentType } from "./../../../Chat/__generated__/MessagesList.graphql";
 export type useCreateChatMutation$variables = {|
   before?: ?any,
@@ -21,7 +20,7 @@ export type useCreateChatMutation$variables = {|
 export type useCreateChatMutation$data = {|
   +createChat: {|
     +id: string,
-    +$fragmentSpreads: ChatResume$fragmentType & MessagesList$fragmentType,
+    +$fragmentSpreads: MessagesList$fragmentType,
   |},
 |};
 export type useCreateChatMutation = {|
@@ -95,11 +94,6 @@ return {
           {
             "args": null,
             "kind": "FragmentSpread",
-            "name": "ChatResume"
-          },
-          {
-            "args": null,
-            "kind": "FragmentSpread",
             "name": "MessagesList"
           }
         ],
@@ -128,13 +122,6 @@ return {
         "plural": false,
         "selections": [
           (v4/*: any*/),
-          {
-            "alias": null,
-            "args": null,
-            "kind": "ScalarField",
-            "name": "resume",
-            "storageKey": null
-          },
           {
             "alias": null,
             "args": (v5/*: any*/),
@@ -245,17 +232,17 @@ return {
     ]
   },
   "params": {
-    "cacheID": "5add8d84033043d511b2c0ac3baff228",
+    "cacheID": "a95515912d7eceff7109c4a7f94c8867",
     "id": null,
     "metadata": {},
     "name": "useCreateChatMutation",
     "operationKind": "mutation",
-    "text": "mutation useCreateChatMutation(\n  $projectId: ID!\n  $last: Int\n  $before: Cursor\n) {\n  createChat(projectId: $projectId) {\n    id\n    ...ChatResume\n    ...MessagesList\n  }\n}\n\nfragment ChatMessage on AIMessage {\n  id\n  role\n  content\n  createdAt\n}\n\nfragment ChatResume on Chat {\n  id\n  resume\n}\n\nfragment MessagesList on Chat {\n  id\n  messages(last: $last, before: $before) {\n    pageInfo {\n      hasPreviousPage\n      startCursor\n    }\n    edges {\n      id\n      cursor\n      node {\n        ...ChatMessage\n        role\n        id\n        __typename\n      }\n    }\n  }\n}\n"
+    "text": "mutation useCreateChatMutation(\n  $projectId: ID!\n  $last: Int\n  $before: Cursor\n) {\n  createChat(projectId: $projectId) {\n    id\n    ...MessagesList\n  }\n}\n\nfragment ChatMessage on AIMessage {\n  id\n  role\n  content\n  createdAt\n}\n\nfragment MessagesList on Chat {\n  id\n  messages(last: $last, before: $before) {\n    pageInfo {\n      hasPreviousPage\n      startCursor\n    }\n    edges {\n      id\n      cursor\n      node {\n        ...ChatMessage\n        role\n        id\n        __typename\n      }\n    }\n  }\n}\n"
   }
 };
 })();
 
-(node/*: any*/).hash = "5d33b69e5274368a42ea210af1e308b6";
+(node/*: any*/).hash = "a7f439f411207f382dbbbac351f23bf9";
 
 module.exports = ((node/*: any*/)/*: Mutation<
   useCreateChatMutation$variables,

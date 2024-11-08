@@ -3,48 +3,30 @@ import { useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { graphql, useMutation } from 'react-relay';
 
-type SendAIMessageUtils = [
-  ({
-    description: string,
-    stackPreferences: string,
-    mode?: ?('CREATE' | 'IMPROVE'),
-    directoryPath?: ?string,
-  }) => void | Promise<void>,
-  boolean,
-];
+import type { useCreateAIProjectMutation } from './__generated__/useCreateAIProjectMutation.graphql';
+
+type SendAIMessageUtils = [() => void, boolean];
 
 export default function useCreateAIProject(): SendAIMessageUtils {
   const navigate = useNavigate();
 
-  const [createProject, createProjectPending] = useMutation(graphql`
-    mutation useCreateAIProjectMutation($description: String!, $mode: AIProjectType!) {
-      createAIProject(description: $description, mode: $mode) {
+  const [createProject, createProjectPending] = useMutation<useCreateAIProjectMutation>(graphql`
+    mutation useCreateAIProjectMutation {
+      createAIProject {
         id
-        name
-        description
-        currentConversation {
-          id
-        }
       }
     }
   `);
 
   const createProjectCallback = useCallback(
     // eslint-disable-next-line consistent-return
-    ({ description, stackPreferences, mode, directoryPath }) => {
+    () => {
       if (!createProjectPending) {
         createProject({
-          variables: {
-            mode: mode || 'CREATE',
-            description,
-            stackPreferences: stackPreferences || '',
-          },
-          onCompleted: async (res) => {
+          variables: {},
+          onCompleted: (res) => {
             const project = res.createAIProject;
             if (project) {
-              if (mode === 'IMPROVE') {
-                await window.codegen.saveDirectory({ directoryPath, project: project.name });
-              }
               navigate(`/app/projects/${project.id}`);
             }
           },

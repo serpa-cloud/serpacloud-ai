@@ -1,0 +1,53 @@
+.Modal__overlay {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  flex-direction: column;
+  top: 0px;
+  bottom: 0px;
+  left: 0px;
+  right: 0px;
+  background-color: hsla(0, 0%, 100%, 0.6);
+  backdrop-filter: saturate(180%) blur(20px);
+  flex-grow: 0px;
+  flex-shrink: 1px;
+  z-index: 100;
+}
+.Modal__modal {
+  padding: 20px;
+  min-height: 100px;
+  min-width: 300px;
+  display: flex;
+  flex-grow: 0px;
+  background-color: #fff;
+  flex-direction: column;
+  position: relative;
+  box-shadow: var(--shadow-1-color);
+  border-radius: 4px;
+  border: 1px solid var(--border-color);
+}
+.Modal__title {
+  color: #444;
+  margin: 0px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #ccc;
+}
+.Modal__closeButton {
+  border: 0px;
+  border-radius: 12px;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  width: 24px;
+  height: 24px;
+  text-align: center;
+  cursor: pointer;
+  background-color: var(--neutral-color-200);
+}
+.Modal__closeButton:hover {
+  background-color: var(--neutral-color-300);
+}
+.Modal__content {
+  padding-top: 20px;
+}

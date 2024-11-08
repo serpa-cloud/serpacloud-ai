@@ -518,7 +518,7 @@ const styles = stylex.create({
     },
   },
   bs: {
-    fontSize: '14px',
+    fontSize: '16px',
     fontWeight: 400,
     lineHeight: '1.6',
     ':before': {

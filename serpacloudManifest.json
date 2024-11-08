@@ -1,7 +1,7 @@
 {
   "src/shared/styles.css": {
     "uuid": "0c4526313212c9d3f258ef48a5a0b432c68418c59f8edd5b48c61de42a1421f8",
-    "hash": "a894853f15b42c925717eec70d9a762bb13cef89c087895171fe550c89681376"
+    "hash": "ac18aad5232c4c5b5be408eab35d6e0ae93ce90a1bc0e0c1c69d1490c3810291"
   },
   "src/shared/utils/invariant.js": {
     "uuid": "d55780ae3a42588a418acb4a424be303e5ef6bdf621b172e770b85cc5a590127",
@@ -25,7 +25,7 @@
   },
   "src/Chat/Composer.jsx": {
     "uuid": "5d0c8538c4944e9993f039b0d8065e20d2d658ce6fda6cdb52ef7ed64333afd7",
-    "hash": "488f983031a01e9b8a7e2e3e83d77483e2986e8680d5adfc03bb5dc23876b0a8"
+    "hash": "12e1c53ad8d6b6fb99cf510d90b673283d215152004c179d498d352f70f2a2c3"
   },
   "src/Chat/Loader.jsx": {
     "uuid": "45d155a9146eb4bb93b2c72ecd049d44e56ff52b0677104bac1246f261711154",
@@ -77,7 +77,7 @@
   },
   "src/Dashboard/index.jsx": {
     "uuid": "86585f7ebd1caee172732d3477f072c17c4570cf3b5db24594e753669be07152",
-    "hash": "09ef3ac638dfd7dc96609aaaa6b9ca254f08faca3dbf8afd59c9bf0e98119031"
+    "hash": "9afd51bb6fc6a87159e32a05808ce7547c445b8e1a90d50c1327641b4d69c7bb"
   },
   "src/Menu/ChatResume.jsx": {
     "uuid": "6f46904d7b84decd6e15f3f3a0d38e560a100c448079462a885bef2479a940e4",
@@ -301,7 +301,7 @@
   },
   "src/shared/index.js": {
     "uuid": "6b305bd53349f58c7a85172ce39fe53536306055492c700ec74e20afc878faa7",
-    "hash": "8fffbd4eb464ebbac77819c45697ce460809a942869258bfc7b2a93d481a630c"
+    "hash": "a9dd5a77c0da2aed9b46487949b596602d3fa31602150fa6ab5f537849bf085a"
   },
   ".dockerignore": {
     "uuid": "9f633d72d9f01a240a1bd808d54192f76bada9ef4ab6a20deabce4f7d7fdf639",
@@ -397,7 +397,7 @@
   },
   "package.json": {
     "uuid": "137c87e41ac9a19e70ca4b9934d79f1dcc7986a65439ecef5e6cb6a1d9e31551",
-    "hash": "da4675bd8a3b625941ad1098cdbe1f8daced258c3165ddcf91e07ca12c0a6760"
+    "hash": "b62442cef12de6e1d4bfa1ab0c746fceb607422039d2c3af21227478cbcfec7d"
   },
   "public/browserconfig.xml": {
     "uuid": "256e5fee05c0f3594f6ec2e741b1a44f933eff60dd2c1c604427b339c6e565a3",
@@ -421,7 +421,7 @@
   },
   "schema.graphql": {
     "uuid": "4fc0b2063a1bdc24d870b881a26f9a0ec32b36baf611f0f83a91a838d729750a",
-    "hash": "a872f39b194647ab65e00d749d7992bcd266c934a3d9ca2cacbfe80c58ac6475"
+    "hash": "2475c6564522c4499ad2ece8adb06192091f4c8ea0ea09d5427cb27b5aa2c03a"
   },
   "scripts/start.js": {
     "uuid": "d5e4bfa4fc400dfe5217549fd29fb5b7ab5deadf88e8cdf3bc1517eb18925a8f",
@@ -433,7 +433,7 @@
   },
   "src/Chat/Content.jsx": {
     "uuid": "86ad2c47f21be1321cce85f1d2a8277bdaa40566540ab6630d763eddd52434d0",
-    "hash": "4f425c54d4b8f054d4960184d96d6c87c4addb183dc17308786789b91a356c83"
+    "hash": "5e8c29649d546eb12281c73feef675242bd19b0c474f0120db6456699c59e4bc"
   },
   "src/Chat/GithubRepos.jsx": {
     "uuid": "3efa3c6f82e8f2da262c5d43715609794dea7d7ab0e0f62652945fda55bfc581",
@@ -461,11 +461,11 @@
   },
   "src/shared/hooks/useCreateAIProject.js": {
     "uuid": "715e242f21addceecbf109ba20f126bd5ea8f9d9afedc825e874b0d6f03b1136",
-    "hash": "286d48ad4d15c0c01f70cafd4deddf12c2af83176e1e9fe38bbcd72995ae31a8"
+    "hash": "d30853cede1504c7f3a2c0f444b51d1c36ae9ee0b341f8c7deb097f56229f711"
   },
   "src/Projects/ProjectPreview.jsx": {
     "uuid": "c422127a93948f53fe35f3b828f3a961787ac25667f6d1bd45b1e1bd2b168996",
-    "hash": "dcd4c8518e8a6a2c3ead3b00df4fcf502ae03dd8d46e18f3d624d91243791696"
+    "hash": "78d7a6f470775dd59de8dafdd43de455da6c440decaad9fbe45d903a96e922b0"
   },
   "src/Projects/__generated__/ProjectPreview.graphql.js": {
     "uuid": "eacf47a69fcd25c3b231f4b3df061c7eb3a20ead134a10ae416873aa278a0ef4",
@@ -511,16 +511,80 @@
     "uuid": "b0ac21a04ddf8b40bc8d4d83026ec0bfbb5d9587aade5d0d62125bae51bcbec0",
     "hash": "38af250f835c9e6fef8b4265da9022c5b678a42a1b8c0ddc7592a1b8018e7b4d"
   },
-  "CHANGELOG.md": {
-    "uuid": "b8553f55046094991a2e216da5abefa4305fafbe3cca7d3fc59ad8f9d1b14a28",
-    "hash": "6f9d3fc688cf3c0292e6b1673de0d99f2a08815ff5cf9552104ce7686adadb31"
-  },
   "src/Project/index.jsx": {
     "uuid": "f47ceea1ab2d307dc57b7c6dee6a51eeb54297211e571031546df565adf661ca",
     "hash": "15623bff4f7dde4776f848d11e1745e937ae184bd8224609ac9bd176d2aab563"
   },
   "src/Projects/index.jsx": {
     "uuid": "c510e5f808374fbeb0ff75b558b694d5aaf969badb37472e39179274d876fdc6",
-    "hash": "20918746ec71593a95df0eac404141265cccc8a40eeda834ae17399c611dd310"
+    "hash": "f75d498cbfe4317d48b8dac3d046a6c67ef1665d136869b937e1c277fcc4ba7e"
+  },
+  "src/Projects/Toggle.jsx": {
+    "uuid": "f3e31c1e5d39dfa51c29e6d0afb4372327c78b74a9d84c489d14b05f73b51779",
+    "hash": "e607018a2b074d2910fc4cb721d8ab553ae8165a9ce04f59903d12b632da04a0"
+  },
+  "src/AppDashboard/__generated__/AppDashboardQuery.graphql.js": {
+    "uuid": "fc110a237ba5dc60610815bbae7677a93e39c7fd43df10c464acbd917f82df3d",
+    "hash": "746d2d1e178392cf5d83ec8c58076939964dc3e35bfc9e06c51e78130a3b24ae"
+  },
+  "src/AppDashboard/__generated__/AppQuery.graphql.js": {
+    "uuid": "6f1f25d3db071cf55e6440bfdf7d5a331c71322db063dddcff19bbfbabe961bb",
+    "hash": "4c20a247ceb02e785824a06f451430f8dccb73d78ee7199111a81f4e5410e46d"
+  },
+  "src/AppDashboard/index.jsx": {
+    "uuid": "982d3fffb08ad96a2be8d2190b76304ba7befbddf75457876cf681d36b0d6f7e",
+    "hash": "b821e1dd1e72f02db21aafcc4c0c67b3f5c466c009df41878fa397a01b06a4d6"
+  },
+  "src/Projects/__generated__/ProjectsQuery.graphql.js": {
+    "uuid": "9ff569a91340ee604d05f7fd578a27afa80c34616a00515f8c3aa1717895a77c",
+    "hash": "c5d7c27c8fddcae5ff78a2564a820e6060c3b629d6fc8e2501c1498c06ad0760"
+  },
+  "src/shared/DocumentEditor.jsx": {
+    "uuid": "6856957226912cc0837304cc6f9b9db7c57328871d4bcd09c042b5620d5cd052",
+    "hash": "c77a000f40c1a5c88cfa89b7237c5b00320a9ddf3b1d8c6ece1e8fee4d635e09"
+  },
+  "src/shared/__generated__/DocumentEditorMutation.graphql.js": {
+    "uuid": "941647c233d1855da314ac8c5212fb5d12fb245225260064cc878634510cddc5",
+    "hash": "7ef02c11413206bcf8488b084b43ba81403e413df9c99515f726f3c5270d6c77"
+  },
+  "src/shared/__generated__/EditorContentMutation.graphql.js": {
+    "uuid": "1689a4896fad4cf29a63644f81d3fe5b54ae3e60f1ab04d618fa55f29cda77f9",
+    "hash": "66750ac625a065cccd187d5fe86599672ad5b72b1808455df5bc32ca2a53d836"
+  },
+  "src/shared/Plugins/FloatingTextFormatToolbarPlugin/index.jsx": {
+    "uuid": "dcbe21736d3aca04a0cf6159cec85597070df95de1e68f7ece30b2d8fae7b1f1",
+    "hash": "586facf697067d71c0d2d61ef1ca44105a497e29c70724bb00f7555f4b0979be"
+  },
+  "src/shared/Plugins/FloatingTextFormatToolbarPlugin/index.css": {
+    "uuid": "2b84040ed2e6364a1abdc8379ae44c511e0e374b8e5e17616c7a625c872b90f4",
+    "hash": "d13eba0f4dff541f8a36bfb58b028ebbda1dbd262f3e8a1f4660e7c2dcc8b610"
+  },
+  "src/shared/utils/getDOMRangeRect.js": {
+    "uuid": "d0b652d5e456a7c7ce9e11742e8682a186f26e057716ffa925216185242a9b26",
+    "hash": "91cf373540a99af3fecf8c7560956e1623664a234af38e911c053984f19223c8"
+  },
+  "src/shared/utils/getSelectedNode.js": {
+    "uuid": "e7316ec60d90d5d3f6b3a50254ffb8e76d4ee91fa1dcd7a936f7054bda47e84d",
+    "hash": "f1dd2091051503da26f84d653976cf169ab27b2b01085621fce5c454199e16a4"
+  },
+  "src/shared/utils/setFloatingElemPosition.js": {
+    "uuid": "d5a78c281be682361af02b43b3d7baaeb7fbcda6f60f8247003c92c235bd8fba",
+    "hash": "de07935d1a3e331febb5d420ae09bc016056e1f5f1cf74cf0ecd3d1c7c1a16ee"
+  },
+  "src/shared/Plugins/ServerPlugin/index.jsx": {
+    "uuid": "99f1e5808e3a9320f68d7697a58de4a80fec32d3555f39b58c81a5797193f755",
+    "hash": "633d2b4c1a9d9d27ed119f37eaa8fd6e3b6f26e41bf5a3e3ab176e991ea32ace"
+  },
+  "src/shared/Plugins/ServerPlugin/__generated__/ServerPluginMutation.graphql.js": {
+    "uuid": "ab59b0708dfaf85c09b4f5a9abd3fbc334f8851db26efabd53babf0af5d9f9d4",
+    "hash": "8b43ea3fbfd6928c356ef92346c8eff1acff1dfeaffc22a848de0ade284a68fd"
+  },
+  "src/shared/DocumentEditor.css": {
+    "uuid": "be252603f8aee1203ff610bad416f1b9962484878bd65afd0fefee4b7d36679c",
+    "hash": "9977d5dc22b2de7161b10297edc787146ca225e4b517eb759c4870c84f6fb4f5"
+  },
+  "src/shared/Dropdown.jsx": {
+    "uuid": "79526edbc3ed75265bdeead8a2cef2a72f95496dc2d7e84f7e8f06a80df0ea21",
+    "hash": "95e25ffe1783ea459e22c73919c9c690d48db3c7ae3d978f01ee7fbbf090e8f2"
   }
 }

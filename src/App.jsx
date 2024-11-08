@@ -1,6 +1,5 @@
 /* eslint-disable import/no-extraneous-dependencies */
 // @flow
-
 import { memo, Suspense } from 'react';
 import { IntlProvider } from 'react-intl';
 import { Routes, Route, Navigate } from 'react-router-dom';
@@ -12,6 +11,8 @@ import Dashboard from './Dashboard';
 import Login from './Session/Login';
 import Signup from './Session/Signup';
 import SessionController from './SessionController';
+
+import { SocketProvider } from './shared';
 
 type Props = {
   locale: 'es' | 'en',
@@ -52,7 +53,9 @@ function App({ locale }: Props): React$Node {
           element={
             <Suspense fallback={<div />}>
               <SessionController redirectTo="/session/signin" fallback={<div />}>
-                <Dashboard />
+                <SocketProvider>
+                  <Dashboard />
+                </SocketProvider>
               </SessionController>
             </Suspense>
           }
