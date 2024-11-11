@@ -30,6 +30,7 @@ import SocketProvider from './hooks/SocketContext';
 // Hooks
 import useCreateAIProject from './hooks/useCreateAIProject';
 import useDevice from './hooks/useDevice';
+import useUpdateProjectSummary from './hooks/useUpdateProjectSummary';
 
 // Utils
 
@@ -66,6 +67,7 @@ export {
   useCreateAIProject,
   useDevice,
   useInput,
+  useUpdateProjectSummary,
   // Utils
   validateData,
 };

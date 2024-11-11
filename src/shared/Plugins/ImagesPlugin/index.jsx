@@ -40,27 +40,20 @@ export const INSERT_IMAGE_COMMAND: any = createCommand('INSERT_IMAGE_COMMAND');
 const getDOMSelection = (targetWindow) => (targetWindow || window).getSelection();
 
 export function InsertImageUploadedDialogBody({ onClick }: { onClick: (any) => void }): React$Node {
-  const [src, setSrc] = useState('');
+  const [imageMetadata, setImageMetadata] = useState({});
 
-  const loadImage = (files: FileList | null) => {
-    const reader = new FileReader();
-    // eslint-disable-next-line func-names
-    reader.onload = function() {
-      if (typeof reader.result === 'string') {
-        setSrc(reader.result);
-      }
-      return '';
-    };
-    if (files !== null) {
-      reader.readAsDataURL(files[0]);
-    }
+  const loadImage = (newImageMetadata: {|
+    id: string | Promise<string>,
+    previewUrl?: ?string,
+  |}) => {
+    setImageMetadata(newImageMetadata);
   };
 
   return (
     <Flexbox flexDirection="column" rowGap={16}>
       <FileInput label="Select an image or drag" onChange={loadImage} accept="image/*" />
       <Flexbox>
-        <Button onClick={() => onClick({ altText: '', src })}>Select Image</Button>
+        <Button onClick={() => onClick(imageMetadata)}>Select Image</Button>
       </Flexbox>
     </Flexbox>
   );
@@ -151,6 +144,7 @@ img.src = TRANSPARENT_IMAGE;
 function $onDragStart(event: DragEvent): boolean {
   // eslint-disable-next-line no-use-before-define
   const node = $getImageNodeInSelection();
+  console.log({ node, event });
   if (!node) {
     return false;
   }
@@ -158,20 +152,17 @@ function $onDragStart(event: DragEvent): boolean {
   if (!dataTransfer) {
     return false;
   }
+  console.log({ dataTransfer });
   dataTransfer.setData('text/plain', '_');
   dataTransfer.setDragImage(img, 0, 0);
   dataTransfer.setData(
     'application/x-lexical-drag',
     JSON.stringify({
       data: {
-        altText: node.__altText,
-        caption: node.__caption,
-        height: node.__height,
+        id: node.__id,
+        previewUrl: node.__previewUrl,
+        metadata: node.__metadata,
         key: node.getKey(),
-        maxWidth: node.__maxWidth,
-        showCaption: node.__showCaption,
-        src: node.__src,
-        width: node.__width,
       },
       type: 'image',
     }),
@@ -250,7 +241,7 @@ function canDropImage(event: DragEvent): boolean {
     target instanceof HTMLElement &&
     !target.closest('code, span.editor-image') &&
     target.parentElement &&
-    target.parentElement.closest('div.ContentEditable__root')
+    target.parentElement.closest('div.contentEditableRoot')
   );
 }
 

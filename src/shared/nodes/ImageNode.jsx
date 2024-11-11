@@ -12,44 +12,27 @@ import type {
   DOMConversionOutput,
   DOMExportOutput,
   EditorConfig,
-  LexicalEditor,
   LexicalNode,
   NodeKey,
-  SerializedEditor,
   SerializedLexicalNode,
   Spread,
 } from 'lexical';
 
-import { $applyNodeReplacement, createEditor, DecoratorNode } from 'lexical';
+import { $applyNodeReplacement, DecoratorNode } from 'lexical';
 import { Suspense } from 'react';
 
 // eslint-disable-next-line import/no-cycle
 import ImageComponent from './ImageComponent';
 
 export interface ImagePayload {
-  altText: string;
-  caption?: LexicalEditor;
-  height?: number;
+  id: string | Promise<string>;
+  previewUrl?: ?string;
   key?: NodeKey;
-  maxWidth?: number;
-  showCaption?: boolean;
-  src: string;
-  width?: number;
-  captionsEnabled?: boolean;
-}
-
-function isGoogleDocCheckboxImg(img: HTMLImageElement): boolean {
-  return (
-    img.parentElement != null &&
-    img.parentElement.tagName === 'LI' &&
-    img.previousSibling === null &&
-    img.getAttribute('aria-roledescription') === 'checkbox'
-  );
 }
 
 function $convertImageElement(domNode: Node): null | DOMConversionOutput {
   const img: HTMLImageElement = domNode;
-  if (img.src.startsWith('file:///') || isGoogleDocCheckboxImg(img)) {
+  if (img.src.startsWith('file:///')) {
     return null;
   }
   const { alt: altText, src, width, height } = img;
@@ -60,69 +43,35 @@ function $convertImageElement(domNode: Node): null | DOMConversionOutput {
 
 export type SerializedImageNode = Spread<
   {
-    altText: string,
-    caption: SerializedEditor,
-    height?: number,
-    maxWidth: number,
-    showCaption: boolean,
-    src: string,
-    width?: number,
+    id: string | Promise<string>,
+    previewUrl: ?string,
   },
   SerializedLexicalNode,
 >;
 
 export class ImageNode extends DecoratorNode<JSX.Element> {
-  __src: string;
+  __id: string | Promise<string>;
 
-  __altText: string;
+  __metadata: { id: string, src: string };
 
-  __width: 'inherit' | number;
-
-  __height: 'inherit' | number;
-
-  __maxWidth: number;
-
-  __showCaption: boolean;
-
-  __caption: LexicalEditor;
-
-  // Captions cannot yet be used within editor cells
-  __captionsEnabled: boolean;
+  __previewUrl: ?string;
 
   static getType(): string {
     return 'image';
   }
 
   static clone(node: ImageNode): ImageNode {
-    return new ImageNode(
-      node.__src,
-      node.__altText,
-      node.__maxWidth,
-      node.__width,
-      node.__height,
-      node.__showCaption,
-      node.__caption,
-      node.__captionsEnabled,
-      node.__key,
-    );
+    return new ImageNode(node.__id, node.__previewUrl, node.__key);
   }
 
   static importJSON(serializedNode: SerializedImageNode): ImageNode {
-    const { altText, height, width, maxWidth, caption, src, showCaption } = serializedNode;
+    const { id, previewUrl } = serializedNode;
     // eslint-disable-next-line no-use-before-define
     const node = $createImageNode({
-      altText,
-      height,
-      maxWidth,
-      showCaption,
-      src,
-      width,
+      id,
+      previewUrl,
     });
-    const nestedEditor = node.__caption;
-    const editorState = nestedEditor.parseEditorState(caption.editorState);
-    if (!editorState.isEmpty()) {
-      nestedEditor.setEditorState(editorState);
-    }
+
     return node;
   }
 
@@ -144,58 +93,32 @@ export class ImageNode extends DecoratorNode<JSX.Element> {
     };
   }
 
-  constructor(
-    src: string,
-    altText: string,
-    maxWidth: number,
-    width?: 'inherit' | number,
-    height?: 'inherit' | number,
-    showCaption?: boolean,
-    caption?: LexicalEditor,
-    captionsEnabled?: boolean,
-    key?: NodeKey,
-  ) {
+  constructor(id: string | Promise<string>, previewUrl?: ?string, key?: NodeKey) {
     super(key);
-    this.__src = src;
-    this.__altText = altText;
-    this.__maxWidth = maxWidth;
-    this.__width = width || 'inherit';
-    this.__height = height || 'inherit';
-    this.__showCaption = showCaption || false;
-    this.__caption =
-      caption ||
-      createEditor({
-        nodes: [],
+
+    this.__id = id;
+    this.__previewUrl = previewUrl;
+    this.__metadata = {
+      id,
+      src: '',
+    };
+
+    if (id instanceof Promise) {
+      Promise.resolve(id).then((imageId) => {
+        this.__metadata.src = imageId;
       });
-    this.__captionsEnabled = captionsEnabled || captionsEnabled === undefined;
+    } else {
+      this.__metadata.src = id;
+    }
   }
 
   exportJSON(): SerializedImageNode {
     return {
-      altText: this.getAltText(),
-      caption: this.__caption.toJSON(),
-      height: this.__height === 'inherit' ? 0 : this.__height,
-      maxWidth: this.__maxWidth,
-      showCaption: this.__showCaption,
-      src: this.getSrc(),
+      id: this.__metadata.src || this.getId(),
       type: 'image',
       version: 1,
-      width: this.__width === 'inherit' ? 0 : this.__width,
     };
   }
-
-  setWidthAndHeight(width: 'inherit' | number, height: 'inherit' | number): void {
-    const writable = this.getWritable();
-    writable.__width = width;
-    writable.__height = height;
-  }
-
-  setShowCaption(showCaption: boolean): void {
-    const writable = this.getWritable();
-    writable.__showCaption = showCaption;
-  }
-
-  // View
 
   // eslint-disable-next-line class-methods-use-this
   createDOM(config: EditorConfig): HTMLElement {
@@ -213,27 +136,17 @@ export class ImageNode extends DecoratorNode<JSX.Element> {
     return false;
   }
 
-  getSrc(): string {
-    return this.__src;
-  }
-
-  getAltText(): string {
-    return this.__altText;
+  getId(): string {
+    return this.__metadata.id;
   }
 
   decorate(): JSX.Element {
     return (
       <Suspense fallback={null}>
         <ImageComponent
-          src={this.__src}
-          altText={this.__altText}
-          width={this.__width}
-          height={this.__height}
-          maxWidth={this.__maxWidth}
+          id={this.getId()}
           nodeKey={this.getKey()}
-          showCaption={this.__showCaption}
-          caption={this.__caption}
-          captionsEnabled={this.__captionsEnabled}
+          previewUrl={this.__previewUrl}
           // eslint-disable-next-line no-use-before-define
           $isImageNode={$isImageNode}
           resizable
@@ -243,30 +156,8 @@ export class ImageNode extends DecoratorNode<JSX.Element> {
   }
 }
 
-export function $createImageNode({
-  altText,
-  height,
-  maxWidth = 500,
-  captionsEnabled,
-  src,
-  width,
-  showCaption,
-  caption,
-  key,
-}: ImagePayload): ImageNode {
-  return $applyNodeReplacement(
-    new ImageNode(
-      src,
-      altText,
-      maxWidth,
-      width,
-      height,
-      showCaption,
-      caption,
-      captionsEnabled,
-      key,
-    ),
-  );
+export function $createImageNode({ id, previewUrl, key }: ImagePayload): ImageNode {
+  return $applyNodeReplacement(new ImageNode(id, previewUrl, key));
 }
 
 export function $isImageNode(node: LexicalNode | null | undefined): ImageNode {
