@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<139d128925d2499fb30d9170b1c9368a>>
+ * @generated SignedSource<<402c1a18f821b5a24193a35919f339ef>>
  * @flow
  * @lightSyntaxTransform
  * @nogrep
@@ -16,7 +16,7 @@ declare export opaque type ProjectCard$fragmentType: FragmentType;
 export type ProjectCard$data = {|
   +id: string,
   +key: string,
-  +name: string,
+  +name: ?string,
   +summary: string,
   +$fragmentType: ProjectCard$fragmentType,
 |};

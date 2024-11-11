@@ -19,6 +19,53 @@ import { INSERT_IMAGE_COMMAND } from '../ImagesPlugin';
 
 const ACCEPTABLE_IMAGE_TYPES = ['image/', 'image/heic', 'image/heif', 'image/gif', 'image/webp'];
 
+function dec2hex(dec) {
+  return dec.toString(16).padStart(2, '0');
+}
+
+function generateId(len) {
+  const arr = new Uint8Array((len || 40) / 2);
+  window.crypto.getRandomValues(arr);
+  return Array.from(arr, dec2hex).join('');
+}
+
+function getImageId(file) {
+  const formData = new FormData();
+
+  formData.append('image', file);
+  formData.append('alt', '');
+
+  const traceId = generateId(16);
+
+  return fetch(`${process.env.REACT_APP_MEDIA_HOST ?? ''}/media/upload`, {
+    mode: 'cors',
+    method: 'POST',
+    body: formData,
+    credentials: 'include',
+    headers: {
+      Accept: 'application/json',
+      'x-request-id': traceId,
+      'x-b3-traceid': traceId,
+      'x-traceid': traceId,
+      'x-b3-spanid': traceId,
+    },
+  })
+    .then((res) => res.json())
+    .then((res) => {
+      const { _id } = res?.data;
+      if (_id) {
+        return _id;
+      }
+
+      return null;
+    })
+    .catch((err) => {
+      // eslint-disable-next-line no-console
+      console.trace({ err });
+      return null;
+    });
+}
+
 export default function DragDropPaste(): null {
   const [editor] = useLexicalComposerContext();
   useEffect(() => {
@@ -33,8 +80,8 @@ export default function DragDropPaste(): null {
           for (const { file, result } of filesResult) {
             if (isMimeType(file, ACCEPTABLE_IMAGE_TYPES)) {
               editor.dispatchCommand(INSERT_IMAGE_COMMAND, {
-                altText: file.name,
-                src: result,
+                id: getImageId(file),
+                previewUrl: result,
               });
             }
           }

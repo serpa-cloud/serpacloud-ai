@@ -56,13 +56,10 @@ type AIProject implements Node {
   createdBy: User!
   createdAt: Date!
   createdAtFormatted: String!
-  name: String!
+  name: String
   key: String!
-  currentConversation: Chat
-  firstConversation: Chat
-  description: String!
-  stackPreferences: String
   summary: String!
+  summaryState: String!
   clarifyingAsks: String
 }
 
@@ -742,7 +739,7 @@ type Mutation {
   promptToSerpaCloudAI(message: String!, conversation: ID!, services: [String]!): AIMessageEdge
   createChat(projectId: ID!): Chat!
   createAIProject: AIProject!
-  updateProjectSummary(id: ID!, summary: String!): AIProject!
+  updateProjectSummary(id: ID!, title: String!, summary: String!, summaryState: String!): AIProject!
 }
 
 interface NamespaceNode {

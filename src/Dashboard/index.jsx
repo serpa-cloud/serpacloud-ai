@@ -1,4 +1,5 @@
 // @flow
+import { Suspense } from 'react';
 import { Routes, Route } from 'react-router-dom';
 
 import Home from '../Home';
@@ -14,8 +15,15 @@ export default function Dashboard(): React$Node {
       <Header />
       <section className={styles.section}>
         <Routes>
-          <Route path="/projects/:project" element={<Project />} />
           <Route path="/search" element={<SearchView />} />
+          <Route
+            path="/projects/:project"
+            element={
+              <Suspense fallback={<div />}>
+                <Project />
+              </Suspense>
+            }
+          />
           <Route path="/" element={<Home />} />
         </Routes>
       </section>
