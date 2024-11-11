@@ -1,42 +1,48 @@
 // @flow
 
-import { useState } from 'react';
-
+import useImageload from './hooks/useImageLoad';
 import './FileInput.css';
 
 import Text from './Text';
 import Icon from './Icon';
+import Spinner from './Spinner';
 
 type Props = {|
   accept?: string,
   label: string,
-  onChange: (files: FileList | null) => void,
+  onChange: ({| id: string | Promise<string>, previewUrl?: ?string |}) => void,
 |};
 
 export default function FileInput({ accept, label, onChange }: Props): React$Node {
-  const [previewUrl, setPreviewUrl] = useState(null);
+  const [, isPending, , previewUrl, handleOnChange] = useImageload(
+    '',
+    (imageId) => {
+      onChange({ id: imageId, previewUrl: null });
+    },
+    {
+      upload: true,
+    },
+  );
 
-  function handleOnChange(e) {
-    onChange(e.target.files);
-
-    setPreviewUrl(null);
-
-    const target: HTMLInputElement = e.currentTarget;
-    const file: File = target.files[0];
-
-    if (file) {
-      const reader = new FileReader();
-      reader.readAsDataURL(file);
-      reader.onloadend = () => {
-        setPreviewUrl(reader.result);
-      };
-    }
-  }
   return (
     <div className="Input__wrapper">
       <div className="Input__fake_image_container">
         <div className="Input__fake_image_content">
-          {previewUrl && <img src={previewUrl} alt="Preview" className="Input__fake_image" />}
+          {previewUrl && (
+            <div className="Input__Preview_image_content">
+              <img
+                src={previewUrl}
+                alt="Preview"
+                className="Input__fake_image"
+                style={{ opacity: isPending ? 0.6 : 1 }}
+              />
+              {isPending && (
+                <div className="Input__spinner">
+                  <Spinner />
+                </div>
+              )}
+            </div>
+          )}
           {!previewUrl && (
             <>
               <Icon icon="image" size={40} />
@@ -52,6 +58,7 @@ export default function FileInput({ accept, label, onChange }: Props): React$Nod
           accept={accept}
           className="Input__input"
           onChange={handleOnChange}
+          disabled={isPending}
         />
       </div>
     </div>

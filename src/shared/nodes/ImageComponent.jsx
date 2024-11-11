@@ -12,7 +12,6 @@ import { useLexicalEditable } from '@lexical/react/useLexicalEditable';
 import { useLexicalNodeSelection } from '@lexical/react/useLexicalNodeSelection';
 import { mergeRegister } from '@lexical/utils';
 import {
-  $getNodeByKey,
   $getSelection,
   $isNodeSelection,
   $isRangeSelection,
@@ -29,67 +28,76 @@ import {
 } from 'lexical';
 
 import { Suspense, useCallback, useEffect, useRef, useState } from 'react';
-
-import ImageResizer from './ImageResizer';
 // $FlowFixMe
 import brokenImage from './image-broken.svg';
 
-import './ImageNode.css';
+import Icon from '../Icon';
+import Spinner from '../Spinner';
 
-const imageCache = new Set();
+import './ImageNode.css';
+import styles from './ImageComponent.module.sass';
+
+const imageCache = new Map();
 
 export const RIGHT_CLICK_IMAGE_COMMAND: any = createCommand('RIGHT_CLICK_IMAGE_COMMAND');
 
-function useSuspenseImage(src: string) {
-  if (!imageCache.has(src)) {
+function useSuspenseImage(id) {
+  if (!imageCache.has(id)) {
     throw new Promise((resolve) => {
-      const img = new Image();
-      img.src = src;
-      img.onload = () => {
-        imageCache.add(src);
-        resolve(null);
-      };
-      img.onerror = () => {
-        imageCache.add(src);
-      };
+      Promise.resolve(id).then((imageId) => {
+        const src = `https://static.serpa.cloud/${imageId}/80/80/0/image?fit=cover`;
+        const img = new Image();
+        img.src = src;
+        img.onload = () => {
+          imageCache.set(id, { src, imageId });
+          resolve({ src, imageId });
+        };
+        img.onerror = () => {
+          imageCache.set(id, { src: '', imageId });
+        };
+      });
     });
   }
+
+  return imageCache.get(id);
 }
 
 function LazyImage({
-  altText,
-  className,
-  imageRef,
-  src,
-  width,
-  height,
-  maxWidth,
+  id,
   onError,
+  imageRef,
+  className,
 }: {
-  altText: string,
-  className: string | null,
-  height: 'inherit' | number,
-  imageRef: { current: null | HTMLImageElement },
-  maxWidth: number,
-  src: string,
-  width: 'inherit' | number,
   onError: () => void,
+  className: string | null,
+  id: string | Promise<string>,
+  imageRef: { current: null | HTMLImageElement },
 }): React$Node {
-  useSuspenseImage(src);
+  const metadata = useSuspenseImage(id);
+
+  if (!metadata) return null;
+
+  const { src, imageId } = metadata;
+
   return (
-    <img
-      className={className || undefined}
-      src={src}
-      alt={altText}
-      ref={imageRef}
-      style={{
-        height,
-        maxWidth,
-        width,
-      }}
-      onError={onError}
-      draggable="false"
-    />
+    <div className={styles.root}>
+      <div className={styles.imageContainer}>
+        <img
+          alt=""
+          src={src}
+          ref={imageRef}
+          onError={onError}
+          draggable="false"
+          className={`${className || ''} ${styles.image}`}
+        />
+        <a
+          className={styles.openLink}
+          href={`https://static.serpa.cloud/${imageId}/0/0/0/image?fit=cover`}
+        >
+          <Icon icon="open_in_new" weight={200} size={16} />
+        </a>
+      </div>
+    </div>
   );
 }
 
@@ -109,32 +117,20 @@ function BrokenImage(): React$Node {
 }
 
 export default function ImageComponent({
-  src,
-  width,
-  height,
-  altText,
+  id,
+  previewUrl,
   nodeKey,
-  maxWidth,
-  resizable,
-  showCaption,
   $isImageNode,
-  captionsEnabled,
 }: {
-  altText: string,
-  height: 'inherit' | number,
-  maxWidth: number,
+  id: string | Promise<string>,
+  previewUrl?: ?string,
   nodeKey: any,
-  resizable: boolean,
-  showCaption: boolean,
-  src: string,
-  width: 'inherit' | number,
-  captionsEnabled: boolean,
   $isImageNode: (any) => boolean,
 }): React$Node {
   const imageRef = useRef<null | HTMLImageElement>(null);
   const buttonRef = useRef<HTMLButtonElement | null>(null);
   const [isSelected, setSelected, clearSelection] = useLexicalNodeSelection(nodeKey);
-  const [isResizing, setIsResizing] = useState<boolean>(false);
+
   const [editor] = useLexicalComposerContext();
   const [selection, setSelection] = useState(null);
   const activeEditorRef = useRef(null);
@@ -202,9 +198,6 @@ export default function ImageComponent({
     (payload: MouseEvent) => {
       const event = payload;
 
-      if (isResizing) {
-        return true;
-      }
       if (event.target === imageRef.current) {
         if (event.shiftKey) {
           setSelected(!isSelected);
@@ -217,7 +210,7 @@ export default function ImageComponent({
 
       return false;
     },
-    [isResizing, imageRef, setSelected, isSelected, clearSelection],
+    [imageRef, setSelected, isSelected, clearSelection],
   );
 
   const onRightClick = useCallback(
@@ -286,7 +279,6 @@ export default function ImageComponent({
   }, [
     clearSelection,
     editor,
-    isResizing,
     isSelected,
     nodeKey,
     $onDelete,
@@ -300,38 +292,22 @@ export default function ImageComponent({
     imageRef,
   ]);
 
-  const setShowCaption = () => {
-    editor.update(() => {
-      const node = $getNodeByKey(nodeKey);
-      if ($isImageNode(node)) {
-        node.setShowCaption(true);
-      }
-    });
-  };
-
-  const onResizeEnd = (nextWidth: 'inherit' | number, nextHeight: 'inherit' | number) => {
-    // Delay hiding the resize bars for click case
-    setTimeout(() => {
-      setIsResizing(false);
-    }, 200);
-
-    editor.update(() => {
-      const node = $getNodeByKey(nodeKey);
-      if ($isImageNode(node)) {
-        node.setWidthAndHeight(nextWidth, nextHeight);
-      }
-    });
-  };
-
-  const onResizeStart = () => {
-    setIsResizing(true);
-  };
-
-  const draggable = isSelected && $isNodeSelection(selection) && !isResizing;
-  const isFocused = (isSelected || isResizing) && isEditable;
+  const draggable = isSelected && $isNodeSelection(selection);
+  const isFocused = isSelected && isEditable;
 
   return (
-    <Suspense fallback={null}>
+    <Suspense
+      fallback={
+        <div className={styles.root}>
+          <div className={styles.imageContainer}>
+            <img alt="" src={previewUrl} className={`${styles.image} ${styles.imagePending}`} />
+            <div className={styles.spinnerContainer}>
+              <Spinner />
+            </div>
+          </div>
+        </div>
+      }
+    >
       <>
         <div draggable={draggable}>
           {isLoadError ? (
@@ -341,32 +317,18 @@ export default function ImageComponent({
               className={
                 isFocused ? `focused ${$isNodeSelection(selection) ? 'draggable' : ''}` : null
               }
-              src={src}
-              altText={altText}
+              id={id}
               imageRef={imageRef}
-              width={width}
-              height={height}
-              maxWidth={maxWidth}
+              previewUrl={previewUrl}
               onError={() => setIsLoadError(true)}
             />
           )}
         </div>
-
-        {resizable && $isNodeSelection(selection) && isFocused && (
-          <ImageResizer
-            showCaption={showCaption}
-            setShowCaption={setShowCaption}
-            editor={editor}
-            buttonRef={buttonRef}
-            // $FlowFixMe
-            imageRef={imageRef}
-            maxWidth={maxWidth}
-            onResizeStart={onResizeStart}
-            onResizeEnd={onResizeEnd}
-            captionsEnabled={!isLoadError && captionsEnabled}
-          />
-        )}
       </>
     </Suspense>
   );
 }
+
+ImageComponent.defaultProps = {
+  previewUrl: null,
+};

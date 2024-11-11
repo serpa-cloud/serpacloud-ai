@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/no-static-element-interactions */
 // @flow
 import stylex from '@serpa-cloud/stylex';
 import { useState, forwardRef } from 'react';
@@ -27,8 +28,8 @@ import {
 
 import { ImageNode } from './nodes/ImageNode';
 
-import SubmitPlugin from './Plugins/SubmitPlugin';
 import ImagesPlugin from './Plugins/ImagesPlugin';
+import OnChangePlugin from './Plugins/OnChangePlugin';
 import AutoLinkPlugin from './Plugins/AutoLinkPlugin';
 import AutoFocusPlugin from './Plugins/AutoFocusPlugin';
 import DragDropPastePlugin from './Plugins/DragDropPastePlugin';
@@ -60,10 +61,12 @@ type Props = {|
   +autofocus?: ?boolean,
   +placeholder?: ?string,
   +children?: ?React$Node,
-  +onSubmit?: ?(any) => void,
   +defaultPlainText?: ?string,
+  +enableComplexPlugins?: ?boolean,
   +placeholderClassName?: ?string,
   +$customPopulate?: ?(any) => void,
+  +onChange?: ?(any) => void | Promise<void>,
+  +onSubmit?: ?(any) => void | Promise<void>,
   +theme?: ?{
     [string]: string,
     heading?: ?{
@@ -75,6 +78,7 @@ type Props = {|
 function DocumentEditorInterface(
   {
     theme,
+    onChange,
     children,
     onSubmit,
     autofocus,
@@ -82,6 +86,7 @@ function DocumentEditorInterface(
     placeholder,
     $customPopulate,
     defaultPlainText,
+    enableComplexPlugins,
     placeholderClassName,
   }: Props,
   ref,
@@ -106,7 +111,12 @@ function DocumentEditorInterface(
   }
 
   return (
-    <div className={`${stylex(styles.editorContainer)} ${className ?? ''}`}>
+    <div
+      className={`${stylex(styles.editorContainer)} ${className ?? ''}`}
+      onKeyDown={(e) => {
+        e.stopPropagation();
+      }}
+    >
       <LexicalComposer
         initialConfig={{
           namespace: 'DocumentEditor',
@@ -238,7 +248,7 @@ function DocumentEditorInterface(
         <RichTextPlugin
           contentEditable={
             <div className="editor" ref={onRef}>
-              <ContentEditable />
+              <ContentEditable className="contentEditableRoot" />
             </div>
           }
           placeholder={
@@ -249,20 +259,26 @@ function DocumentEditorInterface(
           // $FlowFixMe
           ErrorBoundary={LexicalErrorBoundary}
         />
-        <ListPlugin />
-        <ImagesPlugin />
-        <AutoLinkPlugin />
-        <CheckListPlugin />
-        <DragDropPastePlugin />
-        <CodeHighlightPlugin />
-        <ClickableLinkPlugin />
-        <HorizontalRulePlugin />
-        <TabIndentationPlugin />
-        <MarkdownShortcutPlugin />
-        <ComponentPickerMenuPlugin />
-        <SubmitPlugin onSubmit={onSubmit} ref={ref} />
-        <AutoFocusPlugin focus={autofocus} />
-        {floatingAnchorElem && <FloatingTextFormatToolbarPlugin anchorElem={floatingAnchorElem} />}
+        {enableComplexPlugins && (
+          <>
+            <ListPlugin />
+            <ImagesPlugin />
+            <AutoLinkPlugin />
+            <CheckListPlugin />
+            <DragDropPastePlugin />
+            <CodeHighlightPlugin />
+            <ClickableLinkPlugin />
+            <HorizontalRulePlugin />
+            <TabIndentationPlugin />
+            <MarkdownShortcutPlugin />
+            <ComponentPickerMenuPlugin />
+            <AutoFocusPlugin focus={autofocus} />
+            {floatingAnchorElem && (
+              <FloatingTextFormatToolbarPlugin anchorElem={floatingAnchorElem} />
+            )}
+          </>
+        )}
+        <OnChangePlugin onSubmit={onSubmit} onChange={onChange} ref={ref} />
         {children}
       </LexicalComposer>
     </div>
@@ -274,6 +290,7 @@ const DocumentEditor: React$AbstractComponent<Props, mixed> = forwardRef(Documen
 DocumentEditorInterface.defaultProps = {
   theme: {},
   className: '',
+  onChange: null,
   children: null,
   onSubmit: null,
   placeholder: '',
@@ -281,6 +298,7 @@ DocumentEditorInterface.defaultProps = {
   $customPopulate: null,
   defaultPlainText: null,
   placeholderClassName: '',
+  enableComplexPlugins: true,
 };
 
 export default DocumentEditor;
