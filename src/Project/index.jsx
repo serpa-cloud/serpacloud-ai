@@ -9,7 +9,11 @@ import { graphql, useLazyLoadQuery } from 'react-relay/hooks';
 
 import { ComplexEditor, useUpdateProjectSummary } from '../shared';
 
+import Graph from '../Graph';
+
 import styles from './index.module.sass';
+
+import testData from './testData';
 
 async function resolveImagePromises(obj) {
   // Función recursiva para recorrer y resolver promesas
@@ -136,6 +140,9 @@ export default function Project(): React$Node {
         onChangeTitle={handleChangeTitle}
         onChangeSummary={handleChangeSummary}
       />
+      <div>
+        <Graph data={testData} />
+      </div>
     </div>
   );
 }
