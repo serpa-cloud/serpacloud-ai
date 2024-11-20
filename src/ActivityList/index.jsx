@@ -15,7 +15,13 @@ export default function ActivityList({ activity }: Props): React$Node {
           const thisKey = `${item.user}-${key}`;
           return (
             <Flexbox key={thisKey} columnGap={8}>
-              <Icon icon={item.icon} color="--neutral-color-500" size={32} />
+              <Icon
+                icon={item.icon}
+                color="--neutral-color-500"
+                size={20}
+                weight={200}
+                grade={-25}
+              />
               <Text type="s0b">{item.user}</Text>
               <Text type="s0r">{item.description}</Text>
               <Text type="s1r" color="--neutral-color-500">
