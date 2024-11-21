@@ -5,12 +5,15 @@ import styles from './index.module.sass';
 
 import Icon from '../Icon';
 import InteractiveElement from '../InteractiveElement';
+import Flexbox from '../Flexbox';
+import FilterTag from '../FilterTag';
 
 import useDevice from '../hooks/useDevice';
 
 export default function Search(): React$Node {
   const [searchParams, setSearchParams] = useSearchParams();
   const [searchValue, setSearchValue] = useState(searchParams.get('q') || '');
+  const [filter, setFilter] = useState([]);
 
   const { os } = useDevice();
   const isMacOS = os.includes('Mac OS ');
@@ -26,6 +29,21 @@ export default function Search(): React$Node {
   const handleNavigate = useCallback(() => {
     navigate(`/app/search?q=${searchValue}`);
   }, [navigate, searchValue]);
+
+  const addFilter = (tag) => {
+    setFilter((prev) => {
+      if (!prev.includes(tag)) {
+        return [...filter, tag];
+      }
+      return prev;
+    });
+  };
+
+  const deleteFilter = (tag) => {
+    setFilter((prev) => {
+      return prev.filter((item) => item !== tag);
+    });
+  };
 
   useEffect(() => {
     const handleKeydown = (event) => {
@@ -57,23 +75,40 @@ export default function Search(): React$Node {
   }, [searchParams]);
 
   return (
-    <div className={styles.searchContainer}>
-      <InteractiveElement onClick={handleNavigate}>
-        <div>
-          <Icon
-            icon="search"
-            gradient="linear-gradient(225deg, rgb(255, 82, 207) 0%, rgb(255, 103, 82) 100%)"
-          />
-        </div>
-      </InteractiveElement>
-      <input
-        value={searchValue}
-        type="text"
-        placeholder={`${isMacOS ? '⌘' : 'CTRL'} + F / Search your project`}
-        className={styles.searchInput}
-        ref={searchInput}
-        onChange={handleChange}
-      />
-    </div>
+    <Flexbox className={styles.searchContainer} flexDirection="column">
+      <Flexbox alignItems="center">
+        <InteractiveElement onClick={handleNavigate}>
+          <div>
+            <Icon
+              icon="search"
+              gradient="linear-gradient(225deg, rgb(255, 82, 207) 0%, rgb(255, 103, 82) 100%)"
+            />
+          </div>
+        </InteractiveElement>
+        <input
+          value={searchValue}
+          type="text"
+          placeholder={`${isMacOS ? '⌘' : 'CTRL'} + F / Search your project`}
+          className={styles.searchInput}
+          ref={searchInput}
+          onChange={handleChange}
+        />
+      </Flexbox>
+      <Flexbox alignItems="center" columnGap={8}>
+        <FilterTag
+          text="Filter"
+          icon="filter_list"
+          callback={addFilter}
+          addFilter={addFilter}
+          filter={filter}
+          setFilter={setFilter}
+        />
+        {filter.map((tag) => {
+          return (
+            <FilterTag text={tag} key={tag} icon="close" isFilter deleteFilter={deleteFilter} />
+          );
+        })}
+      </Flexbox>
+    </Flexbox>
   );
 }
