@@ -92,14 +92,16 @@ export default function Search(): React$Node {
           onChange={handleChange}
         />
       </Flexbox>
-      <Flexbox alignItems="center" columnGap={8}>
-        <FilterTag text="Filter" icon="filter_list" handleFilter={handleFilter} filter={filter} />
-        {filter.map((tag) => {
-          return (
-            <FilterTag text={tag} key={tag} icon="close" isFilter handleFilter={handleFilter} />
-          );
-        })}
-      </Flexbox>
+      {searchValue && (
+        <Flexbox alignItems="center" columnGap={8}>
+          <FilterTag text="Filter" icon="filter_list" handleFilter={handleFilter} filter={filter} />
+          {filter.map((tag) => {
+            return (
+              <FilterTag text={tag} key={tag} icon="close" isFilter handleFilter={handleFilter} />
+            );
+          })}
+        </Flexbox>
+      )}
     </Flexbox>
   );
 }
