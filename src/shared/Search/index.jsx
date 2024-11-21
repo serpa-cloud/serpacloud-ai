@@ -30,18 +30,16 @@ export default function Search(): React$Node {
     navigate(`/app/search?q=${searchValue}`);
   }, [navigate, searchValue]);
 
-  const addFilter = (tag) => {
-    setFilter((prev) => {
-      if (!prev.includes(tag)) {
-        return [...filter, tag];
+  const handleFilter = (tag, actionType) => {
+    setFilter((prevFilter) => {
+      if (actionType === 'add') {
+        if (!prevFilter.includes(tag)) {
+          return [...filter, tag];
+        }
+        return prevFilter;
       }
-      return prev;
-    });
-  };
 
-  const deleteFilter = (tag) => {
-    setFilter((prev) => {
-      return prev.filter((item) => item !== tag);
+      return prevFilter.filter((item) => item !== tag);
     });
   };
 
@@ -95,17 +93,10 @@ export default function Search(): React$Node {
         />
       </Flexbox>
       <Flexbox alignItems="center" columnGap={8}>
-        <FilterTag
-          text="Filter"
-          icon="filter_list"
-          callback={addFilter}
-          addFilter={addFilter}
-          filter={filter}
-          setFilter={setFilter}
-        />
+        <FilterTag text="Filter" icon="filter_list" handleFilter={handleFilter} filter={filter} />
         {filter.map((tag) => {
           return (
-            <FilterTag text={tag} key={tag} icon="close" isFilter deleteFilter={deleteFilter} />
+            <FilterTag text={tag} key={tag} icon="close" isFilter handleFilter={handleFilter} />
           );
         })}
       </Flexbox>

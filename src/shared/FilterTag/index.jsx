@@ -13,9 +13,7 @@ type Props = {
   isFilter?: boolean,
   callback?: (string) => void,
   filter?: Array<string>,
-  addFilter?: (string) => void,
-  deleteFilter?: (string) => void,
-  setFilter?: (Array<string>) => void,
+  handleFilter?: (string, string) => void,
 };
 
 export default function FilterTag({
@@ -24,9 +22,7 @@ export default function FilterTag({
   isFilter,
   callback,
   filter,
-  addFilter,
-  deleteFilter,
-  setFilter,
+  handleFilter,
 }: Props): React$Node {
   const [menuOpen, setMenuOpen] = useState(false);
 
@@ -35,7 +31,13 @@ export default function FilterTag({
   };
   return (
     <div className={styles.tagContainer}>
-      <InteractiveElement onClick={() => setMenuOpen((prev) => !prev)}>
+      <InteractiveElement
+        className={isFilter ? styles.normalCursor : null}
+        onClick={() => {
+          if (isFilter) return;
+          setMenuOpen((prev) => !prev);
+        }}
+      >
         <Flexbox alignItems="center" className={styles.filterTag}>
           <Flexbox alignItems="center" columnGap={4}>
             <Text type="s0m" color="--neutral-color-800">
@@ -43,7 +45,7 @@ export default function FilterTag({
             </Text>
             <InteractiveElement
               onClick={() => {
-                if (isFilter) deleteFilter(text);
+                if (isFilter) handleFilter(text, 'delete');
                 else callback(text);
               }}
             >
@@ -60,8 +62,7 @@ export default function FilterTag({
             callback={callback}
             closeMenu={closeMenu}
             filter={filter}
-            addFilter={addFilter}
-            setFilter={setFilter}
+            handleFilter={handleFilter}
           />
           <TagItem
             projectName="apology-20211"
@@ -69,8 +70,7 @@ export default function FilterTag({
             callback={callback}
             closeMenu={closeMenu}
             filter={filter}
-            addFilter={addFilter}
-            setFilter={setFilter}
+            handleFilter={handleFilter}
           />
           <TagItem
             projectName="behave-80538"
@@ -78,8 +78,7 @@ export default function FilterTag({
             callback={callback}
             closeMenu={closeMenu}
             filter={filter}
-            addFilter={addFilter}
-            setFilter={setFilter}
+            handleFilter={handleFilter}
           />
         </dialog>
       )}
@@ -92,7 +91,5 @@ FilterTag.defaultProps = {
   isFilter: false,
   callback: () => {},
   filter: [],
-  addFilter: () => {},
-  deleteFilter: () => {},
-  setFilter: () => {},
+  handleFilter: () => {},
 };

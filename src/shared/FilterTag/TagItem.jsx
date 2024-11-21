@@ -8,33 +8,22 @@ import styles from './index.module.sass';
 
 type Props = {
   projectName: string,
-  callback?: (string) => void,
   closeMenu?: () => void,
   filter?: Array<string>,
-  setFilter?: (Array<string>) => void,
+  handleFilter?: (string, string) => void,
 };
 
 export default function TagItem({
   projectName,
-  callback,
   closeMenu,
   filter,
-  setFilter,
+  handleFilter,
 }: Props): React$Node {
   const [checked, setChecked] = useState(filter.includes(projectName));
 
   const check = () => {
     setChecked((prev) => {
-      setFilter((prevFilter) => {
-        if (!prev) {
-          if (!prevFilter.includes(projectName)) {
-            return [...filter, projectName];
-          }
-          return prevFilter;
-        }
-
-        return prevFilter.filter((item) => item !== projectName);
-      });
+      handleFilter(projectName, prev ? 'delete' : 'add');
       return !prev;
     });
   };
@@ -48,7 +37,7 @@ export default function TagItem({
       <InteractiveElement
         className={styles.itemText}
         onClick={() => {
-          callback(projectName);
+          handleFilter(projectName, 'add');
           closeMenu();
         }}
       >
@@ -59,8 +48,7 @@ export default function TagItem({
 }
 
 TagItem.defaultProps = {
-  callback: () => {},
   closeMenu: () => {},
   filter: [],
-  setFilter: () => {},
+  handleFilter: () => {},
 };
