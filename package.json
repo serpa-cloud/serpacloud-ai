@@ -10,7 +10,7 @@
   "email": "emilia@serpa.cloud",
   "license": "MIT",
   "port": 9000,
-  "proxy": "https://serpa.cloud/_graphql",
+  "proxy": "http://localhost:7100/_graphql",
   "description": "Build 20x faster with Serpa AI",
   "dependencies": {
     "@amplitude/analytics-browser": "^2.5.2",
@@ -80,6 +80,7 @@
     "jest-watch-typeahead": "^1.0.0",
     "jsonwebtoken": "^9.0.1",
     "lexical": "^0.19.0",
+    "marked": "^15.0.0",
     "mini-css-extract-plugin": "^2.4.5",
     "node-fetch": "2.6.1",
     "node-match-path": "^0.6.3",

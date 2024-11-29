@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<c326560315587a4b080a772c864453db>>
+ * @generated SignedSource<<bc42a9de5fc626422de7b077ef272abb>>
  * @flow
  * @lightSyntaxTransform
  * @nogrep
@@ -24,6 +24,10 @@ export type ProjectQuery$data = {|
     +summaryState?: string,
     +$fragmentSpreads: ProjectCard$fragmentType,
   |},
+  +projectsTemplates: ?$ReadOnlyArray<{|
+    +id: string,
+    +userDescription: string,
+  |}>,
 |};
 export type ProjectQuery = {|
   response: ProjectQuery$data,
@@ -80,6 +84,25 @@ v6 = {
   "kind": "ScalarField",
   "name": "summaryState",
   "storageKey": null
+},
+v7 = {
+  "alias": null,
+  "args": null,
+  "concreteType": "AIProjectTemplate",
+  "kind": "LinkedField",
+  "name": "projectsTemplates",
+  "plural": true,
+  "selections": [
+    (v2/*: any*/),
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "userDescription",
+      "storageKey": null
+    }
+  ],
+  "storageKey": null
 };
 return {
   "fragment": {
@@ -115,7 +138,8 @@ return {
           }
         ],
         "storageKey": null
-      }
+      },
+      (v7/*: any*/)
     ],
     "type": "Query",
     "abstractKey": null
@@ -155,21 +179,22 @@ return {
           }
         ],
         "storageKey": null
-      }
+      },
+      (v7/*: any*/)
     ]
   },
   "params": {
-    "cacheID": "dfba0d260338051333f32115fa2bae2f",
+    "cacheID": "57c474c8c455a17a6bb1dcacf040159a",
     "id": null,
     "metadata": {},
     "name": "ProjectQuery",
     "operationKind": "query",
-    "text": "query ProjectQuery(\n  $id: ID!\n) {\n  node(id: $id) {\n    __typename\n    id\n    ... on AIProject {\n      id\n      key\n      name\n      summary\n      summaryState\n      ...ProjectCard\n    }\n  }\n}\n\nfragment ProjectCard on AIProject {\n  id\n  key\n  name\n  summary\n}\n"
+    "text": "query ProjectQuery(\n  $id: ID!\n) {\n  node(id: $id) {\n    __typename\n    id\n    ... on AIProject {\n      id\n      key\n      name\n      summary\n      summaryState\n      ...ProjectCard\n    }\n  }\n  projectsTemplates {\n    id\n    userDescription\n  }\n}\n\nfragment ProjectCard on AIProject {\n  id\n  key\n  name\n  summary\n}\n"
   }
 };
 })();
 
-(node/*: any*/).hash = "058cc1697c1ab9f17f67367a893792e7";
+(node/*: any*/).hash = "30f51d3a6ec6bcaa670efa2d96ec9667";
 
 module.exports = ((node/*: any*/)/*: Query<
   ProjectQuery$variables,

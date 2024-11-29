@@ -13,15 +13,17 @@ import styles from './index.module.sass';
 type Props = {|
   +title: string,
   +summary?: ?any,
+  +summaryRef?: ?any,
   +onChangeTitle?: ?(string) => void,
   +onChangeSummary?: ?(any) => void | Promise<void>,
 |};
 
 export default function ComplexEditor({
   title,
-  summary,
-  onChangeTitle,
-  onChangeSummary,
+  summary = null,
+  summaryRef = null,
+  onChangeTitle = null,
+  onChangeSummary = null,
 }: Props): React$Node {
   const handleTitleChange = useCallback(
     ({ plainText }) => {
@@ -49,20 +51,16 @@ export default function ComplexEditor({
       </DocumentEditor>
       <Margin top={24}>
         <DocumentEditor
+          ref={summaryRef}
           enableComplexPlugins
           onChange={onChangeSummary}
-          placeholder="Write a summary.."
+          placeholder="Write a summary or select a template.."
           className={styles.summaryEditor}
-          placeholderClassName={styles.summaryPlaceholder}
           $customPopulate={$populateSummary(summary)}
+          placeholderClassName={styles.summaryPlaceholder}
+          contentClassName={styles.summaryContentClassName}
         />
       </Margin>
     </div>
   );
 }
-
-ComplexEditor.defaultProps = {
-  summary: null,
-  onChangeTitle: null,
-  onChangeSummary: null,
-};

@@ -957,8 +957,8 @@ const styles = stylex.create({
 });
 
 function Flexbox({
-  children,
-  className,
+  children = null,
+  className = '',
   flexWrap = 'nowrap',
   flexDirection = 'row',
   alignItems = 'normal',
@@ -1000,26 +1000,5 @@ function Flexbox({
     </div>
   );
 }
-
-Flexbox.defaultProps = {
-  flexWrap: 'nowrap',
-  flexDirection: 'row',
-  alignItems: 'normal',
-  alignContent: 'normal',
-  justifyContent: 'normal',
-  columnGap: 0,
-  rowGap: 0,
-
-  alignContentM: null,
-  justifyContentM: null,
-  alignItemsM: null,
-  flexDirectionM: null,
-  flexWrapM: null,
-  columnGapM: null,
-  rowGapM: null,
-
-  className: '',
-  children: null,
-};
 
 export default (memo<Props>(Flexbox): React$AbstractComponent<Props, mixed>);

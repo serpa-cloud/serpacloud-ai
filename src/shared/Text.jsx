@@ -1,7 +1,6 @@
 /* eslint-disable import/no-extraneous-dependencies */
 // @flow
 import React from 'react';
-import { useIntl } from 'react-intl';
 import stylex from '@serpa-cloud/stylex';
 
 import Flexbox from './Flexbox';
@@ -34,11 +33,9 @@ export type TextType =
   | 's0r';
 
 type Props = {|
-  +id?: ?string,
   +type: TextType,
   +color?: ?string,
   +children?: ?React$Node,
-  +values?: ?{ [string]: any },
   +component?: ?Component,
   +textAlign?: ?'left' | 'center' | 'right',
   +gradient?: ?string,
@@ -553,19 +550,15 @@ const typeComponentMapping = {
 };
 
 export default function Text({
-  id,
   type,
-  color,
-  values,
-  children,
-  gradient,
-  component,
+  color = null,
+  children = null,
+  gradient = null,
+  component = null,
   textAlign = 'left',
   ariaId = '',
 }: Props): React$Node {
-  const intl = useIntl();
-
-  const content = id ? intl.formatMessage({ id }, values ?? {}) : children;
+  const content = children;
 
   if (
     type === 'd2' ||
@@ -688,14 +681,3 @@ export default function Text({
 
   return null;
 }
-
-Text.defaultProps = {
-  id: null,
-  color: null,
-  children: null,
-  component: null,
-  textAlign: 'left',
-  gradient: null,
-  ariaId: '',
-  values: ({}: { ... }),
-};

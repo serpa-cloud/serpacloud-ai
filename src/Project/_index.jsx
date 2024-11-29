@@ -4,10 +4,22 @@ import { useCallback, useMemo, useRef } from 'react';
 import { useTransition, animated } from 'react-spring';
 import { graphql, useLazyLoadQuery } from 'react-relay/hooks';
 
+import markdownToLexical from './markdownToLexical';
 import lexicalToMarkdown from './lexicalToMarkdown';
 import resolveImagePromises from './resolveImagePromises';
 
-import { Flexbox, ComplexEditor, useProjectInRealTime, useUpdateProjectSummary } from '../shared';
+import {
+  Margin,
+  Flexbox,
+  Padding,
+  Divider,
+  ComplexEditor,
+  ComplexEditorToolbar,
+  useApplyTemplate,
+  useProjectInRealTime,
+  useGenerateSuggestions,
+  useUpdateProjectSummary,
+} from '../shared';
 
 import Suggestion from './Suggestion';
 
@@ -16,6 +28,8 @@ import styles from './index.module.sass';
 export default function Project(): React$Node {
   const params = useParams();
   const summaryRef = useRef();
+  const [applyTemplate] = useApplyTemplate();
+  const generateSuggestions = useGenerateSuggestions(params?.project ?? '');
   const realTimeData = useProjectInRealTime(params?.project ?? '');
 
   const data = useLazyLoadQuery(
@@ -128,9 +142,30 @@ export default function Project(): React$Node {
     }
   }, []);
 
+  const handleGenerateSuggestions = useCallback(async () => {
+    try {
+      const markdown = await getSummaryMarkdown();
+
+      if (markdown) generateSuggestions({ summary: markdown });
+    } catch (e) {
+      // eslint-disable-next-line no-console
+      console.log(e);
+    }
+  }, [generateSuggestions, getSummaryMarkdown]);
+
   const handleOnMutateSummaryState = useCallback((newSummaryState) => {
     summaryRef?.current?.replaceState?.(newSummaryState);
   }, []);
+
+  const handleOnMutateSummaryStateFromTemplate = useCallback(
+    (newSummary) => {
+      console.log(newSummary);
+      const newSummaryState = markdownToLexical(newSummary);
+      console.log(newSummaryState);
+      handleOnMutateSummaryState(newSummaryState);
+    },
+    [handleOnMutateSummaryState],
+  );
 
   const suggestions = realTimeData?.suggestions ?? [];
   const hasSuggestions = !!suggestions?.length;
@@ -180,6 +215,38 @@ export default function Project(): React$Node {
           </div>
         )}
       </div>
+
+      <Margin top={24}>
+        <Divider />
+        <Padding top={24}>
+          <ComplexEditorToolbar
+            items={[
+              ...(data?.projectsTemplates?.map((template) => ({
+                icon: 'arrow_upward',
+                text: template.userDescription,
+                onClick: () => {
+                  applyTemplate({
+                    templateId: template.id,
+                    onCompleted(newSummary) {
+                      handleOnMutateSummaryStateFromTemplate(newSummary);
+                    },
+                  });
+                },
+              })) ?? []),
+              {
+                icon: 'prompt_suggestion',
+                text: 'Suggest',
+                onClick: handleGenerateSuggestions,
+              },
+              {
+                icon: 'move_down',
+                text: 'Generate Features',
+                onClick: () => {},
+              },
+            ]}
+          />
+        </Padding>
+      </Margin>
     </section>
   );
 }

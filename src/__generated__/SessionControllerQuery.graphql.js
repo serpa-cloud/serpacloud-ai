@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<024869f98dc5156e99ec6a7b6bf2317d>>
+ * @generated SignedSource<<a1f1df40f71d3892b115797dd101d4fa>>
  * @flow
  * @lightSyntaxTransform
  * @nogrep
@@ -28,7 +28,6 @@ export type SessionControllerQuery$data = {|
     +email: string,
     +fullname: ?string,
     +gender: ?Gender,
-    +hasBasicProfile: boolean,
     +id: string,
     +lastname: ?string,
     +name: ?string,
@@ -38,9 +37,6 @@ export type SessionControllerQuery$data = {|
     +pronoun: ?Pronoun,
     +uiTheme: ?UITheme,
     +username: string,
-  |},
-  +paymentProfile: ?{|
-    +id: string,
   |},
 |};
 export type SessionControllerQuery = {|
@@ -120,14 +116,7 @@ v9 = {
   "name": "uiTheme",
   "storageKey": null
 },
-v10 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "hasBasicProfile",
-  "storageKey": null
-},
-v11 = [
+v10 = [
   {
     "kind": "Literal",
     "name": "height",
@@ -139,50 +128,38 @@ v11 = [
     "value": 352
   }
 ],
-v12 = [
+v11 = [
   {
     "args": null,
     "kind": "FragmentSpread",
     "name": "Avatar"
   }
 ],
+v12 = [
+  {
+    "kind": "Literal",
+    "name": "height",
+    "value": 80
+  },
+  {
+    "kind": "Literal",
+    "name": "width",
+    "value": 80
+  }
+],
 v13 = [
   {
     "kind": "Literal",
     "name": "height",
-    "value": 80
+    "value": 64
   },
   {
     "kind": "Literal",
     "name": "width",
-    "value": 80
+    "value": 64
   }
 ],
 v14 = [
-  {
-    "kind": "Literal",
-    "name": "height",
-    "value": 64
-  },
-  {
-    "kind": "Literal",
-    "name": "width",
-    "value": 64
-  }
-],
-v15 = {
-  "alias": null,
-  "args": null,
-  "concreteType": "PaymentProfile",
-  "kind": "LinkedField",
-  "name": "paymentProfile",
-  "plural": false,
-  "selections": [
-    (v0/*: any*/)
-  ],
-  "storageKey": null
-},
-v16 = [
   (v0/*: any*/),
   {
     "alias": null,
@@ -238,41 +215,39 @@ return {
           (v7/*: any*/),
           (v8/*: any*/),
           (v9/*: any*/),
-          (v10/*: any*/),
           {
             "alias": "profileAvatar",
-            "args": (v11/*: any*/),
+            "args": (v10/*: any*/),
             "concreteType": "Image",
             "kind": "LinkedField",
             "name": "media",
             "plural": false,
-            "selections": (v12/*: any*/),
+            "selections": (v11/*: any*/),
             "storageKey": "media(height:352,width:352)"
           },
           {
             "alias": "composerAvatar",
+            "args": (v12/*: any*/),
+            "concreteType": "Image",
+            "kind": "LinkedField",
+            "name": "media",
+            "plural": false,
+            "selections": (v11/*: any*/),
+            "storageKey": "media(height:80,width:80)"
+          },
+          {
+            "alias": "badgeAvatar",
             "args": (v13/*: any*/),
             "concreteType": "Image",
             "kind": "LinkedField",
             "name": "media",
             "plural": false,
-            "selections": (v12/*: any*/),
-            "storageKey": "media(height:80,width:80)"
-          },
-          {
-            "alias": "badgeAvatar",
-            "args": (v14/*: any*/),
-            "concreteType": "Image",
-            "kind": "LinkedField",
-            "name": "media",
-            "plural": false,
-            "selections": (v12/*: any*/),
+            "selections": (v11/*: any*/),
             "storageKey": "media(height:64,width:64)"
           }
         ],
         "storageKey": null
-      },
-      (v15/*: any*/)
+      }
     ],
     "type": "Query",
     "abstractKey": null
@@ -301,55 +276,53 @@ return {
           (v7/*: any*/),
           (v8/*: any*/),
           (v9/*: any*/),
-          (v10/*: any*/),
           {
             "alias": "profileAvatar",
-            "args": (v11/*: any*/),
+            "args": (v10/*: any*/),
             "concreteType": "Image",
             "kind": "LinkedField",
             "name": "media",
             "plural": false,
-            "selections": (v16/*: any*/),
+            "selections": (v14/*: any*/),
             "storageKey": "media(height:352,width:352)"
           },
           {
             "alias": "composerAvatar",
+            "args": (v12/*: any*/),
+            "concreteType": "Image",
+            "kind": "LinkedField",
+            "name": "media",
+            "plural": false,
+            "selections": (v14/*: any*/),
+            "storageKey": "media(height:80,width:80)"
+          },
+          {
+            "alias": "badgeAvatar",
             "args": (v13/*: any*/),
             "concreteType": "Image",
             "kind": "LinkedField",
             "name": "media",
             "plural": false,
-            "selections": (v16/*: any*/),
-            "storageKey": "media(height:80,width:80)"
-          },
-          {
-            "alias": "badgeAvatar",
-            "args": (v14/*: any*/),
-            "concreteType": "Image",
-            "kind": "LinkedField",
-            "name": "media",
-            "plural": false,
-            "selections": (v16/*: any*/),
+            "selections": (v14/*: any*/),
             "storageKey": "media(height:64,width:64)"
           }
         ],
         "storageKey": null
-      },
-      (v15/*: any*/)
+      }
     ]
   },
   "params": {
-    "cacheID": "e620d0291a4dbdc9acd9a67f3609eb27",
+    "cacheID": "d1fd0374eb3408214507bdd674d305c6",
     "id": null,
     "metadata": {},
     "name": "SessionControllerQuery",
     "operationKind": "query",
-    "text": "query SessionControllerQuery {\n  me {\n    id\n    username\n    name\n    lastname\n    fullname\n    email\n    gender\n    pronoun\n    description\n    uiTheme\n    hasBasicProfile\n    profileAvatar: media(width: 352, height: 352) {\n      ...Avatar\n      id\n    }\n    composerAvatar: media(width: 80, height: 80) {\n      ...Avatar\n      id\n    }\n    badgeAvatar: media(width: 64, height: 64) {\n      ...Avatar\n      id\n    }\n  }\n  paymentProfile {\n    id\n  }\n}\n\nfragment Avatar on Image {\n  id\n  url\n  alt\n  width\n  height\n}\n"
+    "text": "query SessionControllerQuery {\n  me {\n    id\n    username\n    name\n    lastname\n    fullname\n    email\n    gender\n    pronoun\n    description\n    uiTheme\n    profileAvatar: media(width: 352, height: 352) {\n      ...Avatar\n      id\n    }\n    composerAvatar: media(width: 80, height: 80) {\n      ...Avatar\n      id\n    }\n    badgeAvatar: media(width: 64, height: 64) {\n      ...Avatar\n      id\n    }\n  }\n}\n\nfragment Avatar on Image {\n  id\n  url\n  alt\n  width\n  height\n}\n"
   }
 };
 })();
 
-(node/*: any*/).hash = "a3b2899b145173d12612fd2e7a382e4f";
+(node/*: any*/).hash = "38be69d7fa1c8a312cdd1b2b0abca89b";
 
 module.exports = ((node/*: any*/)/*: Query<
   SessionControllerQuery$variables,

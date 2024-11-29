@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext';
 
-export default function AutoFocusPlugin({ focus }: { focus?: ?boolean }): React$Node {
+export default function AutoFocusPlugin({ focus = false }: { focus?: ?boolean }): React$Node {
   const [editor] = useLexicalComposerContext();
 
   useEffect(() => {
@@ -10,7 +10,3 @@ export default function AutoFocusPlugin({ focus }: { focus?: ?boolean }): React$
 
   return null;
 }
-
-AutoFocusPlugin.defaultProps = {
-  focus: false,
-};

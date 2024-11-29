@@ -49,12 +49,12 @@ type Props = {|
 
 export default function Avatar({
   node,
-  circle,
-  shadow,
-  className,
-  fixedWidth,
-  fixedHeight,
-  fallbackIcon,
+  circle = true,
+  shadow = false,
+  className = '',
+  fixedWidth = null,
+  fixedHeight = null,
+  fallbackIcon = null,
 }: Props): React$Node {
   const data = useFragment(
     graphql`
@@ -122,12 +122,3 @@ export default function Avatar({
     </Suspense>
   );
 }
-
-Avatar.defaultProps = {
-  shadow: false,
-  circle: true,
-  className: '',
-  fixedWidth: null,
-  fixedHeight: null,
-  fallbackIcon: null,
-};

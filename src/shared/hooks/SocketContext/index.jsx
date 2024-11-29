@@ -1,27 +1,47 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
 import io from 'socket.io-client';
-import { useNavigate } from 'react-router-dom';
-import { createContext, useContext, useReducer, useEffect, useRef } from 'react';
+import { createContext, useContext, useReducer, useEffect, useRef, useState } from 'react';
 
 // Define el contexto
 const SocketContext = createContext();
 
 // Define el reducer para manejar el estado
 const socketReducer = (state, action) => {
-  switch (action.type) {
-    case 'SET_PROJECT':
-      return {
-        ...state,
-        project: action.payload,
-      };
-    default:
-      return state;
+  if (action.type === 'SET_PROJECT_SUGGESTIONS') {
+    const projects = { ...state.projects };
+    const { payload } = action;
+
+    projects[payload.projectId] = projects[payload.projectId] || {};
+    projects[payload.projectId].suggestions = payload.suggestions.split('\n').filter(Boolean);
+
+    return {
+      ...state,
+      projects,
+    };
   }
+
+  if (action.type === 'APPLY_SUGGESTION') {
+    const projects = { ...state.projects };
+    const { payload } = action;
+
+    projects[payload.projectId] = projects[payload.projectId] || {};
+    projects[payload.projectId].suggestions = projects[payload.projectId].suggestions.filter(
+      (s) => s !== payload.suggestion,
+    );
+
+    return {
+      ...state,
+      projects,
+    };
+  }
+  return {
+    ...state,
+  };
 };
 
 // Estado inicial
 const initialState = {
-  project: null,
+  projects: {},
 };
 
 // Proveedor del contexto
@@ -61,35 +81,75 @@ export const useSocketContext = () => {
   return useContext(SocketContext);
 };
 
-export const useCreateProject = () => {
-  const navigate = useNavigate();
-  const { getSocket, state, dispatch } = useSocketContext();
+export const useGenerateSuggestions = (projectId) => {
+  const { getSocket, dispatch } = useSocketContext();
 
-  const currentProjectId = useRef(state?.project?.id);
-
-  return ({ description }) => {
+  return ({ summary }) => {
     const socket = getSocket();
-    socket.emit('createProject', { description });
+    socket.emit('generateSuggets', { summary });
 
-    socket.on('projectData', (data) => {
-      const newProjectId = data?.id;
-
-      dispatch({ type: 'SET_PROJECT', payload: data });
-
-      if (currentProjectId.current !== newProjectId) {
-        currentProjectId.current = newProjectId;
-        navigate(`/app/projects/${newProjectId}/summary`);
-      }
+    socket.on('generateSuggets', (data) => {
+      dispatch({
+        type: 'SET_PROJECT_SUGGESTIONS',
+        payload: {
+          projectId,
+          suggestions: data,
+        },
+      });
     });
   };
+};
+
+export const useApplySuggestion = (projectId) => {
+  const [pending, setPending] = useState(false);
+  const { getSocket, dispatch } = useSocketContext();
+
+  const applySuggestion = ({ suggestion, summary, onCompleted }) => {
+    setPending(true);
+    const socket = getSocket();
+
+    socket.emit('applySuggestion', { suggestion, summary });
+
+    socket.on('applySuggestion', (data) => {
+      setPending(false);
+      onCompleted(data);
+
+      dispatch({
+        type: 'APPLY_SUGGESTION',
+        payload: {
+          projectId,
+          suggestion,
+        },
+      });
+    });
+  };
+
+  return [applySuggestion, pending];
+};
+
+export const useApplyTemplate = () => {
+  const [pending, setPending] = useState(false);
+  const { getSocket } = useSocketContext();
+
+  const applyTemplate = ({ templateId, onCompleted }) => {
+    setPending(true);
+    const socket = getSocket();
+
+    socket.emit('applyTemplate', { templateId });
+
+    socket.on('applyTemplate', (data) => {
+      setPending(false);
+      onCompleted(data);
+    });
+  };
+
+  return [applyTemplate, pending];
 };
 
 export const useProjectInRealTime = (projectId) => {
   const { state } = useSocketContext();
 
-  if (state?.project?.id === projectId) return state.project;
-
-  return null;
+  return state.projects[projectId];
 };
 
 export const useAnswer = () => {

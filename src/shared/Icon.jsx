@@ -84,16 +84,16 @@ const styles = stylex.create({
 
 function Icon({
   icon,
-  fill,
+  fill = false,
   size = 24,
   weight = 200,
   grade = 200,
   opticalSize = 24,
   className = '',
   color = '--primary-color-1',
-  hoverColor,
-  gradient,
-  parentClassName,
+  hoverColor = '',
+  gradient = null,
+  parentClassName = null,
 }: Props): React$Node {
   const [hover, setHover] = useState(false);
   const style = {
@@ -124,18 +124,5 @@ function Icon({
     </div>
   );
 }
-
-Icon.defaultProps = {
-  fill: false,
-  size: 24,
-  weight: 200,
-  grade: 200,
-  opticalSize: 24,
-  className: '',
-  gradient: null,
-  color: '--primary-color-1',
-  hoverColor: '',
-  parentClassName: null,
-};
 
 export default (memo<Props>(Icon): React$AbstractComponent<Props, mixed>);

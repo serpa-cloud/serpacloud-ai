@@ -21,15 +21,15 @@ type Props = {
 };
 
 export default function InteractiveElement({
-  label,
-  onClick,
+  label = '',
+  onClick = null,
   children,
-  disabled,
-  className,
-  onKeyPress,
-  onMouseEnter,
-  disableFocus,
-  autoFocus,
+  disabled = false,
+  className = '',
+  onKeyPress = null,
+  onMouseEnter = null,
+  disableFocus = false,
+  autoFocus = null,
 }: Props): React$Node {
   const ref = useRef();
 
@@ -79,14 +79,3 @@ export default function InteractiveElement({
     </div>
   );
 }
-
-InteractiveElement.defaultProps = {
-  label: '',
-  className: '',
-  disabled: false,
-  onClick: null,
-  onKeyPress: null,
-  autoFocus: false,
-  onMouseEnter: null,
-  disableFocus: false,
-};

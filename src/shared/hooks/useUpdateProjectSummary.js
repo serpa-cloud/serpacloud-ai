@@ -30,31 +30,57 @@ export default function useUpdateProjectSummary(): [(input: UpdateProjectInput) 
     }
   `);
 
-  const timeoutRef = useRef<?TimeoutID>(null);
+  const pendingRequestRef = useRef<boolean>(false);
+  const nextRequestRef = useRef<?UpdateProjectInput>(null);
 
-  const debouncedUpdateProject = useCallback(
+  const executeUpdate = useCallback(
     ({ id, title, summary, summaryState, onCompleted }: UpdateProjectInput) => {
-      if (timeoutRef.current) {
-        clearTimeout(timeoutRef.current);
+      // Store the latest request if there's one already pending
+      if (pendingRequestRef.current) {
+        nextRequestRef.current = { id, title, summary, summaryState, onCompleted };
+        return;
       }
 
-      timeoutRef.current = setTimeout(() => {
-        if (!isPending && (title || (summary && summaryState)))
-          updateProject({
-            variables: {
-              id,
-              title: title || '',
-              summary: summary || '',
-              summaryState: summaryState || '',
-            },
-            onCompleted: (response) => {
-              if (onCompleted) onCompleted(response);
-            },
-          });
-      }, 200); // Debounce delay (500ms, configurable as needed)
+      // Mark as pending
+      pendingRequestRef.current = true;
+
+      // Execute the mutation
+      updateProject({
+        variables: {
+          id,
+          title: title || '',
+          summary: summary || '',
+          summaryState: summaryState || '',
+        },
+        onCompleted: (response) => {
+          pendingRequestRef.current = false;
+
+          // Execute the next pending request, if any
+          const nextRequest = nextRequestRef.current;
+          if (nextRequest) {
+            nextRequestRef.current = null; // Clear the stored request
+            executeUpdate(nextRequest); // Execute the next stored request
+          }
+
+          // Call the original onCompleted callback
+          if (onCompleted) onCompleted(response);
+        },
+        onError: (error) => {
+          pendingRequestRef.current = false;
+
+          // Execute the next pending request, if any
+          const nextRequest = nextRequestRef.current;
+          if (nextRequest) {
+            nextRequestRef.current = null; // Clear the stored request
+            executeUpdate(nextRequest); // Execute the next stored request
+          }
+
+          console.error('Mutation failed', error);
+        },
+      });
     },
-    [updateProject, isPending],
+    [updateProject],
   );
 
-  return [debouncedUpdateProject, isPending];
+  return [executeUpdate, isPending];
 }

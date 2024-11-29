@@ -20,7 +20,7 @@ export default function Margin({
   vertical = 0,
   horizontal = 0,
   children,
-  className,
+  className = '',
 }: MarginProps): React$Node {
   return (
     <div
@@ -36,13 +36,3 @@ export default function Margin({
     </div>
   );
 }
-
-Margin.defaultProps = {
-  top: 0,
-  left: 0,
-  bottom: 0,
-  right: 0,
-  vertical: 0,
-  horizontal: 0,
-  className: '',
-};

@@ -4,7 +4,7 @@ import { forwardRef, useEffect, useImperativeHandle, useCallback } from 'react';
 import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext';
 
 // eslint-disable-next-line react/prop-types
-function OnChangePluginInterface({ onChange, onSubmit }, ref): React$Node {
+function OnChangePluginInterface({ onChange = null, onSubmit = null }, ref): React$Node {
   const [editor] = useLexicalComposerContext();
 
   const handleOnSend = useCallback(() => {
@@ -17,10 +17,24 @@ function OnChangePluginInterface({ onChange, onSubmit }, ref): React$Node {
     });
   }, [editor, onSubmit]);
 
-  useImperativeHandle(ref, () => ({
-    submit: () => {
-      handleOnSend();
+  const replaceState = useCallback(
+    (newState) => {
+      editor.update(() => {
+        try {
+          const parsedState = editor.parseEditorState(newState);
+          editor.setEditorState(parsedState);
+        } catch (error) {
+          // eslint-disable-next-line no-console
+          console.error('Failed to replace editor state:', error);
+        }
+      });
     },
+    [editor],
+  );
+
+  useImperativeHandle(ref, () => ({
+    replaceState,
+    submit: handleOnSend,
   }));
 
   const handleOnChange = useCallback(() => {
@@ -61,10 +75,6 @@ function OnChangePluginInterface({ onChange, onSubmit }, ref): React$Node {
 
   return null;
 }
-
-OnChangePluginInterface.defaultProps = {
-  onSubmit: null,
-};
 
 const OnChangePlugin: React$AbstractComponent<
   { onSubmit?: ?(any) => void | Promise<void>, onChange?: ?(any) => void | Promise<void> },

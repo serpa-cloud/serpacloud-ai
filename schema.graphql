@@ -63,183 +63,18 @@ type AIProject implements Node {
   clarifyingAsks: String
 }
 
+type AIProjectTemplate implements Node {
+  id: ID!
+  createdBy: User!
+  createdAt: Date!
+  createdAtFormatted: String!
+  userDescription: String!
+  recommendedFor: [String!]
+}
+
 enum AIRole {
   user
   assistant
-}
-
-type App implements Node {
-  id: ID!
-  appType: AppType!
-  media(width: Int = 48, height: Int = 48, blur: Int = 0, fit: String = "cover", focus: Boolean = false): Image
-  organization: Node
-  namespace: String!
-  createdBy: User!
-  createdAt: Date!
-  createdAtFormatted: String!
-  updatedAt: Date!
-  updatedAtFormatted: String!
-  name: String!
-  source: GitRepo
-  staticGitSourceName: String
-  gitProvider: GitProvider
-  useDockerfileTemplate: Boolean!
-  dockerfile: DockerFile
-  continousIntegrationEnabled: Boolean!
-  eventTypeTrigger: EventTypeTrigger
-  eventNameTrigger: String
-  environmentVariables: [Env!]!
-  runtime: StaticRuntime
-  preInstallCommand: String
-  buildCommand: String
-  buildPath: String
-  nodeVersion: String
-  lastCompilation: ID
-  compilationCount: Int
-  deploymentCount: Int
-  siteCount: Int
-  dockerfileContent: String
-  appMethod: AppMethod!
-  builder: ContainerBuilder
-}
-
-input AppInput {
-  name: String
-  media: ID
-  source: ID
-  gitProvider: GitProvider
-  useDockerfileTemplate: Boolean
-  dockerfile: ID
-  dockerfileContent: String
-  continousIntegrationEnabled: Boolean
-  eventTypeTrigger: EventTypeTrigger
-  eventNameTrigger: String
-  env: [EnvInput!]
-  runtime: StaticRuntime
-  buildCommand: String
-  preInstallCommand: String
-  appType: AppType
-  appMethod: AppMethod!
-  buildPath: String
-  builder: ContainerBuilder
-}
-
-enum AppMethod {
-  GIT
-  DOCKER
-}
-
-enum AppType {
-  CONTAINER
-  STATIC
-}
-
-type Artifact implements Node {
-  id: ID!
-  organization: Org!
-  createdBy: User!
-  createdAt: Date!
-  createdAtFormatted: String!
-  artifactory: String!
-  dockerUrl: String
-  dockerName: String
-  buildOrder: String!
-  digest: String!
-  digestShortSha: String!
-  dockerUrlWithDiggest: String
-  app: App!
-  dockerTag: String
-  commitSha: String!
-  commitShaShort: String!
-  commitUrl: String!
-  gitBase: String!
-  gitBaseIsTag: Boolean!
-  gitTag: String
-  gitTagUrl: String
-  commitDescription: String!
-}
-
-type Build implements Node {
-  id: ID!
-  organization: Org!
-  createdBy: User!
-  createdAt: Date!
-  createdAtFormatted: String!
-  finishedAt: Date
-  finishedAtFormatted: String
-  done: Boolean!
-  app: App!
-  status: BuildStatus!
-  steps: [BuildStep]
-  artifact: Artifact
-  logs: BuildLogs
-  buildTime: Float
-  commitSha: String
-  commitShaShort: String
-  commitUrl: String
-  gitBase: String
-  gitBaseIsTag: Boolean
-  gitTag: String
-  gitTagUrl: String
-  commitDescription: String
-}
-
-type BuildCommand {
-  placeholder: String!
-  value: String!
-}
-
-input BuildInput {
-  app: ID!
-  sha: ID
-  ref: ID
-}
-
-type BuildLogs {
-  id: ID!
-  text: String!
-  payloads: [String!]!
-  payloadsByStep: [[String!]]!
-}
-
-type BuildStaticSettings {
-  preinstallCommand: BuildCommand!
-  installCommand: BuildCommand!
-  buildCommand: BuildCommand!
-  outputDirectory: BuildCommand!
-}
-
-enum BuildStatus {
-  UNKNOWN
-  QUEUED
-  WORKING
-  SUCCESS
-  FAILURE
-  ERROR
-  TIMEOUT
-  CANCELLED
-}
-
-type BuildStep {
-  name: String!
-  status: String
-  entrypoint: String!
-  args: [String!]!
-  command: String!
-  pullTimingStartTime: Date
-  pullTimingEndTime: Date
-  pullTimingDuration: Int
-  timingStartTime: Date
-  timingEndTime: Date
-  timingDuration: Int
-}
-
-type Certificate {
-  id: ID!
-  domainName: String!
-  provider: String!
-  arn: String
-  dnsRecords: [DNSRecord!]!
 }
 
 type Chat implements Node {
@@ -252,215 +87,10 @@ type Chat implements Node {
   resume: String
 }
 
-type CloudAccount implements Node {
-  id: ID!
-  alias: String
-  provider: String!
-  projectId: String!
-  organization: Node
-  namespace: String!
-  createdBy: User
-  createdAt: Date!
-  createdAtFormatted: String!
-}
-
-enum CloudProvider {
-  GCLOUD
-  AWS
-}
-
-type Comment implements Node {
-  id: ID!
-  createdBy: User!
-  createdAt: Date!
-  createdAtFormatted: String!
-  text: String!
-  parentComment: ID
-  responses: [Comment!]!
-}
-
-type ComputeResource {
-  id: ID!
-  createdBy: User!
-  createdAt: Date!
-  createdAtFormatted: String!
-  name: String!
-  org: Org!
-  provider: String!
-  location: String!
-}
-
-enum ContainerBuilder {
-  DOCKER
-  BUILDPACKS
-  KANIKO
-}
-
 scalar Cursor
 
 """Fecha en formato JS"""
 scalar Date
-
-enum DBEngine {
-  REDIS
-  MYSQL
-  POSTGRES
-  ELASTIC
-  MONGODB
-}
-
-type DBResource implements Node {
-  id: ID!
-  createdBy: User!
-  createdAt: Date!
-  createdAtFormatted: String!
-  name: String!
-  organization: Org!
-  provider: String!
-  engine: DBEngine!
-  kubernetesCluster: KubernetesCluster!
-  createdByYellowCode: Boolean!
-}
-
-type Deployment implements Node {
-  id: ID!
-  namespace: String!
-  organization: Org!
-  createdBy: User!
-  updatedBy: User!
-  createdAt: Date!
-  createdAtFormatted: String!
-  updatedAt: Date!
-  updatedAtFormatted: String!
-  port: Int!
-  name: String!
-  postStartExecCommand: [String!]!
-  replicas: Int!
-  source: Source
-  build: Build
-  environmentVariables: [DeploymentEnv!]!
-  app: App!
-  environment: Environment!
-  implementation: Implementation!
-  volumeMounts: [VolumeMount!]!
-  volumes: [Volume!]!
-  pods: [Pod!]!
-  status: DeploymentStatus
-  publicEndpoint: String
-  publicVirtualService: String
-  serviceName: String
-  privacy: DeploymentPrivacy!
-  enableCors: Boolean!
-  allowOrigin: [String!]
-  allowHeaders: [String!]
-  allowMethods: [String!]
-  continousDeployment: String
-  patternTag: String
-  pause: Boolean
-  dockerImageUrl: String
-}
-
-type DeploymentEnv {
-  name: String!
-  value: String!
-  valueFrom: ValueFrom
-}
-
-input DeploymentEnvInput {
-  name: String!
-  value: String
-  valueFrom: ValueFromInput
-}
-
-enum DeploymentPrivacy {
-  PUBLIC
-  PRIVATE
-}
-
-type DeploymentStatus {
-  replicas: Int!
-  readyReplicas: Int!
-  updatedReplicas: Int!
-  availableReplicas: Int!
-  unavailableReplicas: Int!
-  observedGeneration: Int!
-}
-
-input DestinationInput {
-  target: ID!
-  routes: [HTTPRouteInput!]!
-}
-
-enum DNSProvider {
-  AWS
-}
-
-input DNSQueryRecordInput {
-  name: String!
-  type: String!
-  value: String!
-}
-
-type DNSRecord {
-  domainName: String!
-  name: String!
-  type: String!
-  value: String!
-}
-
-type DNSRecordProvider {
-  A: [String!]!
-  CNAME: [String!]!
-}
-
-enum DNSRecordType {
-  A
-  CNAME
-}
-
-type DockerFile implements Node {
-  id: ID!
-  createdBy: User!
-  createdAt: Date!
-  createdAtFormatted: String!
-  organization: Org!
-  key: String!
-  name: String!
-  description: String
-  baseImageVersion: String!
-  internalVersion: String!
-  content: String!
-  media(width: Int = 48, height: Int = 48, blur: Int = 0, fit: String = "cover", focus: Boolean = false): Image
-}
-
-type Domain {
-  id: ID!
-  namespace: String!
-  organization: Org!
-  environment: Environment!
-  createdBy: User!
-  updatedBy: User!
-  createdAt: Date!
-  createdAtFormatted: String!
-  updatedAt: Date!
-  updatedAtFormatted: String!
-  provider: DNSProvider!
-  status: DomainStatus!
-  domain: String!
-  records: DNSRecordProvider!
-  validationId: String!
-}
-
-type DomainMapping {
-  id: ID!
-  domain: String!
-  cert: Certificate!
-}
-
-enum DomainStatus {
-  PENDING
-  COMPLETE
-}
 
 type Edge {
   cursor: Cursor!
@@ -493,49 +123,7 @@ type EntitiesConnection {
   pageInfo: PageInfo
 }
 
-union Entity = App | Org | User | Post | Site | Build | Artifact | DBResource | Deployment | DockerFile | Environment | Implementation | CloudAccount | KubernetesCluster | Chat | AIProject
-
-type Env {
-  name: String!
-  value: String!
-}
-
-input EnvInput {
-  name: String!
-  value: String!
-}
-
-type Environment implements Node {
-  id: ID!
-  media(width: Int = 48, height: Int = 48, blur: Int = 0, fit: String = "cover", focus: Boolean = false): Image
-  organization: Node
-  namespace: String!
-  createdBy: User!
-  createdAt: Date!
-  createdAtFormatted: String!
-  updatedBy: User!
-  updatedAt: Date!
-  updatedAtFormatted: String!
-  name: String!
-  host: String!
-  domains: [String!]!
-  shortDescription: String!
-  environmentVariables: [Env!]!
-  environmentVariablesQuantity: Int!
-  routes: [HTTPRoute!]!
-  kubernetesCluster: KubernetesCluster
-  domainsMapping: [DomainMapping!]!
-  domainsRecords: [Domain!]!
-  deploymentCount: Int
-  secrets: [Secret!]!
-  secretsCount: Int
-  defaultEnvironment: Boolean
-}
-
-enum EventTypeTrigger {
-  BRANCH
-  TAG
-}
+union Entity = Org | User | Chat | AIProject
 
 input FilterInput {
   property: String!
@@ -545,20 +133,6 @@ input FilterInput {
   valueBoolean: Boolean
   gt: Float
   lte: Float
-}
-
-type Framework implements Node {
-  id: ID!
-  createdBy: User!
-  createdAt: Date!
-  createdAtFormatted: String!
-  name: String!
-  version: String!
-  type: String!
-  language: String!
-  staticSettings: BuildStaticSettings
-  dockerfile: String!
-  children: [Framework!]!
 }
 
 enum Gender {
@@ -604,55 +178,6 @@ type GitValidation {
   available: Boolean!
 }
 
-type HTTPMatchRequest {
-  parameter: HTTPMatchRequestParameter!
-  parameterName: String
-  matchType: HTTPMatchRequestMatchType!
-  matchValue: String!
-}
-
-input HTTPMatchRequestInput {
-  parameter: HTTPMatchRequestParameter!
-  parameterName: String
-  matchType: HTTPMatchRequestMatchType!
-  matchValue: String!
-}
-
-enum HTTPMatchRequestMatchType {
-  EXACT
-  PREFIX
-  REGEX
-}
-
-enum HTTPMatchRequestParameter {
-  URI
-  SCHEME
-  METHOD
-  AUTHORITY
-  HEADERS
-  QUERY_PARAMS
-}
-
-type HTTPRoute {
-  match: [HTTPMatchRequest!]!
-  route: [HTTPRouteDestination!]!
-}
-
-type HTTPRouteDestination {
-  destination: Deployment
-  weight: Float!
-}
-
-input HTTPRouteDestinationInput {
-  destination: ID!
-  weight: Float!
-}
-
-input HTTPRouteInput {
-  match: [HTTPMatchRequestInput!]!
-  route: [HTTPRouteDestinationInput!]!
-}
-
 type Image {
   id: ID!
   ref: String!
@@ -661,53 +186,6 @@ type Image {
   width: Float!
   height: Float!
   blur: Float!
-}
-
-type Implementation implements Node {
-  id: ID!
-  organization: Org!
-  createdBy: User!
-  createdAt: Date!
-  createdAtFormatted: String!
-  updatedAt: Date!
-  updatedAtFormatted: String!
-  name: String!
-  serviceName: String!
-  appId: ID!
-  app: App!
-  environment: Environment!
-  deploymentsCount: Int!
-  routes: [HTTPRoute!]!
-}
-
-type Ingress {
-  id: ID!
-  ingressHostName: String!
-}
-
-scalar JSDependency
-
-type KubernetesCluster implements Node {
-  id: ID!
-  createdBy: User
-  createdAt: Date!
-  createdAtFormatted: String!
-  cloudAccount: CloudAccount!
-  clusterId: String!
-  organization: Node
-  status: String
-  provider: String!
-  location: String!
-  instanceType: String
-  minSize: Int
-  desiredSize: Int
-  maxSize: Int
-  ingress: Ingress!
-  createdByYellowCode: Boolean!
-  canBeDeleted: Boolean!
-  namespace: String!
-  jobId: String
-  managedResource: Boolean!
 }
 
 input LoginInput {
@@ -720,22 +198,9 @@ type Mutation {
   login(input: LoginInput!): ID
   logout: ID
   saveGithubToken(code: String!): Boolean!
-  createApp(input: AppInput!, triggerCompilation: Boolean): App!
-  updateApp(input: PatchAppInput!): App!
-  updateDeployment(input: PatchDeploymentInput!): Deployment!
-  pauseDeployment(id: ID!): Deployment!
-  restartDeployment(id: ID!): Deployment!
-  createBuild(input: BuildInput!): Build!
-  updateNetworking(input: DestinationInput!): NetworkingOwner!
-  deleteDeployment(id: ID!): Boolean!
-  addAlternateDomain(environment: ID!, domain: String!): Environment!
-  deleteApp(id: ID!): Boolean!
   githubOauth(code: String!): ID
   recoverPassword(email: String!): Boolean
   resetPassword(email: String!, password: String!, confirmPassword: String!, otp: String!, state: String!): Boolean
-  updateDeploymentSource(id: ID!, source: ID!): Deployment!
-  validateNSRecords(domain: String!, environment: ID!, provider: DNSProvider!): Domain!
-  requestCertificate(domain: String!, environment: ID!, provider: DNSProvider!, recordType: DNSRecordType!): Domain!
   promptToSerpaCloudAI(message: String!, conversation: ID!, services: [String]!): AIMessageEdge
   createChat(projectId: ID!): Chat!
   createAIProject: AIProject!
@@ -747,11 +212,7 @@ interface NamespaceNode {
   createdBy: User
   createdAt: Date!
   createdAtFormatted: String!
-  freeTrialUntil: Date!
-  discountAvailableUntil: Date
 }
-
-union NetworkingOwner = Implementation | Environment
 
 interface Node {
   id: ID!
@@ -765,8 +226,6 @@ type Org implements Node & NamespaceNode {
   createdBy: User!
   createdAt: Date!
   createdAtFormatted: String!
-  freeTrialUntil: Date!
-  discountAvailableUntil: Date
   name: String!
   description: String
   key: String!
@@ -782,116 +241,6 @@ type PageInfo {
   finalCursor: Cursor
 }
 
-input PatchAppInput {
-  id: ID!
-  media: ID
-  useDockerfileTemplate: Boolean
-  dockerfile: ID
-  dockerfileContent: String
-  continousIntegrationEnabled: Boolean
-  eventTypeTrigger: EventTypeTrigger
-  eventNameTrigger: String
-  env: [EnvInput!]
-  preInstallCommand: String
-  buildCommand: String
-  buildPath: String
-  nodeVersion: String
-  builder: ContainerBuilder
-}
-
-input PatchDeploymentInput {
-  id: ID!
-  source: ID
-  env: [DeploymentEnvInput!]!
-  postStartExecCommand: [String!]
-  replicas: Int = 1
-  volumeMounts: [VolumeMountInput!]
-  volumes: [VolumeInput!]
-  privacy: DeploymentPrivacy!
-  enableCors: Boolean! = false
-  allowOrigin: [String!] = ["*"]
-  allowHeaders: [String!] = ["content-type"]
-  allowMethods: [String!] = ["OPTIONS", "GET"]
-  continousDeployment: String
-  patternTag: String
-  dockerImageUrl: String
-  port: Int! = 80
-}
-
-type PaymentProfile implements Node {
-  id: ID!
-  createdBy: User!
-  createdAt: Date!
-  createdAtFormatted: String!
-  product: String!
-}
-
-type Pod {
-  id: String!
-  name: String!
-  status: PodStatus!
-}
-
-type PodStatus {
-  phase: String!
-  message: String
-  reason: String
-  startTime: String!
-  conditions: [PodStatusCondition!]!
-}
-
-type PodStatusCondition {
-  type: String!
-  status: Boolean!
-}
-
-type Post implements Node {
-  id: ID!
-  createdBy: User!
-  createdAt: Date!
-  createdAtFormatted: String!
-  content(supported: [String]): PostContent
-  likes: Int!
-  liked: Boolean!
-  shares: Int!
-  shared: Boolean!
-  comments: Int!
-  commented: Boolean!
-  responses: [Comment!]!
-}
-
-type PostBlog {
-  id: ID!
-  title: String!
-  text: String!
-  fullText: String!
-  paragraphs: [String!]!
-  schema: String!
-  js(module: String!): JSDependency!
-}
-
-union PostContent = PostText | PostImage | PostVideo | PostBlog
-
-type PostImage {
-  id: ID!
-  text: String
-  media(width: Int = 48, height: Int = 48, blur: Int = 0, fit: String = "cover", focus: Boolean = false): Image
-  js(module: String!): JSDependency!
-}
-
-type PostText {
-  id: ID!
-  text: String!
-  js(module: String!): JSDependency!
-}
-
-type PostVideo {
-  id: ID!
-  text: String!
-  video: String!
-  js(module: String!): JSDependency!
-}
-
 enum Pronoun {
   HE
   SHE
@@ -901,90 +250,19 @@ enum Pronoun {
 
 type Query {
   node(id: ID!): Node
-  secrets(environment: ID!): [Secret!]!
-  podsByDeployment(deploymentId: ID!): [Pod!]!
+  projectsTemplates: [AIProjectTemplate!]
   conversation(after: Cursor, before: Cursor, first: Int, last: Int, conversation: String!): AIMessagesConnection
   entities(index: ElasticIndex = ALL, after: Cursor, before: Cursor, first: Int, last: Int, query: QueryInput, sort: SortInput, filter: [FilterInput], filterMatrix: [[FilterInput]], orgIndex: Int): EntitiesConnection
   me: User
-  namespaceAvailability(name: String!): Boolean!
-  appNameAvailability(name: String!): Boolean!
   currentTime: Date!
-  checkEmailAvailability(email: String!): Boolean!
-  checkOrgAvailability(organization: String!): Boolean!
-  getOrganizationByIndex(orgIndex: Int!): Org
-  computeResource(orgIndex: Int!): ComputeResource
-  listCloudClusters(provider: CloudProvider!, accountId: String!, location: String!): [String]
   gitRepos(provider: GitProvider!): [GitRepo!]
   gitBranchesByApp(appId: String!): [GitBranch!]
   gitTagsByApp(appId: String!): [GitTag!]
-  frameworkCatalog: [Framework!]!
-  frameworkPrediction(repo: String!): Framework
-  getPodById(name: String!, deploymentId: ID!): Pod
-  podLog(name: String!, deploymentId: ID!): String
-  dockerFileByRepo(repo: String!, provider: GitProvider!): String
-  getCurrentNameSpace: NamespaceNode
-  getBuildRemediations(buildId: ID!): String
-  lookupDNSRecords(records: [DNSQueryRecordInput!]!): Boolean
-  paymentProfile: PaymentProfile
-  getPaymentProfileByStripeCustomerSession(session: ID!): PaymentProfile
 }
 
 input QueryInput {
   value: String!
   field: [String!]!
-}
-
-type Release implements Node {
-  id: ID!
-  app: App!
-  organization: Org!
-  createdBy: User!
-  createdAt: Date!
-  createdAtFormatted: String!
-  name: String!
-  shortDescription: String!
-  artifact: Artifact!
-  environmentVariables: [Env!]!
-}
-
-type ReleaseChannel implements Node {
-  id: ID!
-  app: App!
-  organization: Org!
-  createdBy: User!
-  createdAt: Date!
-  createdAtFormatted: String!
-  name: String!
-  shortDescription: String!
-  phase: String!
-  artifact: Artifact!
-  artifactHistory: [Artifact!]!
-  eventTypeTrigger: EventTypeTrigger!
-  eventNameTrigger: String!
-  environmentVariables: [Env!]!
-}
-
-type Secret {
-  name: String!
-  type: String!
-  dataCount: Int!
-  data: [SecretData!]
-  creationTimestamp: String!
-}
-
-type SecretData {
-  key: String!
-  value: String!
-}
-
-type SecretVolumeSource {
-  secretName: String!
-  defaultMode: Int!
-}
-
-input SecretVolumeSourceInput {
-  secretName: String!
-  defaultMode: Int = 420
 }
 
 input SignupInput {
@@ -993,45 +271,9 @@ input SignupInput {
   username: String!
 }
 
-type Site implements Node {
-  id: ID!
-  app: App!
-  organization: Org!
-  namespace: String!
-  createdBy: User!
-  createdAt: Date!
-  createdAtFormatted: String!
-  updatedAt: Date!
-  updatedAtFormatted: String!
-  name: String!
-  shortDescription: String!
-  environmentVariables: [Env!]!
-  environmentVariablesQuantity: Int!
-  provider: String!
-  accountId: String!
-  cloudAccount: CloudAccount
-  status: String
-  bucketName: String
-  bucketUrl: String
-  distributionUrl: String
-  customErrorCode: Int
-  customErrorPath: String
-  domain: String
-  domainsMapping: [DomainMapping!]
-  continousDeployment: String
-  patternTag: String
-  source: Artifact
-}
-
 input SortInput {
   value: String!
   property: String!
-}
-
-union Source = Artifact | Release | ReleaseChannel
-
-enum StaticRuntime {
-  NODEJS
 }
 
 type Subscription {
@@ -1054,10 +296,6 @@ type User implements Node & NamespaceNode {
   createdBy: User!
   createdAt: Date!
   createdAtFormatted: String!
-  freeTrialUntil: Date!
-  discountAvailableUntil: Date
-  hasOrganizations: Boolean!
-  organizations: [Org!]!
   name: String
   lastname: String
   fullname: String
@@ -1070,49 +308,5 @@ type User implements Node & NamespaceNode {
   media(width: Int = 48, height: Int = 48, blur: Int = 0, fit: String = "cover", focus: Boolean = false): Image
   cover(width: Int = 48, height: Int = 48, blur: Int = 0, fit: String = "cover", focus: Boolean = false): Image
   canFetchFromGithub: Boolean!
-  canFetchFromGitlab: Boolean!
-  hasBasicProfile: Boolean!
-}
-
-type ValueFrom {
-  secretKeyRef: ValueFromSecretKeyRef
-}
-
-input ValueFromInput {
-  secretKeyRef: ValueFromSecretKeyRefInput
-}
-
-type ValueFromSecretKeyRef {
-  name: String!
-  key: String!
-  optional: Boolean
-}
-
-input ValueFromSecretKeyRefInput {
-  name: String!
-  key: String!
-  optional: Boolean!
-}
-
-type Volume {
-  name: String!
-  secret: SecretVolumeSource
-}
-
-input VolumeInput {
-  name: String!
-  secret: SecretVolumeSourceInput
-}
-
-type VolumeMount {
-  name: String!
-  mountPath: String!
-  readOnly: Boolean!
-}
-
-input VolumeMountInput {
-  name: String!
-  mountPath: String!
-  readOnly: Boolean = false
 }
 

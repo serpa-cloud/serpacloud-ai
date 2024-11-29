@@ -13,9 +13,9 @@
   text-align: right;
 }
 .PlaygroundEditorTheme__paragraph {
-  margin: 0;
+  margin: 18px 0;
   font-size: 16px;
-  color: var(--neutral-color-800);
+  color: var(--neutral-color-600);
   position: relative;
 }
 .PlaygroundEditorTheme__quote {
@@ -33,25 +33,26 @@
   font-size: 24px;
   color: var(--neutral-color-800);
   font-weight: 800;
-  margin: 0;
+  margin: 24px 0;
 }
 .PlaygroundEditorTheme__h2 {
   font-size: 20px;
   color: var(--neutral-color-800);
   font-weight: 700;
-  margin: 0;
+  margin: 20px 0;
 }
 .PlaygroundEditorTheme__h3 {
   font-size: 18px;
   color: var(--neutral-color-800);
-  font-weight: 500;
-  margin: 0;
+  font-weight: 700;
+  margin: 18px 0;
 }
 .PlaygroundEditorTheme__indent {
   --lexical-indent-base-value: 40px;
 }
 .PlaygroundEditorTheme__textBold {
   font-weight: bold;
+  color: var(--neutral-color-800);
 }
 .PlaygroundEditorTheme__textItalic {
   font-style: italic;
@@ -311,7 +312,11 @@
   list-style-position: outside;
 }
 .PlaygroundEditorTheme__listItem {
-  margin: 0 32px;
+  margin: 12px 32px;
+  color: var(--neutral-color-600);
+}
+.PlaygroundEditorTheme__listItem::marker {
+  color: var(--neutral-color-800);
 }
 .PlaygroundEditorTheme__listItemChecked,
 .PlaygroundEditorTheme__listItemUnchecked {

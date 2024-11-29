@@ -12,6 +12,8 @@ module.exports = {
     'react/react-in-jsx-scope': 'off',
     'react/jsx-wrap-multilines': 'off',
     'flowtype/define-flow-type': 2,
+    'react/require-default-props': 'off',
+    'no-underscore-dangle': 'off',
   },
   globals: {
     process: true,

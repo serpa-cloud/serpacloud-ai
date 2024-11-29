@@ -167,7 +167,9 @@ export default function Messages({ conversation }: Props): React$Node {
               <Loader size={24} />
 
               <div>
-                <Text type="s0b" id="generatingResponse" color="--neutral-color-800" />
+                <Text type="s0b" color="--neutral-color-800">
+                  Generating response..
+                </Text>
               </div>
             </Flexbox>
           )}

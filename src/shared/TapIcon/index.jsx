@@ -20,7 +20,13 @@ type Props = {|
 const SAFE_SPACE = 16;
 const HALF_WIDTH_OF_CONTAINER = 20;
 
-export default function TapIcon({ icon, label, onTap, keymap, modifier }: Props): React$Node {
+export default function TapIcon({
+  icon,
+  label,
+  onTap,
+  keymap,
+  modifier = null,
+}: Props): React$Node {
   const containerRef = useRef();
   const labelRef = useRef();
   const [anchor, setAnchor] = useState('Bottom');
@@ -75,7 +81,9 @@ export default function TapIcon({ icon, label, onTap, keymap, modifier }: Props)
       >
         <InteractiveElement className={styles.tap} onClick={onTap}>
           <Icon
+            grade={0}
             icon={icon}
+            weight={200}
             gradient="linear-gradient(225deg, rgb(255, 82, 207) 0%, rgb(255, 103, 82) 100%)"
           />
         </InteractiveElement>
@@ -97,7 +105,3 @@ export default function TapIcon({ icon, label, onTap, keymap, modifier }: Props)
     </div>
   );
 }
-
-TapIcon.defaultProps = {
-  modifier: null,
-};

@@ -1,7 +1,6 @@
 // @flow
-import { useState, useCallback, memo } from 'react';
-import { useIntl } from 'react-intl';
 import stylex from '@serpa-cloud/stylex';
+import { useState, useCallback, memo } from 'react';
 
 import Text from './Text';
 import Flexbox from './Flexbox';
@@ -122,7 +121,6 @@ export type ButtonType = 'primary' | 'secondary' | 'danger' | 'main';
 export type ButtonSize = 'default' | 'hero';
 
 type Props = {|
-  +intlId?: ?string,
   +children?: ?string,
   +icon?: ?string,
   +iconRight?: ?string,
@@ -135,18 +133,16 @@ type Props = {|
 |};
 
 function Button({
-  size,
-  intlId,
-  icon,
-  iconRight,
-  disabled,
-  children,
+  icon = null,
+  children = null,
+  size = 'default',
+  iconRight = null,
+  disabled = false,
   onClick,
-  buttonType,
+  buttonType = 'main',
   autoFocus = false,
   loading = false,
 }: Props): React$Node {
-  const intl = useIntl();
   const [hover, setHover] = useState<boolean>(false);
   const isHero = size === 'hero';
 
@@ -176,7 +172,7 @@ function Button({
         autoFocus={autoFocus}
         onKeyPress={handleOnClick}
         className={stylex(styles.content)}
-        label={intlId ? intl.formatMessage({ id: intlId }) : children ?? ''}
+        label={children ?? ''}
       >
         <Flexbox
           className={stylex(styles.textContainer)}
@@ -195,24 +191,12 @@ function Button({
               }
             />
           )}
-          {intlId ? (
-            <Text
-              type={isHero ? 's2m' : 's0b'}
-              id={intlId}
-              color={
-                buttonType === 'secondary' ? '--primary-color-1' : '--button-primary-text-color'
-              }
-            />
-          ) : (
-            <Text
-              type={isHero ? 's2m' : 's0b'}
-              color={
-                buttonType === 'secondary' ? '--primary-color-1' : '--button-primary-text-color'
-              }
-            >
-              {children}
-            </Text>
-          )}
+          <Text
+            type={isHero ? 's2m' : 's0b'}
+            color={buttonType === 'secondary' ? '--primary-color-1' : '--button-primary-text-color'}
+          >
+            {children}
+          </Text>
           {iconRight && (
             <Icon
               icon={iconRight}
@@ -236,17 +220,5 @@ function Button({
     </div>
   );
 }
-
-Button.defaultProps = {
-  icon: null,
-  iconRight: null,
-  disabled: false,
-  buttonType: 'main',
-  intlId: null,
-  children: null,
-  size: 'default',
-  loading: false,
-  autoFocus: false,
-};
 
 export default (memo<Props>(Button): React$AbstractComponent<Props, mixed>);
