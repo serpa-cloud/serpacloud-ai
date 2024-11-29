@@ -13,10 +13,10 @@ type Props = {
 };
 
 export default function SessionController({
-  fallback,
   children,
   redirectTo,
-  publicRoute,
+  fallback = null,
+  publicRoute = false,
 }: Props): React$Node {
   const userData = useLazyLoadQuery(
     graphql`
@@ -32,7 +32,6 @@ export default function SessionController({
           pronoun
           description
           uiTheme
-          hasBasicProfile
           profileAvatar: media(width: 352, height: 352) {
             ...Avatar
           }
@@ -42,9 +41,6 @@ export default function SessionController({
           badgeAvatar: media(width: 64, height: 64) {
             ...Avatar
           }
-        }
-        paymentProfile {
-          id
         }
       }
     `,
@@ -61,8 +57,3 @@ export default function SessionController({
 
   return <React.Suspense fallback={fallback || <div />}>{children}</React.Suspense>;
 }
-
-SessionController.defaultProps = {
-  publicRoute: false,
-  fallback: null,
-};

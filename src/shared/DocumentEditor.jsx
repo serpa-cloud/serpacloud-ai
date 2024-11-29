@@ -62,6 +62,7 @@ type Props = {|
   +placeholder?: ?string,
   +children?: ?React$Node,
   +defaultPlainText?: ?string,
+  +contentClassName?: ?string,
   +enableComplexPlugins?: ?boolean,
   +placeholderClassName?: ?string,
   +$customPopulate?: ?(any) => void,
@@ -86,6 +87,7 @@ function DocumentEditorInterface(
     placeholder,
     $customPopulate,
     defaultPlainText,
+    contentClassName,
     enableComplexPlugins,
     placeholderClassName,
   }: Props,
@@ -248,7 +250,7 @@ function DocumentEditorInterface(
         <RichTextPlugin
           contentEditable={
             <div className="editor" ref={onRef}>
-              <ContentEditable className="contentEditableRoot" />
+              <ContentEditable className={`contentEditableRoot ${contentClassName ?? ''}`} />
             </div>
           }
           placeholder={
@@ -295,6 +297,7 @@ DocumentEditorInterface.defaultProps = {
   onSubmit: null,
   placeholder: '',
   autofocus: false,
+  contentClassName: '',
   $customPopulate: null,
   defaultPlainText: null,
   placeholderClassName: '',

@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 /* eslint-disable react/jsx-filename-extension */
 
 import { createRoot } from 'react-dom/client';
@@ -16,7 +17,7 @@ const isEnglish = window.location.hostname.includes('en.');
 
 createRoot(document.getElementById('root')).render(
   <RelayEnvironmentProvider environment={RelayEnvironment}>
-    <BrowserRouter>
+    <BrowserRouter future={{ v7_startTransition: true }}>
       <ResizerProvider>
         <App locale={isEnglish ? 'en' : 'es'} />
       </ResizerProvider>

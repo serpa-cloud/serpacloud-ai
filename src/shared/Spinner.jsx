@@ -44,7 +44,7 @@ type Props = {|
   size?: ?LayoutSize,
 |};
 
-export default function Spinner({ color, size = 24 }: Props): React$Node {
+export default function Spinner({ color = '', size = 24 }: Props): React$Node {
   return (
     <svg
       width={size}
@@ -66,8 +66,3 @@ export default function Spinner({ color, size = 24 }: Props): React$Node {
     </svg>
   );
 }
-
-Spinner.defaultProps = {
-  color: '',
-  size: 24,
-};

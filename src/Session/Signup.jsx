@@ -2,9 +2,9 @@
 import { useIntl } from 'react-intl';
 import { Link } from 'react-router-dom';
 import stylex from '@serpa-cloud/stylex';
+import { useCallback, useEffect } from 'react';
 import { useMutation, graphql } from 'react-relay';
 import * as amplitude from '@amplitude/analytics-browser';
-import { useState, useCallback, useDeferredValue, useEffect, useRef, Suspense } from 'react';
 
 import {
   Card,
@@ -23,8 +23,6 @@ import {
 import Loader from '../Chat/Loader';
 
 import { ReactComponent as GithubLogo } from './github-logo.svg';
-
-import NamespaceValidation from './NamespaceValidation';
 
 import type { SignupMutation } from './__generated__/SignupMutation.graphql';
 import type { SignupGithubMutation } from './__generated__/SignupGithubMutation.graphql';
@@ -70,11 +68,6 @@ const styles = stylex.create({
 export default function Signup(): React$Node {
   const intl = useIntl();
 
-  const queryUpdateFx = useRef();
-  const [query, setQuery] = useState('');
-  const deferredQuery = useDeferredValue(query);
-  const [namespaceAvailable, setNamespaceAvailable] = useState(false);
-
   const handleGithubLogin = () => {
     window.location.assign(
       `https://github.com/login/oauth/authorize?client_id=3c99fab1cc5756199981&scope=user,user:email,repo,read:org&redirect_uri=${encodeURIComponent(
@@ -110,37 +103,6 @@ export default function Signup(): React$Node {
         });
     }
   }, [connectToGithub]);
-
-  const username = useInput({
-    name: 'username',
-    required: true,
-    label: intl.formatMessage({ id: 'sign.userName' }),
-    value: '',
-    maxlength: 63,
-    errors: {
-      requiredError: intl.formatMessage({ id: 'input.requiredError' }),
-    },
-  });
-
-  const usernameValue = username.input.value;
-
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  function callback() {
-    setQuery(usernameValue);
-  }
-
-  useEffect(() => {
-    queryUpdateFx.current = callback;
-  }, [callback]);
-
-  useEffect(() => {
-    function tick() {
-      queryUpdateFx?.current?.();
-    }
-
-    const timerId = setInterval(tick, 500);
-    return () => clearInterval(timerId);
-  }, [usernameValue]);
 
   const email = useInput({
     name: 'email',
@@ -181,8 +143,7 @@ export default function Signup(): React$Node {
       const { errors, data } = validateData<{
         email: string,
         password: string,
-        username: string,
-      }>([email, password, username]);
+      }>([email, password]);
 
       if (!errors) {
         createAccount({
@@ -214,7 +175,7 @@ export default function Signup(): React$Node {
         alert('sign.singupDefaultError');
       }
     },
-    [email, password, username, createAccount],
+    [email, password, createAccount],
   );
 
   return (
@@ -252,23 +213,6 @@ export default function Signup(): React$Node {
                           <Input input={password.input} />
                         </div>
                       </Flexbox>
-
-                      <Flexbox columnGap={8} flexDirectionM="column">
-                        <div className={stylex(styles.fullWidth)}>
-                          <Flexbox flexDirection="column" rowGap={8}>
-                            <Input input={username.input} />
-
-                            {deferredQuery ? (
-                              <Suspense fallback={<></>}>
-                                <NamespaceValidation
-                                  name={deferredQuery}
-                                  onChange={setNamespaceAvailable}
-                                />
-                              </Suspense>
-                            ) : null}
-                          </Flexbox>
-                        </div>
-                      </Flexbox>
                     </Flexbox>
 
                     <Margin top={40} className={stylex(styles.fullWidth)}>
@@ -277,7 +221,6 @@ export default function Signup(): React$Node {
                           loading={commitPending}
                           intlId="signup.button"
                           onClick={handleSubmit}
-                          disabled={!namespaceAvailable}
                         />
                       </div>
                     </Margin>

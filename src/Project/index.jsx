@@ -1,56 +1,25 @@
-/* eslint-disable no-restricted-syntax */
-/* eslint-disable no-plusplus */
-/* eslint-disable no-param-reassign */
-/* eslint-disable no-await-in-loop */
 // @flow
 import { useParams } from 'react-router-dom';
 import { useCallback, useMemo, useRef } from 'react';
 import { graphql, useLazyLoadQuery } from 'react-relay/hooks';
 
-import ProjectsList from '../ProjectsList';
-import ActivityList from '../ActivityList';
-
 import { ComplexEditor, useUpdateProjectSummary, Flexbox, Margin } from '../shared';
 
 import Graph from '../Graph';
+import ProjectsList from '../ProjectsList';
+import ActivityList from '../ActivityList';
 
 import styles from './index.module.sass';
+
+import resolveImagePromises from './resolveImagePromises';
 
 import testData from './testData';
 import testMovements from './testMovements';
 import testActiivity from './testActivity';
 
-async function resolveImagePromises(obj) {
-  // Función recursiva para recorrer y resolver promesas
-  async function traverse(node) {
-    if (Array.isArray(node)) {
-      // Si el nodo es un array, recorre cada elemento
-      for (let i = 0; i < node.length; i++) {
-        node[i] = await traverse(node[i]);
-      }
-    } else if (node && typeof node === 'object') {
-      // Si el nodo es un objeto, verifica sus propiedades
-      for (const key in node) {
-        if (key === 'id' && node.type === 'image' && node[key] instanceof Promise) {
-          // Si es un nodo de tipo imagen y su id es una promesa, resuelve la promesa
-          node[key] = await node[key];
-        } else {
-          // De lo contrario, sigue recorriendo el objeto
-          node[key] = await traverse(node[key]);
-        }
-      }
-    }
-    return node;
-  }
-
-  // Inicia el recorrido desde el nodo raíz
-  const r = await traverse(obj);
-
-  return r;
-}
-
 export default function Project(): React$Node {
   const params = useParams();
+  const summaryRef = useRef();
 
   const data = useLazyLoadQuery(
     graphql`
@@ -66,6 +35,10 @@ export default function Project(): React$Node {
             ...ProjectCard
           }
         }
+        projectsTemplates {
+          id
+          userDescription
+        }
       }
     `,
     {
@@ -77,6 +50,8 @@ export default function Project(): React$Node {
   const [updateProject] = useUpdateProjectSummary();
   const node = data?.node;
   const name = node?.name ?? '';
+
+  console.log(data);
 
   // Inicialización de los refs basada en los valores de node
   const savedTitleRef = useRef(node?.name ?? '');
@@ -101,6 +76,8 @@ export default function Project(): React$Node {
         updateProject({
           id: node.id,
           title,
+          summary: savedSummaryRef.current ?? '',
+          summaryState: savedSummaryStateRef.current ?? '',
           onCompleted(response) {
             if (response.updateProjectSummary) {
               savedTitleRef.current = response.updateProjectSummary?.name ?? '';
@@ -123,6 +100,7 @@ export default function Project(): React$Node {
       ) {
         updateProject({
           id: node.id,
+          title: savedTitleRef.current ?? '',
           summary: summary.plainText ?? '',
           summaryState: serializedSummary,
           onCompleted(response) {
@@ -142,6 +120,7 @@ export default function Project(): React$Node {
       <ComplexEditor
         title={name}
         summary={summaryState}
+        summaryRef={summaryRef}
         onChangeTitle={handleChangeTitle}
         onChangeSummary={handleChangeSummary}
       />

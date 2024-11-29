@@ -1321,7 +1321,7 @@ function Padding({
   verticalM = null,
   horizontalM = null,
 
-  className,
+  className = '',
   children,
 }: PaddingProps): React$Node {
   return (
@@ -1345,21 +1345,5 @@ function Padding({
     </div>
   );
 }
-
-Padding.defaultProps = {
-  top: 0,
-  left: 0,
-  bottom: 0,
-  right: 0,
-  vertical: 0,
-  horizontal: 0,
-  topM: null,
-  leftM: null,
-  bottomM: null,
-  rightM: null,
-  verticalM: null,
-  horizontalM: null,
-  className: '',
-};
 
 export default (memo<PaddingProps>(Padding): React$AbstractComponent<PaddingProps, mixed>);

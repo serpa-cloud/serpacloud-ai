@@ -7,6 +7,7 @@ import Card from './Card';
 import Cascader from './Cascader';
 import Checkbox from './Checkbox';
 import ComplexEditor from './ComplexEditor';
+import ComplexEditorToolbar from './ComplexEditorToolbar';
 import ContextualMenu from './ContextualMenu';
 import Divider from './Divider';
 import DocumentEditor from './DocumentEditor';
@@ -23,10 +24,16 @@ import Search from './Search';
 import Spinner from './Spinner';
 import TapIcon from './TapIcon';
 import Text from './Text';
+import MiniButton from './MiniButton';
 import Modal from './Modal'; // Importamos el nuevo componente Modal
 
 // Provider
-import SocketProvider from './hooks/SocketContext';
+import SocketProvider, {
+  useApplySuggestion,
+  useGenerateSuggestions,
+  useApplyTemplate,
+  useProjectInRealTime,
+} from './hooks/SocketContext';
 
 // Hooks
 import useCreateAIProject from './hooks/useCreateAIProject';
@@ -46,6 +53,7 @@ export {
   Cascader,
   Checkbox,
   ComplexEditor,
+  ComplexEditorToolbar,
   ContextualMenu,
   Divider,
   DocumentEditor,
@@ -62,9 +70,14 @@ export {
   Spinner,
   TapIcon,
   Text,
+  MiniButton,
   Modal, // Exportamos el nuevo componente Modal
   // Provider
   SocketProvider,
+  useApplySuggestion,
+  useGenerateSuggestions,
+  useApplyTemplate,
+  useProjectInRealTime,
   // Hooks
   useCreateAIProject,
   useDevice,
