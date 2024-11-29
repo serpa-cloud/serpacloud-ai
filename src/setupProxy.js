@@ -4,7 +4,7 @@ module.exports = function proxyRules(app) {
   app.use(
     '/_graphql',
     createProxyMiddleware({
-      target: 'http://localhost:7100',
+      target: 'https://graphql-default--abundance.yellow-code.workspaces.serpa.cloud/',
       changeOrigin: true,
       headers: {
         Connection: 'keep-alive',

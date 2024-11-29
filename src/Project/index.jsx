@@ -7,9 +7,18 @@ import { useParams } from 'react-router-dom';
 import { useCallback, useMemo, useRef } from 'react';
 import { graphql, useLazyLoadQuery } from 'react-relay/hooks';
 
-import { ComplexEditor, useUpdateProjectSummary } from '../shared';
+import ProjectsList from '../ProjectsList';
+import ActivityList from '../ActivityList';
+
+import { ComplexEditor, useUpdateProjectSummary, Flexbox, Margin } from '../shared';
+
+import Graph from '../Graph';
 
 import styles from './index.module.sass';
+
+import testData from './testData';
+import testMovements from './testMovements';
+import testActiivity from './testActivity';
 
 async function resolveImagePromises(obj) {
   // Función recursiva para recorrer y resolver promesas
@@ -136,6 +145,19 @@ export default function Project(): React$Node {
         onChangeTitle={handleChangeTitle}
         onChangeSummary={handleChangeSummary}
       />
+      <Margin top={40}>
+        <Flexbox flexDirection="column" rowGap={32}>
+          <div>
+            <ActivityList activity={testActiivity} />
+          </div>
+          <div>
+            <ProjectsList projects={testMovements} />
+          </div>
+          <div>
+            <Graph data={testData} />
+          </div>
+        </Flexbox>
+      </Margin>
     </div>
   );
 }
