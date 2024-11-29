@@ -1,22 +1,16 @@
 .tagContainer
     display: inline-flex
     position: relative
-    &:hover
-        .filterTag
-            background-color: var(--neutral-color-200)
-
-.filterTag
-    padding: 4px 8px
-    border-radius: 9999px
-    box-shadow: var(--shadow-1-color)
-    border: 1px solid var(--neutral-color-200)
 
 .normalCursor
     cursor: default !important
 
 .optionsMenu
+    background-color: var(--neutral-color-100)
+    position: absolute
     z-index: 1
-    top: 100%
+    top: calc(100% + 8px)
+    left: 0
     border: none
     box-shadow: var(--shadow-1-color)
     border-radius: 8px
@@ -36,3 +30,18 @@
 
 .itemText
     flex: 1
+
+.projectIcon
+    display: flex
+    justify-content: center
+    align-items: center
+    width: 18px
+    height: 18px
+    color: var(--neutral-color-100)
+    font-family: var(--font-family-default)
+    font-size: 10px
+    border-radius: 9999px
+    border: 1px solid var(--neutral-color-100)
+
+.projectIconLeft
+    margin-left: -10px

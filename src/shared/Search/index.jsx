@@ -7,13 +7,21 @@ import Icon from '../Icon';
 import InteractiveElement from '../InteractiveElement';
 import Flexbox from '../Flexbox';
 import FilterTag from '../FilterTag';
+import FilterDialog from '../FilterTag/FilterDialog';
+import FilterGroup from '../FilterTag/FilterGroup';
 
 import useDevice from '../hooks/useDevice';
+
+import filterBy from './filterBy';
+import filterWith from './filterWith';
 
 export default function Search(): React$Node {
   const [searchParams, setSearchParams] = useSearchParams();
   const [searchValue, setSearchValue] = useState(searchParams.get('q') || '');
+  const [principalFilter, setPrincipalFilter] = useState('');
+  const [principalFilterIcon, setPrincipalFilterIcon] = useState('');
   const [filter, setFilter] = useState([]);
+  const [filterMenuOpen, setFilterMenuOpen] = useState(false);
 
   const { os } = useDevice();
   const isMacOS = os.includes('Mac OS ');
@@ -30,6 +38,11 @@ export default function Search(): React$Node {
     navigate(`/app/search?q=${searchValue}`);
   }, [navigate, searchValue]);
 
+  const handlePrincipalFilter = (tag, icon) => {
+    setPrincipalFilter(tag);
+    setPrincipalFilterIcon(icon);
+  };
+
   const handleFilter = (tag, actionType) => {
     setFilter((prevFilter) => {
       if (actionType === 'add') {
@@ -41,6 +54,13 @@ export default function Search(): React$Node {
 
       return prevFilter.filter((item) => item !== tag);
     });
+  };
+
+  const clearFilter = () => {
+    setPrincipalFilter('');
+    setPrincipalFilterIcon('');
+    setFilter([]);
+    setFilterMenuOpen(false);
   };
 
   useEffect(() => {
@@ -93,13 +113,48 @@ export default function Search(): React$Node {
         />
       </Flexbox>
       {searchValue && (
-        <Flexbox alignItems="center" columnGap={8}>
-          <FilterTag text="Filter" icon="filter_list" handleFilter={handleFilter} filter={filter} />
-          {filter.map((tag) => {
-            return (
-              <FilterTag text={tag} key={tag} icon="close" isFilter handleFilter={handleFilter} />
-            );
-          })}
+        <Flexbox className={styles.filterContainer} alignItems="center">
+          <Flexbox columnGap={16} className={styles.filterTags} alignItems="center">
+            {principalFilter && (
+              <Flexbox alignItems="center" columnGap={8}>
+                {principalFilter && (
+                  <FilterTag
+                    text={principalFilter || ''}
+                    icon={principalFilterIcon || 'filter_list'}
+                    handleFilter={handlePrincipalFilter}
+                    filterList={filterBy}
+                  />
+                )}
+                {filter.length > 0 && (
+                  <FilterGroup filter={filter} principalFilter={principalFilter} />
+                )}
+              </Flexbox>
+            )}
+
+            {principalFilter && (
+              <InteractiveElement onClick={clearFilter}>
+                <Icon size={14} icon="close" color="--neutral-color-600" weight={400} />
+              </InteractiveElement>
+            )}
+
+            <FilterTag
+              text=""
+              icon="filter_list"
+              handleFilter={principalFilter ? handleFilter : handlePrincipalFilter}
+              filterList={principalFilter ? filterWith : filterBy}
+              setFilterMenuOpen={setFilterMenuOpen}
+            />
+
+            {filterMenuOpen && (
+              <FilterDialog
+                filterList={principalFilter ? filterWith : filterBy}
+                setFilterMenuOpen={setFilterMenuOpen}
+                handleFilter={principalFilter ? handleFilter : handlePrincipalFilter}
+                filter={filter}
+                isFilter={principalFilter ?? true}
+              />
+            )}
+          </Flexbox>
         </Flexbox>
       )}
     </Flexbox>

@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react';
 import Flexbox from '../Flexbox';
 import Checkbox from '../Checkbox';
 import InteractiveElement from '../InteractiveElement';
+import Icon from '../Icon';
 
 import styles from './index.module.sass';
 
@@ -11,6 +12,8 @@ type Props = {
   closeMenu?: () => void,
   filter?: Array<string>,
   handleFilter?: (string, string) => void,
+  icon?: string,
+  isFilter?: boolean,
 };
 
 export default function TagItem({
@@ -18,12 +21,14 @@ export default function TagItem({
   closeMenu,
   filter,
   handleFilter,
+  icon,
+  isFilter,
 }: Props): React$Node {
   const [checked, setChecked] = useState(filter.includes(projectName));
 
   const check = () => {
     setChecked((prev) => {
-      handleFilter(projectName, prev ? 'delete' : 'add');
+      handleFilter(projectName, (isFilter && (prev ? 'delete' : 'add')) || icon);
       return !prev;
     });
   };
@@ -33,11 +38,13 @@ export default function TagItem({
   }, [filter, projectName]);
   return (
     <Flexbox columnGap={8} alignItems="center" className={styles.itemContainer}>
-      <Checkbox checked={checked} onChange={check} />
+      {(icon && <Icon size={14} icon={icon} color="--neutral-color-800" weight={700} />) || (
+        <Checkbox checked={checked} onChange={check} />
+      )}
       <InteractiveElement
         className={styles.itemText}
         onClick={() => {
-          handleFilter(projectName, 'add');
+          check();
           closeMenu();
         }}
       >
@@ -51,4 +58,6 @@ TagItem.defaultProps = {
   closeMenu: () => {},
   filter: [],
   handleFilter: () => {},
+  icon: '',
+  isFilter: false,
 };
