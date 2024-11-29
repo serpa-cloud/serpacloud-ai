@@ -4,7 +4,7 @@ module.exports = function proxyRules(app) {
   app.use(
     '/_graphql',
     createProxyMiddleware({
-      target: 'http://localhost:7100',
+      target: 'http://localhost:7100/',
       changeOrigin: true,
       headers: {
         Connection: 'keep-alive',

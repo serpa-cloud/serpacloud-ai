@@ -1,22 +1,25 @@
 // @flow
 import { useParams } from 'react-router-dom';
 import { useCallback, useMemo, useRef } from 'react';
-import { useTransition, animated } from 'react-spring';
 import { graphql, useLazyLoadQuery } from 'react-relay/hooks';
 
-import lexicalToMarkdown from './lexicalToMarkdown';
-import resolveImagePromises from './resolveImagePromises';
+import { ComplexEditor, useUpdateProjectSummary, Flexbox, Margin } from '../shared';
 
-import { Flexbox, ComplexEditor, useProjectInRealTime, useUpdateProjectSummary } from '../shared';
-
-import Suggestion from './Suggestion';
+import Graph from '../Graph';
+import ProjectsList from '../ProjectsList';
+import ActivityList from '../ActivityList';
 
 import styles from './index.module.sass';
+
+import resolveImagePromises from './resolveImagePromises';
+
+import testData from './testData';
+import testMovements from './testMovements';
+import testActiivity from './testActivity';
 
 export default function Project(): React$Node {
   const params = useParams();
   const summaryRef = useRef();
-  const realTimeData = useProjectInRealTime(params?.project ?? '');
 
   const data = useLazyLoadQuery(
     graphql`
@@ -112,74 +115,28 @@ export default function Project(): React$Node {
     [node?.id, updateProject],
   );
 
-  const getSummaryMarkdown = useCallback(async () => {
-    const state = savedSummaryStateRef.current;
-
-    try {
-      const parsedState = JSON.parse(state);
-      const normalizedState = await resolveImagePromises({ ...(parsedState || {}) });
-      const markdown = lexicalToMarkdown(normalizedState);
-
-      return markdown;
-    } catch (e) {
-      // eslint-disable-next-line no-console
-      console.log(e);
-      return null;
-    }
-  }, []);
-
-  const handleOnMutateSummaryState = useCallback((newSummaryState) => {
-    summaryRef?.current?.replaceState?.(newSummaryState);
-  }, []);
-
-  const suggestions = realTimeData?.suggestions ?? [];
-  const hasSuggestions = !!suggestions?.length;
-
-  const transitions = useTransition(suggestions, {
-    keys: (suggestion) => suggestions.indexOf(suggestion),
-    from: { opacity: 0, scale: 0, y: 0 },
-    enter: { opacity: 1, scale: 1, y: 0 },
-    leave: { opacity: 0, scale: 0, y: -20 },
-  });
-
   return (
-    <section
-      className={`${styles.container} ${
-        hasSuggestions ? styles.containerOpen : styles.containerClosed
-      }`}
-    >
-      <div
-        className={`${styles.section} ${
-          hasSuggestions ? styles.sectionOpen : styles.sectionClosed
-        }`}
-      >
-        <div>
-          <ComplexEditor
-            title={name}
-            summary={summaryState}
-            summaryRef={summaryRef}
-            onChangeTitle={handleChangeTitle}
-            onChangeSummary={handleChangeSummary}
-          />
-        </div>
-        {hasSuggestions && (
+    <div className={styles.section}>
+      <ComplexEditor
+        title={name}
+        summary={summaryState}
+        summaryRef={summaryRef}
+        onChangeTitle={handleChangeTitle}
+        onChangeSummary={handleChangeSummary}
+      />
+      <Margin top={40}>
+        <Flexbox flexDirection="column" rowGap={32}>
           <div>
-            <Flexbox flexDirection="column" rowGap={16} className={styles.sidePanel}>
-              {transitions((style, suggestion) => (
-                <animated.div style={style}>
-                  <Suggestion
-                    key={suggestion}
-                    suggestion={suggestion}
-                    getSummary={getSummaryMarkdown}
-                    projectId={params?.project ?? ''}
-                    onChangeSummary={handleOnMutateSummaryState}
-                  />
-                </animated.div>
-              ))}
-            </Flexbox>
+            <ActivityList activity={testActiivity} />
           </div>
-        )}
-      </div>
-    </section>
+          <div>
+            <ProjectsList projects={testMovements} />
+          </div>
+          <div>
+            <Graph data={testData} />
+          </div>
+        </Flexbox>
+      </Margin>
+    </div>
   );
 }
