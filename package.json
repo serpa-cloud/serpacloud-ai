@@ -10,7 +10,7 @@
   "email": "emilia@serpa.cloud",
   "license": "MIT",
   "port": 9000,
-  "proxy": "http://localhost:7100/_graphql",
+  "proxy": "http://localhost:7100",
   "description": "Build 20x faster with Serpa AI",
   "dependencies": {
     "@amplitude/analytics-browser": "^2.5.2",
@@ -141,7 +141,7 @@
     "start": "export REACT_APP_VERSION=$npm_package_version && node scripts/start.js",
     "build": "export REACT_APP_VERSION=$npm_package_version && node scripts/build.js",
     "relay": "relay-compiler",
-    "schema": "get-graphql-schema ${npm_package_proxy}/_graphql > schema.graphql",
+    "schema": "get-graphql-schema ${npm_package_proxy}/graphql > schema.graphql",
     "standard-release": "standard-version",
     "create-release": "standard-version && git push --follow-tags origin release",
     "release": "npm run create-release && yarn publish-electron",
