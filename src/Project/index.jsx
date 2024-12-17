@@ -3,11 +3,13 @@ import { useParams } from 'react-router-dom';
 import { useCallback, useMemo, useRef } from 'react';
 import { graphql, useLazyLoadQuery } from 'react-relay/hooks';
 
-import { ComplexEditor, useUpdateProjectSummary, Flexbox, Margin } from '../shared';
+import { ComplexEditor, useUpdateProjectSummary, Flexbox, Margin, Padding } from '../shared';
 
 import Graph from '../Graph';
 import ProjectsList from '../ProjectsList';
 import ActivityList from '../ActivityList';
+
+import Chat from '../Chat';
 
 import styles from './index.module.sass';
 
@@ -62,7 +64,7 @@ export default function Project(): React$Node {
     let state;
 
     try {
-      state = JSON.parse(node?.summaryState);
+      state = JSON.parse(node?.summaryState ?? '{}');
     } catch (e) {
       state = null;
     }
@@ -117,26 +119,31 @@ export default function Project(): React$Node {
 
   return (
     <div className={styles.section}>
-      <ComplexEditor
-        title={name}
-        summary={summaryState}
-        summaryRef={summaryRef}
-        onChangeTitle={handleChangeTitle}
-        onChangeSummary={handleChangeSummary}
-      />
-      <Margin top={40}>
-        <Flexbox flexDirection="column" rowGap={32}>
-          <div>
-            <ActivityList activity={testActiivity} />
-          </div>
-          <div>
-            <ProjectsList projects={testMovements} />
-          </div>
-          <div>
-            <Graph data={testData} />
-          </div>
-        </Flexbox>
-      </Margin>
+      <Padding vertical={40} horizontal={40}>
+        <ComplexEditor
+          title={name}
+          summary={summaryState}
+          summaryRef={summaryRef}
+          onChangeTitle={handleChangeTitle}
+          onChangeSummary={handleChangeSummary}
+        />
+        <Margin top={40}>
+          <Flexbox flexDirection="column" rowGap={32}>
+            <div>
+              <ActivityList activity={testActiivity} />
+            </div>
+            <div>
+              <ProjectsList projects={testMovements} />
+            </div>
+            <div>
+              <Graph data={testData} />
+            </div>
+          </Flexbox>
+        </Margin>
+      </Padding>
+      <div className={styles.chatContainer}>
+        <Chat />
+      </div>
     </div>
   );
 }

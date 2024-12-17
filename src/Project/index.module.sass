@@ -1,7 +1,11 @@
 .section
   display: grid
-  column-gap: 72px
+  column-gap: 0px
   transition: all 300ms ease-out
+  grid-template-columns: 1fr 400px
+
+.chatContainer
+  box-shadow: var(--shadow-1-color)
 
 .sectionOpen
   grid-template-columns: minmax(680px, 1fr) minmax(376px, 1fr)

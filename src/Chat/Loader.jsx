@@ -212,8 +212,9 @@ function SiriWaveLoader({ size = 100 }: Props): React$Node {
 }
 
 // Memoizamos el componente con Flow para mejorar el rendimiento
-export default (React.memo<Props>(SiriWaveLoader): React$AbstractComponent<Props, mixed>);
+const component = React.memo<Props>(SiriWaveLoader) as component (
+  ref: RefSetter<mixed>,
+  ...Props
+) renders React$Node;
 
-SiriWaveLoader.defaultProps = {
-  size: 100,
-};
+export default component;

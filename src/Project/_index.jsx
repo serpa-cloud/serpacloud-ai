@@ -34,7 +34,7 @@ export default function Project(): React$Node {
 
   const data = useLazyLoadQuery(
     graphql`
-      query ProjectQuery($id: ID!) {
+      query IndexProjectV2Query($id: ID!) {
         node(id: $id) {
           id
           ... on AIProject {
@@ -73,7 +73,7 @@ export default function Project(): React$Node {
     let state;
 
     try {
-      state = JSON.parse(node?.summaryState);
+      state = JSON.parse(node?.summaryState ?? '{}');
     } catch (e) {
       state = null;
     }

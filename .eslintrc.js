@@ -14,6 +14,7 @@ module.exports = {
     'flowtype/define-flow-type': 2,
     'react/require-default-props': 'off',
     'no-underscore-dangle': 'off',
+    'react/require-default-props': 'off',
   },
   globals: {
     process: true,
