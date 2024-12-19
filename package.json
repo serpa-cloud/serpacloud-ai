@@ -1,6 +1,6 @@
 {
   "name": "serpacloud-ai",
-  "version": "0.0.4",
+  "version": "0.0.6",
   "main": "lib/main.js",
   "repository": {
     "type": "git",

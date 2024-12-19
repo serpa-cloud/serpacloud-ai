@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.6](https://github.com/yellow-code-io/serpacloud/compare/v0.0.5...v0.0.6) (2024-12-18)
+
+### [0.0.5](https://github.com/yellow-code-io/serpacloud/compare/v0.0.4...v0.0.5) (2024-12-17)
+
+
+### Bug Fixes
+
+* change to new graphql endpoint ([77ad7bc](https://github.com/yellow-code-io/serpacloud/commit/77ad7bc175d4ecb8e21de421f8d03321fcd16d5a))
+
 ### [0.0.4](https://github.com/yellow-code-io/serpacloud/compare/v0.0.3...v0.0.4) (2024-10-31)
 
 
