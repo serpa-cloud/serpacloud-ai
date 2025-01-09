@@ -7,7 +7,13 @@ import type { useSendAIMessageMutation } from './__generated__/useSendAIMessageM
 type SendAIMessageUtils = [(message: string) => void | Promise<void>, boolean];
 
 const getDirectoryName = (fullPath) => {
-  const parts = fullPath.split('/');
+  let parts;
+  if (fullPath.includes('C:')) {
+    parts = fullPath.split('\\');
+  } else {
+    parts = fullPath.split('/');
+  }
+  console.log(parts, 'parts', fullPath);
   return parts[parts.length - 1];
 };
 
